@@ -1,0 +1,26 @@
+.arriere-plan-degrade {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #1e40af 100%);
+}
+
+.effet-verre {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.animation-flottante {
+    animation: flotter 6s ease-in-out infinite;
+}
+
+@keyframes flotter {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+.focus-champ-saisie:focus {
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.3);
+}
+
+option{
+    background-color: #3730a3;
+}

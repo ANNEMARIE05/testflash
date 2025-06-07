@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Service - Connexion</title>
+    <link rel="shortcut icon" href="/assets/img/log.jpeg" type="image/jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/login.css">
+</head>
+<body class="min-h-screen fondDegradeAnime flex items-center justify-center p-4">
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-800 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-900 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
+        <div class="absolute top-40 left-40 w-80 h-80 bg-blue-700 rounded-full mix-blend-multiply filter blur-xl opacity-60"></div>
+    </div>
+
+    <div class="relative w-full max-w-sm">
+        <div class="effetVerre rounded-2xl shadow-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+                <button id="boutonRetourPageAccueil" class="flex items-center text-blue-200 hover:text-white transition-colors duration-200">
+                    <a href="/index.html" class="flex">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Accueil
+                    </a>
+                </button>
+                <img src="/assets/img/logo.png" class="inline-flex items-center justify-center w-12 h-12 rounded-xl" alt="">
+            </div>
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-bold text-white mb-1">Connexion</h1>
+                <p class="text-blue-100 text-sm">Accédez à votre compte Flash Service</p>
+            </div>
+
+            <form id="formulaireConnexion" class="space-y-4">
+                <div>
+                    <input 
+                        type="tel" 
+                        id="numeroTelephone" 
+                        name="numeroTelephone"
+                        class="focus-champ-saisie w-full px-3 py-2.5 bg-white/10 border border-white/20 rounded-xl text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300"
+                        placeholder="Numéro de téléphone"
+                        required
+                    >
+                </div>
+
+                <div class="relative">
+                    <input 
+                        type="password" 
+                        id="Password" 
+                        name="PasswordUtilisateur"
+                        class="champSaisieFocus w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300"
+                        placeholder="Mot de passe"
+                        required
+                    >
+                    <button 
+                        type="button" 
+                        id="btnAfficherPassword"
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-200 hover:text-white transition-colors duration-200"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="flex items-center justify-between text-sm">
+                    <label class="flex items-center">
+                        <input 
+                            type="checkbox" 
+                            id="caseSeRappelerUtilisateur"
+                            name="caseSeRappelerUtilisateur"
+                            class="rounded border-white/20 bg-white/10 text-yellow-500 focus:ring-yellow-400 focus:ring-offset-0"
+                        >
+                        <span class="ml-2 text-blue-100">Se rappeler</span>
+                    </label>
+                    <a href="#" class="text-yellow-300 hover:text-yellow-100 transition-colors duration-200">
+                        Mot de passe oublié ?
+                    </a>
+                </div>
+
+                <button 
+                    type="submit" 
+                    id="boutonValidation"
+                    class="w-full bg-gradient-to-r from-blue-800 to-yellow-500 text-white font-bold py-3 px-4 rounded-xl hover:from-blue-900 hover:to-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 transform hover:scale-105 transition-all duration-300 shadow-lg"
+                >
+                    <span id="texteConnexion">Se connecter</span>
+                    <div id="chargementConnexion" class="hidden flex items-center justify-center">
+                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Connexion en cours...
+                    </div>
+                </button>
+            </form>
+
+            <div id="zoneAffichageMessages" class="mt-4 text-center hidden">
+                <div id="messageSucces" class="hidden bg-green-500/20 border border-green-400 text-green-100 px-4 py-2 rounded-lg">
+                    Connexion réussie ! Redirection...
+                </div>
+                <div id="messageErreur" class="hidden bg-red-500/20 border border-red-400 text-red-100 px-4 py-2 rounded-lg">
+                    Identifiants incorrects. Veuillez réessayer.
+                </div>
+            </div>
+
+            <div class="mt-6 text-center">
+                <p class="text-blue-100 text-sm">
+                    Nouveau sur Flash Service ?
+                    <a href="register.html" class="text-yellow-300 hover:text-yellow-100 font-medium transition-colors duration-200">
+                        Créer un compte
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+   <script src="/script/login.js"></script>
+</body>
+</html>

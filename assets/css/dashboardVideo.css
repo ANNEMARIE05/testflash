@@ -1,0 +1,12 @@
+
+.hover\:from-bleu-fonce:hover { background: linear-gradient(to right, #1e40af, #3b82f6); }
+.card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+}
+.box {
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    padding: 12px;
+    margin-bottom: 12px;
+    border-bottom: 2px solid white;
+}

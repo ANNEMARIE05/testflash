@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+:root {
+    --couleur-primaire-900: rgb(15 23 42);
+    --couleur-primaire-800: rgb(30 41 59);
+    --couleur-primaire-700: rgb(51 65 85);
+    --couleur-primaire-600: rgb(59 130 246);
+    --couleur-primaire-500: rgb(99 102 241);
+    --couleur-primaire-400: rgb(129 140 248);
+    --couleur-accent-400: rgb(251 191 36);
+    --couleur-accent-500: rgb(245 158 11);
+    --couleur-jaune-accent: rgb(251 191 36);
+    --couleur-jaune-clair: rgb(252 211 77);
+    --couleur-bleu-principal: rgb(59 130 246);
+    --couleur-bleu-fonce: rgb(30 41 59);
+    --couleur-fond-carte: rgba(255, 255, 255, 0.05);
+    --couleur-bordure-carte: rgba(59, 130, 246, 0.2);
+}
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+@keyframes flotterAnimation {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+@keyframes glisserDepuisGauche {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes glisserDepuisDroite {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes glisserVersHaut {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+@keyframes apparitionVersHaut {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+@keyframes apparitionVersBas {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+@keyframes apparitionDepuisDroite {
+    from { transform: translateX(30px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes pulsationLumineuse {
+    0%, 100% { box-shadow: 0 0 20px rgba(14, 165, 233, 0.3); }
+    50% { box-shadow: 0 0 30px rgba(14, 165, 233, 0.6); }
+}
+@keyframes changementGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animation-flotter { animation: flotterAnimation 3s ease-in-out infinite; }
+.animation-glisser-gauche { animation: glisserDepuisGauche 1s ease-out; }
+.animation-glisser-droite { animation: glisserDepuisDroite 1s ease-out; }
+.animation-glisser-haut { animation: glisserVersHaut 0.8s ease-out; }
+.animation-apparition-haut { animation: apparitionVersHaut 0.8s ease-out; }
+.animation-apparition-bas { animation: apparitionVersBas 0.8s ease-out; }
+.animation-apparition-droite { animation: apparitionDepuisDroite 0.8s ease-out; }
+.animation-pulsation { animation: pulsationLumineuse 2s ease-in-out infinite; }
+.animation-gradient { animation: changementGradient 3s ease infinite; background-size: 200% 200%; }
+
+.logo-club {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 50%;
+    background: white;
+}
+.carte-pronostic {
+    background: var(--couleur-fond-carte);
+    border: 1px solid var(--couleur-bordure-carte);
+    transition: all 0.3s ease;
+}
+
+.carte-pronostic:hover {
+    border-color: var(--couleur-accent-400);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.morphisme-verre {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.survol-carte {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.survol-carte:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+.texte-gradient {
+    background: linear-gradient(135deg, #0ea5e9, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.lueur-neon {
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.4), 0 0 40px rgba(14, 165, 233, 0.2);
+}
+
+.etoiles {
+    color: #f59e0b;
+}
+
+.menu-mobile {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.menu-mobile.ouvert {
+    transform: translateX(0);
+}
+
+.overlay-menu {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.overlay-menu.actif {
+    opacity: 1;
+    visibility: visible;
+}
+
+.text-jaune-accent{
+    color: #fbbf24;
+}
+
+@media (max-width: 768px) {
+    .menu-mobile {
+        width: 280px;
+    }
+}

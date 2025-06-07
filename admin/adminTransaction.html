@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+    <link rel="shortcut icon" href="/assets/img/log.jpeg" type="image/jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen">
+        <aside id="menu" class="bg-white shadow-lg w-64 fixed h-full z-30 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+            <div class="p-6 bg-bleu flex justify-between items-center">
+                <h2 class="text-white text-xl font-bold">Admin Panel</h2>
+                <button id="fermer" class="lg:hidden text-white hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <nav class="mt-8">
+                <a href="dashboardAdmin.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="adminPronostic.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-plus-circle mr-3"></i>
+                    Nouveau Pronostic
+                </a>
+                <a href="adminMesProno.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-futbol mr-3"></i>
+                    Mes Pronostiques
+                </a>
+                <a href="adminCoordonnee.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-bell mr-3"></i>
+                    Coordonnées
+                </a>
+                <a href="adminVideo.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-video mr-3"></i>
+                    Nouvelle Vidéo
+                </a>
+                <a href="adminHistorique.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-history mr-3"></i>
+                    Mes Historiques
+                </a>
+                <a href="adminUser.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-users mr-3"></i>
+                    Utilisateurs
+                </a>
+                <a href="adminTransaction.html" class="flex items-center px-6 py-3 text-bleu bg-blue-50 border-r-3 border-bleu">
+                    <i class="fas fa-credit-card mr-3"></i>
+                    Transactions
+                </a>
+                <a href="adminBonus.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-gift mr-3"></i>
+                    Bonus
+                </a>
+                <button id="deco" class="w-full flex items-center px-6 py-3 text-red-600 hover:bg-red-50 transition-colors mt-8">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Déconnexion
+                </button>
+            </nav>
+        </aside>
+
+        <div class="flex-1 lg:ml-64">
+            <header class="bg-white shadow-sm border-b">
+                <div class="flex items-center justify-between px-4 lg:px-6 py-4">
+                    <div class="flex items-center">
+                        <button id="ouvrir" class="lg:hidden text-gray-600 mr-4">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <h1 class="text-xl lg:text-2xl font-semibold text-gray-800">Gestion des Transactions</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <i class="fas fa-bell text-gray-600 text-lg lg:text-xl"></i>
+                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center" id="notif">0</span>
+                        </div>
+                        <img src="https://img.freepik.com/vecteurs-premium/icone-profil-avatar-par-defaut-image-utilisateur-medias-sociaux-icone-avatar-gris-silhouette-profil-vide-illustration-vectorielle_561158-3383.jpg?uid=R99967860&semt=ais_hybrid&w=740" alt="Avatar" class="w-8 h-8 rounded-full">
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-4 lg:p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
+                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total en Attente</p>
+                                <p class="text-2xl lg:text-3xl font-bold text-jaune" id="totalAttente">0</p>
+                            </div>
+                            <div class="bg-yellow-100 p-3 rounded-full">
+                                <i class="fas fa-clock text-jaune text-lg lg:text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Dépôts</p>
+                                <p class="text-2xl lg:text-3xl font-bold text-green-600" id="nbDepots">0</p>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-full">
+                                <i class="fas fa-arrow-down text-green-600 text-lg lg:text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Retraits</p>
+                                <p class="text-2xl lg:text-3xl font-bold text-red-600" id="nbRetraits">0</p>
+                            </div>
+                            <div class="bg-red-100 p-3 rounded-full">
+                                <i class="fas fa-arrow-up text-red-600 text-lg lg:text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md mb-6">
+                    <div class="px-4 lg:px-6 py-4 border-b flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Demandes en Attente</h2>
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <select id="filtreType" class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                                <option value="">Tous les types</option>
+                                <option value="depot">Dépôts</option>
+                                <option value="retrait">Retraits</option>
+                            </select>
+                            <select id="filtreStatut" class="px-3 py-2 border border-gray-300 rounded-lg text-sm">
+                                <option value="attente">En attente</option>
+                                <option value="valide">Validées</option>
+                                <option value="rejete">Rejetées</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="hidden md:block overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Utilisateur</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Montant</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Méthode</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabTrans" class="divide-y divide-gray-200">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="md:hidden" id="transMobile">
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden lg:hidden"></div>
+
+    <div id="modalDetails" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Détails de la Transaction</h3>
+                <button id="fermerModal" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="contenuModal" class="space-y-3">
+            </div>
+            <div class="flex justify-end space-x-3 mt-6">
+                <button id="btnRejeter" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+                    <i class="fas fa-times mr-2"></i>Rejeter
+                </button>
+                <button id="btnValider" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                    <i class="fas fa-check mr-2"></i>Valider
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/script/adminTransaction.js"></script>
+</body>
+</html>

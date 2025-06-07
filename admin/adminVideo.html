@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+    <link rel="shortcut icon" href="/assets/img/log.jpeg" type="image/jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen">
+        <aside id="menu" class="bg-white shadow-lg w-64 fixed h-full z-30 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+            <div class="flex items-center justify-between p-6 bg-bleu-principal">
+                <h2 class="text-white text-xl font-bold">Admin Panel</h2>
+                <button id="fermerMenu" class="lg:hidden text-white hover:text-gray-300">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <nav class="mt-8">
+                <a href="dashboardAdmin.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="adminPronostic.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-plus-circle mr-3"></i>
+                    Nouveau Pronostic
+                </a>
+                <a href="adminMesProno.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-futbol mr-3"></i>
+                    Mes Pronostiques
+                </a>
+                <a href="adminCoordonnee.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-bell mr-3"></i>
+                    Coordonnées
+                </a>
+                <a href="#" class="flex items-center px-6 py-3 text-bleu-principal bg-blue-50 border-r-3 border-bleu-principal">
+                    <i class="fas fa-video mr-3"></i>
+                    Nouvelle Vidéo
+                </a>
+                <a href="adminHistorique.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-history mr-3"></i>
+                    Mes Historiques
+                </a>
+                <a href="adminUser.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-users mr-3"></i>
+                    Utilisateurs
+                </a>
+                <a href="dashboard.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-credit-card mr-3"></i>
+                    Transactions
+                </a>
+                <a href="adminBonus.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-gift mr-3"></i>
+                    Bonus
+                </a>
+                <button id="deco" class="w-full flex items-center px-6 py-3 text-red-600 hover:bg-red-50 transition-colors mt-8">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Déconnexion
+                </button>
+            </nav>
+        </aside>
+
+        <div class="flex-1 lg:ml-64">
+            <header class="bg-white shadow-sm border-b">
+                <div class="flex items-center justify-between px-4 lg:px-6 py-4">
+                    <div class="flex items-center">
+                        <button id="ouvrirMenu" class="lg:hidden text-gray-600 mr-4">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <h1 class="text-xl lg:text-2xl font-semibold text-gray-800">Gestion des Vidéos</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <i class="fas fa-bell text-gray-600 text-lg lg:text-xl"></i>
+                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                        </div>
+                        <img src="https://img.freepik.com/vecteurs-premium/icone-profil-avatar-par-defaut-image-utilisateur-medias-sociaux-icone-avatar-gris-silhouette-profil-vide-illustration-vectorielle_561158-3383.jpg?uid=R99967860&semt=ais_hybrid&w=740" alt="Avatar" class="w-8 h-8 rounded-full">
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-4 lg:p-6">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Ajouter une nouvelle vidéo</h2>
+                    <form id="formVideo" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Titre de la vidéo</label>
+                                <input type="text" id="titre" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bleu-principal" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Durée (minutes)</label>
+                                <input type="number" id="duree" min="1" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bleu-principal" required>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Fichier vidéo</label>
+                            <input type="file" id="fichier" accept="video/*" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bleu-principal" required>
+                            <p class="text-sm text-gray-500 mt-1">Formats acceptés: MP4, AVI, MOV, WMV</p>
+                        </div>
+                       
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <textarea id="desc" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-bleu-principal"></textarea>
+                        </div>
+                        <button type="submit" class="bg-bleu-principal text-white px-6 py-2 rounded-lg hover:bg-bleu-fonce transition-colors">
+                            <i class="fas fa-plus mr-2"></i>Ajouter la vidéo
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md">
+                    <div class="px-6 py-4 border-b">
+                        <h2 class="text-xl font-semibold text-gray-800">Liste des vidéos</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="listeVideos">
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="voile" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden lg:hidden"></div>
+
+    <div id="lecteur" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-4xl w-full max-h-full overflow-auto">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 id="titreLecteur" class="text-xl font-semibold"></h3>
+                <button id="fermerLecteur" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <video id="videoPlayer" class="w-full h-64 md:h-96 bg-black rounded" controls>
+                    <source src="" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture vidéo.
+                </video>
+                <p id="descLecteur" class="mt-4 text-gray-600"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/script/adminVideo.js"></script>
+</body>
+</html>
