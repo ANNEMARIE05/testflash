@@ -76,7 +76,7 @@
             position: relative;
         }
 
-        .dropdown-menu {
+        .menuDrop {
             display: none;
             position: absolute;
             top: 100%;
@@ -90,11 +90,11 @@
             overflow-y: auto;
         }
 
-        .dropdown-menu.show {
+        .menuDrop.show {
             display: block;
         }
 
-        .dropdown-item {
+        .itemDrop {
             display: flex;
             align-items: center;
             padding: 12px 16px;
@@ -103,22 +103,22 @@
             transition: background-color 0.2s;
         }
 
-        .dropdown-item:hover {
+        .itemDrop:hover {
             background: #4b5563;
         }
 
-        .dropdown-item:last-child {
+        .itemDrop:last-child {
             border-bottom: none;
         }
 
-        .dropdown-item img {
+        .itemDrop img {
             width: 24px;
             height: 24px;
             margin-right: 12px;
             border-radius: 4px;
         }
 
-        .platChoice input[type="radio"]:checked + div {
+        .choixPlat input[type="radio"]:checked + div {
             border-color: #fbbf24;
             background: rgba(251, 191, 36, 0.1);
         }
@@ -132,7 +132,10 @@
             animation: spin 1s linear infinite;
         }
 
-        .navBar { transform: translateX(-100%); }
+        .navBar { 
+            transform: translateX(-100%); 
+            transition: transform 0.3s ease;
+        }
         .navBar.open { transform: translateX(0); }
 
         @media (min-width: 1024px) {
@@ -141,6 +144,32 @@
 
         .etap { display: none; }
         .etap.actif { display: block; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modalContent {
+            background: #1f2937;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            margin: 20px;
+        }
     </style>
     <script>
         tailwind.config = {
@@ -166,27 +195,27 @@
     <div id="masque" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
     
     <div class="flex h-screen">
-        <aside id="navLat" class="navBar bg-gray-800 text-white w-64 fixed lg:relative h-full transition-transform duration-300 z-50">
+        <aside id="navLat" class="navBar bg-gray-800 text-white w-64 fixed lg:relative h-full z-50">
             <div class="p-4 lg:p-6 border-b border-bleuP">
                 <div class="flex items-center justify-between mb-3 lg:mb-4">
                     <div class="flex items-center">
-                        <div class="w-8 h-8 lg:w-12 lg:h-12 bg-gradient-to-r from-jauneA to-yellow-300 rounded-full flex items-center justify-center mr-2 lg:mr-3 icAnim">
-                            <i class="fas fa-user text-bleuF text-sm lg:text-xl"></i>
+                        <div class="w-12 h-12 bg-gradient-to-r from-jauneA to-yellow-300 rounded-full flex items-center justify-center mr-2 lg:mr-3 icAnim">
+                            <i class="fas fa-user text-bleuF text-xl"></i>
                         </div>
                         <div>
-                            <h3 class="font-semibold text-sm lg:text-base">Hello Yao</h3>
-                            <p class="text-xs lg:text-sm text-gray-300">Solde: 45,000 XOF</p>
+                            <h3 class="font-semibold text-base">Hello Yao</h3>
+                            <p class="text-sm text-gray-300">Solde: 45,000 XOF</p>
                         </div>
                     </div>
-                    <button id="btnFerm" class="lg:hidden text-white hover:text-gray-300 text-lg lg:text-xl">
+                    <button id="btnFerm" class="lg:hidden text-red-500 hover:text-red-400 text-lg lg:text-xl">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <div class="flex gap-1 lg:gap-2">
-                    <button onclick="allerPage('dashboardRetrait.html')" class="bg-gradient-to-r from-rougeP to-red-700 hover:from-red-700 hover:to-red-800 px-2 lg:px-3 py-1 rounded text-xs lg:text-sm flex-1 btnAnim">
+                    <button onclick="allerPage('dashboardRetrait.html')" class="bg-gradient-to-r from-rougeP to-red-700 hover:from-red-700 hover:to-red-800 px-3 py-1 rounded text-sm flex-1 btnAnim">
                         <i class="fas fa-money-bill-wave mr-1"></i> Retrait
                     </button>
-                    <button onclick="allerPage('dashboardDepot.html')" class="bg-gradient-to-r from-vertP to-green-700 hover:from-green-700 hover:to-green-800 px-2 lg:px-3 py-1 rounded text-xs lg:text-sm flex-1 btnAnim">
+                    <button onclick="allerPage('dashboardDepot.html')" class="bg-gradient-to-r from-vertP to-green-700 hover:from-green-700 hover:to-green-800 px-3 py-1 rounded text-sm flex-1 btnAnim">
                         <i class="fas fa-dollar-sign mr-1"></i> Dépôt
                     </button>
                 </div>
@@ -194,32 +223,32 @@
             
             <nav class="p-3 lg:p-4">
                 <ul class="space-y-1 lg:space-y-2">
-                    <li><a href="dashboardUser.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
-                        <i class="fas fa-home mr-2 lg:mr-3 text-sm lg:text-base"></i> Dashboard
+                    <li><a href="dashboardUser.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
+                        <i class="fas fa-home mr-3 text-base"></i> Dashboard
                     </a></li>
-                    <li><a href="dashboardDepot.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
-                        <i class="fas fa-plus-circle mr-2 lg:mr-3"></i> Dépôt
+                    <li><a href="dashboardDepot.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
+                        <i class="fas fa-plus-circle mr-3"></i> Dépôt
                     </a></li>
-                    <li><a href="dashboardRetrait.html" class="flex items-center p-2 lg:p-3 rounded bg-bleuP transition-colors text-sm lg:text-base">
-                        <i class="fas fa-minus-circle mr-2 lg:mr-3"></i> Retrait
+                    <li><a href="dashboardRetrait.html" class="flex items-center p-3 rounded bg-bleuP transition-colors text-base">
+                        <i class="fas fa-minus-circle mr-3"></i> Retrait
                     </a></li>
-                    <li><a href="dashboardTransaction.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
-                        <i class="fas fa-list-alt mr-2 lg:mr-3"></i> Mes Transactions
+                    <li><a href="dashboardTransaction.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
+                        <i class="fas fa-list-alt mr-3"></i> Mes Transactions
                     </a></li>
-                    <li><a href="dashboardPronostic.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
-                        <i class="fas fa-futbol mr-2 lg:mr-3"></i> Pronostics
+                    <li><a href="dashboardPronostic.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
+                        <i class="fas fa-futbol mr-3"></i> Pronostics
                     </a></li>
-                    <li><a href="dashboardVideo.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
-                        <i class="fas fa-video mr-2 lg:mr-3 text-sm lg:text-base"></i> Vidéo
+                    <li><a href="dashboardVideo.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
+                        <i class="fas fa-video mr-3 text-base"></i> Vidéo
                     </a></li>
-                    <li><a href="dashboardBonus.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
-                        <i class="fas fa-gift mr-2 lg:mr-3 text-sm lg:text-base"></i> Bonus
+                    <li><a href="dashboardBonus.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
+                        <i class="fas fa-gift mr-3 text-base"></i> Bonus
                     </a></li>
-                    <li><a href="dashboardProfile.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
-                        <i class="fas fa-user-cog mr-2 lg:mr-3"></i> Profil
+                    <li><a href="dashboardProfile.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
+                        <i class="fas fa-user-cog mr-3"></i> Profil
                     </a></li>
-                    <li><a href="#" id="btnDeco" class="flex items-center p-2 lg:p-3 rounded hover:bg-red-600 transition-colors mt-6 lg:mt-8 text-sm lg:text-base">
-                        <i class="fas fa-sign-out-alt mr-2 lg:mr-3 text-sm lg:text-base"></i> Déconnexion
+                    <li><a href="#" id="btnDeco" class="flex items-center p-3 rounded hover:bg-red-600 transition-colors mt-6 lg:mt-8 text-base">
+                        <i class="fas fa-sign-out-alt mr-3 text-base"></i> Déconnexion
                     </a></li>
                 </ul>
             </nav>
@@ -235,7 +264,7 @@
                 </div>
                 <div class="flex items-center space-x-2 lg:space-x-4">
                     <div class="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center">
-                        <a href="/users/dashboardProfile.html"><i class="fas fa-user text-white text-sm"></i></a>
+                        <a href="dashboardProfile.html"><i class="fas fa-user text-white text-sm"></i></a>
                     </div>
                 </div>
             </header>
@@ -244,7 +273,7 @@
                 <div class="max-w-6xl mx-auto">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-2">
-                            <div class="bg-gray-800 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl border border-gray-700">
+                            <div class="bg-gray-800 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl border border-gray-700 cardRet">
                                 
                                 <div id="etap1" class="etap actif">
                                     <div class="text-center mb-6 lg:mb-8">
@@ -309,22 +338,22 @@
                                             </div>
                                             
                                             <div class="space-y-3 lg:space-y-4">
-                                                <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                                                <div class="flex flex-row sm:items-center gap-2">
                                                     <span class="text-white font-semibold min-w-20">Montant :</span>
                                                     <div class="flex items-center gap-2">
-                                                        <input type="number" id="montantAff" class="w-24 lg:w-32 px-2 lg:px-3 py-1 lg:py-2 bg-gray-600 border border-gray-500 rounded-lg text-white text-center font-bold text-sm lg:text-base" readonly>
+                                                        <p id="montantAff" class="font-bold text-white text-sm lg:text-base"></p>
                                                         <span class="text-white">FCFA</span>
                                                     </div>
                                                 </div>
                                                 
-                                                <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                                                <div class="flex flex-row sm:items-center gap-2">
                                                     <span class="text-white font-semibold min-w-20">Ville :</span>
-                                                    <input type="text" id="villeAff" class="flex-1 px-2 lg:px-3 py-1 lg:py-2 bg-gray-600 border border-gray-500 rounded-lg text-white text-sm lg:text-base" readonly>
+                                                    <p id="villeAff" class="font-bold text-white text-sm lg:text-base"></p>
                                                 </div>
                                                 
-                                                <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                                                <div class="flex flex-row sm:items-center gap-2">
                                                     <span class="text-white font-semibold min-w-20">Rue :</span>
-                                                    <input type="text" id="rueAff" class="flex-1 px-2 lg:px-3 py-1 lg:py-2 bg-gray-600 border border-gray-500 rounded-lg text-white text-sm lg:text-base" readonly>
+                                                    <p id="rueAff" class="font-bold text-white text-sm lg:text-base"></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -336,11 +365,6 @@
                                                 <span id="chrono" class="text-red-400 font-bold text-lg lg:text-2xl">20:00</span>
                                             </div>
                                         </div>
-    
-                                        <button id="btnCoordRecu" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 lg:py-4 px-4 lg:px-6 rounded-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-sm lg:text-base mb-6">
-                                            <i class="fas fa-check mr-2"></i>
-                                            Coordonnées reçues avec succès
-                                        </button>
 
                                         <div class="bg-gray-700 rounded-xl p-4 lg:p-6">
                                             <h3 class="text-lg lg:text-xl font-bold text-white mb-4 lg:mb-6">Finaliser le Retrait</h3>
@@ -369,31 +393,31 @@
                                                 <div>
                                                     <label class="block text-xs lg:text-sm font-medium text-gray-300 mb-2">Méthode de Paiement</label>
                                                     <div class="dropdown">
-                                                        <div id="btn" class="w-full px-3 lg:px-4 py-2 lg:py-3 bg-gray-600 border border-gray-500 rounded-xl text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all flex items-center justify-between text-sm lg:text-base">
+                                                        <div id="btnDrop" class="w-full px-3 lg:px-4 py-2 lg:py-3 bg-gray-600 border border-gray-500 rounded-xl text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all flex items-center justify-between text-sm lg:text-base">
                                                             <div class="flex items-center">
-                                                                <img id="selectedImg" src="" alt="" class="w-6 h-6 mr-3 hidden">
-                                                                <span id="opt">Sélectionnez une méthode</span>
+                                                                <img id="imgSel" src="" alt="" class="w-6 h-6 mr-3 hidden">
+                                                                <span id="optSel">Sélectionnez une méthode</span>
                                                             </div>
                                                             <i class="fas fa-chevron-down"></i>
                                                         </div>
-                                                        <div id="liste" class="dropdown-menu">
-                                                            <div class="dropdown-item" data-value="orange-money" data-img="/assets/img/orange.png">
+                                                        <div id="listeDrop" class="menuDrop">
+                                                            <div class="itemDrop" data-value="orange-money" data-img="/assets/img/orange.png">
                                                                 <img src="/assets/img/orange.png" alt="Orange Money">
                                                                 <span>Orange Money</span>
                                                             </div>
-                                                            <div class="dropdown-item" data-value="mtn-money" data-img="/assets/img/mtn-money.png">
+                                                            <div class="itemDrop" data-value="mtn-money" data-img="/assets/img/mtn-money.png">
                                                                 <img src="/assets/img/mtn-money.png" alt="MTN Money">
                                                                 <span>MTN Money</span>
                                                             </div>
-                                                            <div class="dropdown-item" data-value="moov-money" data-img="/assets/img/moov.png">
+                                                            <div class="itemDrop" data-value="moov-money" data-img="/assets/img/moov.png">
                                                                 <img src="/assets/img/moov.png" alt="Moov Money">
                                                                 <span>Moov Money</span>
                                                             </div>
-                                                            <div class="dropdown-item" data-value="wave" data-img="/assets/img/wave.png">
+                                                            <div class="itemDrop" data-value="wave" data-img="/assets/img/wave.png">
                                                                 <img src="/assets/img/wave.png" alt="Wave">
                                                                 <span>Wave</span>
                                                             </div>
-                                                            <div class="dropdown-item" data-value="solde-bonus" data-img="/assets/img/log.jpeg">
+                                                            <div class="itemDrop" data-value="solde-bonus" data-img="/assets/img/log.jpeg">
                                                                 <img src="/assets/img/log.jpeg" alt="solde Bonus">
                                                                 <span>Solde Bonus</span>
                                                             </div>
@@ -409,7 +433,7 @@
                                                 <div>
                                                     <label class="block text-xs lg:text-sm font-semibold text-gray-300 mb-2 lg:mb-3">Plateforme de Destination</label>
                                                     <div class="grid grid-cols-2 gap-3 lg:gap-4">
-                                                        <label class="platChoice cursor-pointer">
+                                                        <label class="choixPlat cursor-pointer">
                                                             <input type="radio" name="platDest" value="1xbet" class="sr-only">
                                                             <div class="p-3 lg:p-4 border-2 border-gray-600 rounded-xl hover:border-yellow-400 transition-all bg-gray-600 hover:bg-gray-500 flex justify-center items-center space-x-2 lg:space-x-3">
                                                                 <img src="/assets/img/1xbet-icon.png" class="w-8 h-8 lg:w-10 lg:h-10 bg-blue-600 rounded-lg" alt="">
@@ -417,7 +441,7 @@
                                                             </div>
                                                         </label>
                                                         
-                                                        <label class="platChoice cursor-pointer">
+                                                        <label class="choixPlat cursor-pointer">
                                                             <input type="radio" name="platDest" value="melbet" class="sr-only">
                                                             <div class="p-3 lg:p-4 border-2 border-gray-600 rounded-xl hover:border-yellow-400 transition-all bg-gray-600 hover:bg-gray-500 flex justify-center items-center space-x-2 lg:space-3">
                                                                 <img src="/assets/img/melbet.jpg" class="w-8 h-8 lg:w-10 lg:h-10 bg-yellow-600 rounded-lg" alt="">
@@ -439,72 +463,103 @@
                                 <div id="etapSucces" class="etap">
                                     <div class="text-center py-8 lg:py-12">
                                         <div class="w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                                            <i class="fas fa-check text-white text-2xl lg:text-3xl"></i>
-                                        </div>
-                                        <h2 class="text-xl lg:text-3xl font-bold text-white mb-4">Retrait Effectué avec Succès!</h2>
-                                        <p class="text-sm lg:text-base text-gray-400 mb-6">Votre demande de retrait a été traitée avec succès</p>
-                                        <button onclick="location.reload()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-all transform hover:scale-105">
-                                            <i class="fas fa-redo mr-2"></i>
-                                            Nouveau Retrait
-                                        </button>
+                                        <i class="fas fa-check text-white text-2xl lg:text-3xl"></i>
                                     </div>
+                                    <h2 class="text-lg lg:text-2xl font-bold text-white mb-4">Retrait Effectué avec Succès!</h2>
+                                    <p class="text-sm lg:text-base text-gray-400 mb-6">Votre transaction a été traitée avec succès</p>
+                                    
+                                    <div class="bg-green-900/30 border border-green-500 rounded-xl p-4 lg:p-6 mb-6">
+                                        <div class="flex items-center justify-center mb-4">
+                                            <i class="fas fa-money-bill-wave text-green-400 hidden md:flex text-xl mr-3"></i>
+                                            <span class="text-white font-bold text-lg">Montant retiré: </span>
+                                            <span id="montantSucces" class="text-green-400 font-bold text-xl ml-2"></span>
+                                            <span class="text-white font-bold text-xl ml-1">FCFA</span>
+                                        </div>
+                                        <p class="text-center text-white text-sm lg:text-base">
+                                            Vous recevrez une confirmation par SMS dans quelques minutes.
+                                        </p>
+                                    </div>
+
+                                    <button onclick="retourDashboard()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 lg:py-4 px-6 lg:px-8 rounded-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-sm lg:text-base">
+                                        <i class="fas fa-home mr-2"></i>
+                                        Retour au Dashboard
+                                    </button>
                                 </div>
+                            </div>
                             </div>
                         </div>
 
-                        <div class="space-y-6">
-                            <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-2xl">
-                                <div class="flex items-center space-x-3 mb-6">
-                                    <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-info-circle text-white"></i>
+                        <div class="lg:col-span-1">
+                            <div class="space-y-6">
+                                <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-2xl">
+                                    <div class="flex items-center space-x-3 mb-6">
+                                        <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-info-circle text-white"></i>
+                                        </div>
+                                        <h3 class="text-xl font-bold text-white">Informations Importantes</h3>
                                     </div>
-                                    <h3 class="text-xl font-bold text-white">Informations Importantes</h3>
+        
+                                    <div class="space-y-4">
+                                        <div class="flex items-start space-x-3">
+                                            <i class="fas fa-clock text-yellow-400 mt-1"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-white mb-1">Délai de Traitement</h4>
+                                                <p class="text-sm text-gray-400">Les retraits sont traités sous 24h ouvrables</p>
+                                            </div>
+                                        </div>
+        
+                                        <div class="flex items-start space-x-3">
+                                            <i class="fas fa-coins text-yellow-400 mt-1"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-white mb-1">Montant Minimum</h4>
+                                                <p class="text-sm text-gray-400">Retrait minimum: 1,000 FCFA</p>
+                                            </div>
+                                        </div>
+        
+                                        <div class="flex items-start space-x-3">
+                                            <i class="fas fa-shield-alt text-yellow-400 mt-1"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-white mb-1">Sécurité</h4>
+                                                <p class="text-sm text-gray-400">Toutes les transactions sont sécurisées</p>
+                                            </div>
+                                        </div>
+        
+                                        <div class="flex items-start space-x-3">
+                                            <i class="fas fa-headset text-yellow-400 mt-1"></i>
+                                            <div>
+                                                <h4 class="font-semibold text-white mb-1">Support</h4>
+                                                <p class="text-sm text-gray-400">Assistance 24h/24 et 7j/7</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-    
-                                <div class="space-y-4">
-                                    <div class="flex items-start space-x-3">
-                                        <i class="fas fa-clock text-yellow-400 mt-1"></i>
-                                        <div>
-                                            <h4 class="font-semibold text-white mb-1">Délai de Traitement</h4>
-                                            <p class="text-sm text-gray-400">Les retraits sont traités sous 24h ouvrables</p>
+        
+                                <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-6 border border-green-500/20">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-shield-alt text-white"></i>
                                         </div>
+                                        <h4 class="text-lg font-bold text-green-400">Sécurité Garantie</h4>
                                     </div>
-    
-                                    <div class="flex items-start space-x-3">
-                                        <i class="fas fa-coins text-yellow-400 mt-1"></i>
-                                        <div>
-                                            <h4 class="font-semibold text-white mb-1">Montant Minimum</h4>
-                                            <p class="text-sm text-gray-400">Retrait minimum: 1,000 FCFA</p>
-                                        </div>
-                                    </div>
-    
-                                    <div class="flex items-start space-x-3">
-                                        <i class="fas fa-shield-alt text-yellow-400 mt-1"></i>
-                                        <div>
-                                            <h4 class="font-semibold text-white mb-1">Sécurité</h4>
-                                            <p class="text-sm text-gray-400">Toutes les transactions sont sécurisées</p>
-                                        </div>
-                                    </div>
-    
-                                    <div class="flex items-start space-x-3">
-                                        <i class="fas fa-headset text-yellow-400 mt-1"></i>
-                                        <div>
-                                            <h4 class="font-semibold text-white mb-1">Support</h4>
-                                            <p class="text-sm text-gray-400">Assistance 24h/24 et 7j/7</p>
-                                        </div>
-                                    </div>
+                                    <p class="text-sm text-gray-300">Toutes vos transactions sont cryptées et sécurisées. Vos données personnelles sont protégées selon les standards internationaux.</p>
                                 </div>
                             </div>
-    
-                            <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-6 border border-green-500/20">
-                                <div class="flex items-center space-x-3 mb-3">
-                                    <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-shield-alt text-white"></i>
-                                    </div>
-                                    <h4 class="text-lg font-bold text-green-400">Sécurité Garantie</h4>
-                                </div>
-                                <p class="text-sm text-gray-300">Toutes vos transactions sont cryptées et sécurisées. Vos données personnelles sont protégées selon les standards internationaux.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal de succès -->
+                <div id="modalSucces" class="modal">
+                    <div class="modalContent">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-check text-white text-2xl"></i>
                             </div>
+                            <h3 class="text-xl font-bold text-white mb-4">Retrait Effectué!</h3>
+                            <p id="messageSucces" class="text-gray-300 mb-6 text-sm lg:text-base"></p>
+                            <button onclick="fermerModal()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-all">
+                                Fermer
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -513,153 +568,177 @@
     </div>
 
     <script>
-        const btnMenu = document.getElementById('btnMenu');
-        const btnFerm = document.getElementById('btnFerm');
-        const navLat = document.getElementById('navLat');
-        const masque = document.getElementById('masque');
+        let etapActuelle = 1;
+        let chronoInterval;
+        let tempsRestant = 1200; // 20 minutes en secondes
 
-        function ouvrirNav() {
-            navLat.classList.add('open');
+        // Gestion du menu mobile
+        document.getElementById('btnMenu').addEventListener('click', function() {
+            const nav = document.getElementById('navLat');
+            const masque = document.getElementById('masque');
+            nav.classList.add('open');
             masque.classList.remove('hidden');
-        }
+        });
 
-        function fermerNav() {
-            navLat.classList.remove('open');
+        document.getElementById('btnFerm').addEventListener('click', function() {
+            fermerMenu();
+        });
+
+        document.getElementById('masque').addEventListener('click', function() {
+            fermerMenu();
+        });
+
+        function fermerMenu() {
+            const nav = document.getElementById('navLat');
+            const masque = document.getElementById('masque');
+            nav.classList.remove('open');
             masque.classList.add('hidden');
         }
 
-        btnMenu.addEventListener('click', ouvrirNav);
-        btnFerm.addEventListener('click', fermerNav);
-        masque.addEventListener('click', fermerNav);
+        // Gestion du dropdown
+        document.getElementById('btnDrop').addEventListener('click', function() {
+            document.getElementById('listeDrop').classList.toggle('show');
+        });
 
-        // Gestion des étapes
-        function afficherEtape(etapeId) {
-            document.querySelectorAll('.etap').forEach(etap => {
-                etap.classList.remove('actif');
+        document.querySelectorAll('.itemDrop').forEach(item => {
+            item.addEventListener('click', function() {
+                const value = this.dataset.value;
+                const img = this.dataset.img;
+                const text = this.textContent.trim();
+                
+                document.getElementById('optSel').textContent = text;
+                document.getElementById('imgSel').src = img;
+                document.getElementById('imgSel').classList.remove('hidden');
+                document.getElementById('listeDrop').classList.remove('show');
             });
-            document.getElementById(etapeId).classList.add('actif');
-        }
+        });
+
+        // Fermer dropdown si clic à l'extérieur
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                document.getElementById('listeDrop').classList.remove('show');
+            }
+        });
 
         // Gestion du formulaire de demande
         document.getElementById('formDem').addEventListener('submit', function(e) {
             e.preventDefault();
+            
             const montant = document.getElementById('montant').value;
-            const plat = document.getElementById('plat').value;
-
-            if (!montant || !plat || montant < 1000) {
+            const plateforme = document.getElementById('plat').value;
+            
+            if (!montant || !plateforme || montant < 1000) {
                 alert('Veuillez remplir tous les champs et respecter le montant minimum de 1000 FCFA');
                 return;
             }
-
+            
             // Passer à l'étape d'attente
-            afficherEtape('etapAtt');
-
-            // Simuler l'attente de 3 secondes puis afficher les coordonnées
+            changerEtape('etapAtt');
+            
+            // Simuler l'attente de 3 minutes
             setTimeout(() => {
-                document.getElementById('nomPlat').textContent = plat.toUpperCase();
-                document.getElementById('montantAff').value = montant;
-                document.getElementById('montantFin').value = montant;
-                document.getElementById('villeAff').value = 'Abidjan, Cocody';
-                document.getElementById('rueAff').value = 'Rue des Jardins, Riviera 2';
-                
-                afficherEtape('etapCoord');
-                demarrerChrono();
-            }, 3000);
+                afficherCoordonnees(montant, plateforme);
+            }, 5000); // 5 secondes pour la démo, normalement 3 minutes
         });
 
-        // Gestion du chronomètre
-        let tempsRestant = 1200; // 20 minutes en secondes
-        let intervalChrono;
+        function changerEtape(nouvelleEtape) {
+            document.querySelectorAll('.etap').forEach(etap => {
+                etap.classList.remove('actif');
+            });
+            document.getElementById(nouvelleEtape).classList.add('actif');
+        }
+
+        function afficherCoordonnees(montant, plateforme) {
+            // Coordonnées simulées
+            const coordonnees = {
+                ville: "Abidjan",
+                rue: "Boulevard de la République, près de la station Shell"
+            };
+            
+            document.getElementById('montantAff').textContent = montant;
+            document.getElementById('montantFin').value = montant;
+            document.getElementById('villeAff').textContent = coordonnees.ville;
+            document.getElementById('rueAff').textContent = coordonnees.rue;
+            document.getElementById('nomPlat').textContent = plateforme.toUpperCase();
+            
+            changerEtape('etapCoord');
+            demarrerChrono();
+        }
 
         function demarrerChrono() {
-            intervalChrono = setInterval(() => {
+            chronoInterval = setInterval(() => {
                 const minutes = Math.floor(tempsRestant / 60);
                 const secondes = tempsRestant % 60;
+                
                 document.getElementById('chrono').textContent = 
                     `${minutes.toString().padStart(2, '0')}:${secondes.toString().padStart(2, '0')}`;
                 
                 if (tempsRestant <= 0) {
-                    clearInterval(intervalChrono);
+                    clearInterval(chronoInterval);
                     alert('Temps écoulé! Veuillez recommencer votre demande.');
                     location.reload();
                 }
+                
                 tempsRestant--;
             }, 1000);
         }
 
-        // Gestion du dropdown des méthodes de paiement
-        const btnDropdown = document.getElementById('btn');
-        const listeDropdown = document.getElementById('liste');
-        const optionSelectionnee = document.getElementById('opt');
-        const imageSelectionnee = document.getElementById('selectedImg');
-
-        btnDropdown.addEventListener('click', function() {
-            listeDropdown.classList.toggle('show');
-        });
-
-        document.querySelectorAll('.dropdown-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const valeur = this.getAttribute('data-value');
-                const image = this.getAttribute('data-img');
-                const texte = this.textContent.trim();
-
-                optionSelectionnee.textContent = texte;
-                imageSelectionnee.src = image;
-                imageSelectionnee.classList.remove('hidden');
-                listeDropdown.classList.remove('show');
-            });
-        });
-
-        // Fermer le dropdown si on clique ailleurs
-        document.addEventListener('click', function(e) {
-            if (!btnDropdown.contains(e.target) && !listeDropdown.contains(e.target)) {
-                listeDropdown.classList.remove('show');
-            }
-        });
-
-        // Gestion du bouton "Coordonnées reçues"
-        document.getElementById('btnCoordRecu').addEventListener('click', function() {
-            this.style.display = 'none';
-            document.getElementById('formRet').style.display = 'block';
-        });
-
-        // Gestion du formulaire de retrait final
+        // Gestion du formulaire de retrait
         document.getElementById('formRet').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            const identifiant = document.getElementById('id').value;
             const code = document.getElementById('code').value;
-            const tel = document.getElementById('tel').value;
-            const platDest = document.querySelector('input[name="platDest"]:checked');
-            const methodePaiement = document.getElementById('opt').textContent;
-
-            if (!code || !tel || !platDest || methodePaiement === 'Sélectionnez une méthode') {
+            const montant = document.getElementById('montantFin').value;
+            const telephone = document.getElementById('tel').value;
+            const methodePaiement = document.getElementById('optSel').textContent;
+            const plateforme = document.querySelector('input[name="platDest"]:checked');
+            
+            if (!identifiant || !code || !montant || !telephone || 
+                methodePaiement === 'Sélectionnez une méthode' || !plateforme) {
                 alert('Veuillez remplir tous les champs obligatoires');
                 return;
             }
-
-            clearInterval(intervalChrono);
-            afficherEtape('etapSucces');
+            
+            // Arrêter le chrono
+            clearInterval(chronoInterval);
+            
+            // Afficher le modal de succès
+            const message = `Votre retrait de ${montant} FCFA a été effectué avec succès. Vous recevrez une confirmation par SMS.`;
+            document.getElementById('messageSucces').textContent = message;
+            document.getElementById('montantSucces').textContent = montant;
+            document.getElementById('modalSucces').classList.add('show');
+    
+            // Passer à l'étape de succès après fermeture du modal
+            setTimeout(() => {
+                changerEtape('etapSucces');
+            }, 100);
         });
+
+        function fermerModal() {
+            document.getElementById('modalSucces').classList.remove('show');
+        }
+
+        function retourDashboard() {
+            window.location.href = 'dashboardUser.html';
+        }
+
+        function allerPage(page) {
+            window.location.href = page;
+        }
 
         // Gestion de la déconnexion
         document.getElementById('btnDeco').addEventListener('click', function(e) {
             e.preventDefault();
-            if (confirm('Voulez-vous vraiment vous déconnecter ?')) {
-                window.location.href = 'login.html';
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                window.location.href = 'index.html';
             }
         });
 
-        // Fonction pour naviguer vers d'autres pages
-        function allerPage(url) {
-            window.location.href = url;
-        }
-
-        // Animation d'entrée des cartes
+        // Animation au chargement
         window.addEventListener('load', function() {
             document.querySelectorAll('.cardRet').forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.animationDelay = `${index * 0.2}s`;
-                }, 100);
+                card.style.animationDelay = `${index * 0.2}s`;
             });
         });
     </script>
