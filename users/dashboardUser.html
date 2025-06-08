@@ -3,30 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Utilisateur</title>
+    <title>Flash Service - Dashboard</title>
+    <link rel="shortcut icon" href="/assets/img/log.jpeg" type="image/jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
-        * {
-            font-family: 'Inter', sans-serif;
-        }
+        * { font-family: 'Inter', sans-serif; }
         
         @keyframes glissementHaut {
             from { transform: translateY(50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes rebondEchelle {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        @keyframes scintillement {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
         }
         
         @keyframes flottement {
@@ -34,20 +21,8 @@
             50% { transform: translateY(-10px); }
         }
         
-        .cardStats {
-            animation: glissementHaut 0.8s ease-out forwards;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .iconeAnim {
-            animation: rebondEchelle 1s ease-out;
-            transition: transform 0.4s ease;
-        }
-        
-        .iconeAnim:hover {
-            transform: rotate(360deg) scale(1.2);
-            animation: flottement 2s ease-in-out infinite;
+        .cardStat {
+            animation: glisHaut 0.8s ease-out forwards;
         }
         
         .btnAnim {
@@ -67,90 +42,49 @@
             transition: left 0.6s ease;
         }
         
-        .btnAnim:hover::before {
-            left: 100%;
-        }
+        .btnAnim:hover::before { left: 100%; }
+        .btnAnim:hover { transform: translateY(-2px); }
         
-        .btnAnim:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        
-        .cardSurvol:hover {
+        .cardSurv:hover {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 197, 253, 0.15));
             transform: scale(1.02);
             box-shadow: 0 8px 32px rgba(59, 130, 246, 0.2);
             border-color: rgba(59, 130, 246, 0.5);
         }
         
-        .texteDegrade {
-            background: linear-gradient(135deg, #06b6d4, #8b5cf6, #f59e0b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        .logoEq { width: 40px; height: 40px; object-fit: contain; }
         
-        .logoEquipe {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-        }
-        
-        .cardProno {
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-        }
-        
-        .cardProno:hover {
+        .cardPron:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
-        .sidebarMasque {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 40;
+        .masqSide {
             display: none;
         }
 
-        .sidebarMasque.actif {
+        .masqSide.actif {
             display: block;
         }
 
-        .btnBonusClique {
+        .btnBonusClick {
             background: linear-gradient(to right, #059669, #047857) !important;
         }
         
-        @media (max-width: 768px) {
-            .cardStats {
-                padding: 0.75rem;
-            }
-            
-            .cardProno {
-                padding: 1rem;
-            }
-            
-            .texteProno {
-                font-size: 0.75rem;
-            }
-            
-            .titreProno {
-                font-size: 0.875rem;
-            }
+        .barreNav {
+            transform: translateX(-100%);
+        }
+        
+        .barreNav.ouvert {
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 640px) {
+            .logoEq { width: 32px; height: 32px; }
         }
 
-        @media (max-width: 1024px) {
-            .barreNavigation {
-                transform: translateX(-100%);
-            }
-            
-            .barreNavigation.ouvert {
-                transform: translateX(0);
-            }
+        @media (min-width: 1024px) {
+            .barreNav { transform: translateX(0); }
         }
     </style>
     <script>
@@ -158,307 +92,291 @@
             theme: {
                 extend: {
                     colors: {
-                        'bleuPrincipal': '#1e40af',
-                        'bleuFonce': '#1e3a8a',
+                        'bleuPrinc': '#1e40af',
+                        'bleuFc': '#1e3a8a',
                         'bleuDash': '#3b82f6',
-                        'bleuClair': '#dbeafe',
-                        'jauneAccent': '#fbbf24',
-                        'jauneClair': '#fef3c7',
-                        'vertParis': '#059669',
-                        'rougeParis': '#dc2626',
-                        'violetParis': '#7c3aed'
+                        'jauneAcc': '#fbbf24',
+                        'vertPar': '#059669'
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-gradient-to-br from-indigo-950 via-purple-950 to-cyan-950 font-sans min-h-screen overflow-x-hidden">
-    <div id="masqueSidebar" class="sidebarMasque"></div>
+<body class="bg-gray-900 font-sans min-h-screen overflow-x-hidden">
+    <div id="masqSide" class="masqSide fixed inset-0 bg-black/50 z-40"></div>
     
     <div class="flex h-screen">
-        <aside id="barreNavigationLaterale" class="barreNavigation bg-gradient-to-b from-bleuFonce via-indigo-900 to-slate-900 text-white w-64 fixed lg:relative h-full transition-transform duration-300 z-50">
-            <div class="p-6 border-b border-bleuPrincipal">
-                <div class="flex items-center justify-between mb-4">
+        <aside id="barreNavLat" class="barreNav bg-gray-800 text-white w-64 fixed lg:relative h-full transition-transform duration-300 z-50">
+            <div class="p-4 lg:p-6 border-b border-bleuPrinc">
+                <div class="flex items-center justify-between mb-3 lg:mb-4">
                     <div class="flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-r from-jauneAccent to-yellow-300 rounded-full flex items-center justify-center mr-3 iconeFlottante">
-                            <i class="fas fa-user text-bleuFonce text-xl"></i>
+                        <div class="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-jauneAcc to-yellow-300 rounded-full flex items-center justify-center mr-2 lg:mr-3 iconeFlottante">
+                            <i class="fas fa-user text-bleuFc text-lg lg:text-xl"></i>
                         </div>
                         <div>
-                            <h3 class="font-semibold">Hello Yao</h3>
-                            <p class="text-sm text-gray-300">Solde: 45,000 XOF</p>
+                            <h3 class="font-semibold text-sm lg:text-base">Hello Yao</h3>
+                            <p class="text-xs lg:text-sm text-gray-300">Solde: 45,000 XOF</p>
                         </div>
                     </div>
-                    <button id="btnFermerBarreLaterale" class="lg:hidden text-white hover:text-gray-300 text-xl">
+                    <button id="btnFermBarLat" class="lg:hidden text-white hover:text-gray-300 text-xl">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <div class="flex gap-2">
-                    <button onclick="allerVersPage('dashboardRetrait.html')" class="bg-gradient-to-r from-rougeParis to-red-700 hover:from-red-700 hover:to-red-800 px-3 py-1 rounded text-sm flex-1 btnInteractif">
-                        <i class="fas fa-arrow-up mr-1"></i> Retrait
+                    <button onclick="allerPage('dashboardRetrait.html')" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-2 lg:px-3 py-1 rounded text-xs lg:text-sm flex-1 btnInteractif">
+                        <i class="fas fa-money-bill-wave mr-1"></i> Retrait
                     </button>
-                    <button onclick="allerVersPage('dashboardDepot.html')" class="bg-gradient-to-r from-vertParis to-green-700 hover:from-green-700 hover:to-green-800 px-3 py-1 rounded text-sm flex-1 btnInteractif">
-                        <i class="fas fa-arrow-down mr-1"></i> Dépôt
+                    <button onclick="allerPage('dashboardDepot.html')" class="bg-gradient-to-r from-vertPar to-green-700 hover:from-green-700 hover:to-green-800 px-2 lg:px-3 py-1 rounded text-xs lg:text-sm flex-1 btnInteractif">
+                        <i class="fas fa-dollar-sign mr-1"></i> Dépôt
                     </button>
                 </div>
             </div>
             
-            <nav class="p-4">
-                <ul class="space-y-2">
-                    <li><a href="dashboardUser.html" class="flex items-center p-3 rounded hover:bg-bleuPrincipal transition-colors bg-bleuPrincipal">
-                        <i class="fas fa-home mr-3"></i> Dashboard
+            <nav class="p-3 lg:p-4">
+                <ul class="space-y-1 lg:space-y-2">
+                    <li><a href="dashboardUser.html" class="flex items-center p-2 lg:p-3 rounded transition-colors bg-bleuPrinc text-sm lg:text-base">
+                        <i class="fas fa-home mr-2 lg:mr-3"></i> Dashboard
                     </a></li>
-                    <li><a href="dashboardDepot.html" class="flex items-center p-3 rounded hover:bg-bleuPrincipal transition-colors">
-                        <i class="fas fa-arrow-down mr-3"></i> Dépôt
+                    <li><a href="dashboardDepot.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-plus-circle mr-2 lg:mr-3"></i> Dépôt
                     </a></li>
-                    <li><a href="dashboardRetrait.html" class="flex items-center p-3 rounded hover:bg-bleuPrincipal transition-colors">
-                        <i class="fas fa-arrow-up mr-3"></i> Retrait
+                    <li><a href="dashboardRetrait.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-minus-circle mr-2 lg:mr-3"></i> Retrait
                     </a></li>
-                    <li><a href="dashboardTransaction.html" class="flex items-center p-3 rounded hover:bg-bleuPrincipal transition-colors">
-                        <i class="fas fa-exchange-alt mr-3"></i> Mes Transactions
+                    <li><a href="dashboardTransaction.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-list-alt mr-2 lg:mr-3"></i> Mes Transactions
                     </a></li>
-                    <li><a href="dashboardPronostic.html" class="flex items-center p-3 rounded hover:bg-bleuPrincipal transition-colors">
-                        <i class="fas fa-chart-line mr-3"></i> Pronostics
+                    <li><a href="dashboardPronostic.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-futbol mr-2 lg:mr-3"></i> Pronostics
                     </a></li>
-                    <li><a href="dashboardVideo.html" class="flex items-center p-3 rounded hover:bg-bleuPrincipal transition-colors">
-                        <i class="fas fa-video mr-3"></i> Vidéo
+                    <li><a href="dashboardVideo.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-video mr-2 lg:mr-3"></i> Vidéo
                     </a></li>
-                    <li><a href="dashboardBonus.html" class="flex items-center p-3 rounded hover:bg-bleuPrincipal transition-colors">
-                        <i class="fas fa-gift mr-3"></i> Bonus
+                    <li><a href="dashboardBonus.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-gift mr-2 lg:mr-3"></i> Bonus
                     </a></li>
-                    <li><a href="/auth/login.html" class="flex items-center p-3 rounded hover:bg-red-600 transition-colors mt-8">
-                        <i class="fas fa-sign-out-alt mr-3"></i> Déconnexion
+                    <li><a href="dashboardProfile.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-user-cog mr-2 lg:mr-3"></i> Profil
+                    </a></li>
+                    <li><a href="#" id="btnDeconnexion" class="flex items-center p-2 lg:p-3 rounded hover:bg-red-600 transition-colors mt-6 lg:mt-8 text-sm lg:text-base">
+                        <i class="fas fa-user mr-2 lg:mr-3"></i> Déconnexion
                     </a></li>
                 </ul>
             </nav>
         </aside>
 
         <div class="flex-1 flex flex-col w-full lg:w-auto">
-            <header class="bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 shadow-2xl border-b border-white/10 px-4 sm:px-6 py-4 flex items-center justify-between backdrop-blur-sm">
+            <header class="bg-gradient-to-r from-gray-900 to-gray-800 shadow-2xl border-b border-white/10 px-3 sm:px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between backdrop-blur-sm">
                 <div class="flex items-center">
-                    <button id="btnOuvrirMenuMobile" class="lg:hidden mr-4 text-white hover:text-jauneAccent transition-colors">
+                    <button id="btnOuvrMenuMob" class="lg:hidden mr-3 text-white hover:text-jauneAcc transition-colors">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
-                    <h1 class="text-lg sm:text-2xl font-bold text-white">Dashboard Utilisateur</h1>
+                    <h1 class="text-base sm:text-lg lg:text-2xl font-bold text-white">Dashboard Utilisateur</h1>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="relative">
-                        <i class="fas fa-bell text-white text-xl cursor-pointer hover:text-jauneAccent transition-colors iconeAnim"></i>
+                        <i class="fas fa-bell text-white text-lg lg:text-xl cursor-pointer hover:text-jauneAcc transition-colors"></i>
                     </div>
                 </div>
             </header>
 
-            <main class="flex-1 overflow-y-auto p-3 sm:p-6">
-                <div class="max-w-7xl mx-auto space-y-4 sm:space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-                        <div class="cardStats bg-gradient-to-br from-gray-900/90 to-gray-800/90 rounded-2xl p-4 sm:p-6 relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-jauneAccent/30 to-yellow-600/10"></div>
+            <main class="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6">
+                <div class="max-w-7xl mx-auto space-y-4 lg:space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6">
+                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
                             <div class="relative flex items-center justify-between">
                                 <div>
-                                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Solde Bonus</p>
-                                    <p class="text-xl sm:text-3xl font-bold text-jauneAccent">2,450.00 XOF</p>
-                                    <div class="flex items-center mt-2">
-                                        <i class="fas fa-arrow-up text-green-400 text-sm mr-1"></i>
-                                        <span class="text-green-400 text-xs sm:text-sm font-medium">+12.5%</span>
-                                    </div>
+                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Solde Bonus</p>
+                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-jauneAcc">2,450.00 XOF</p>
                                 </div>
-                                <div class="iconeAnim">
-                                    <i class="fas fa-wallet text-jauneAccent text-2xl sm:text-3xl"></i>
+                                <div class="icAnim">
+                                    <i class="fas fa-wallet text-jauneAcc text-xl lg:text-3xl"></i>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="cardStats bg-gradient-to-br from-gray-900/90 to-gray-800/90 rounded-2xl p-4 sm:p-6 relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/10"></div>
+                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
                             <div class="relative flex items-center justify-between">
                                 <div>
-                                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Pronostics Réussis</p>
-                                    <p class="text-xl sm:text-3xl font-bold text-green-400">92%</p>
-                                    <div class="flex items-center mt-2">
-                                        <i class="fas fa-trophy text-jauneAccent text-sm mr-1"></i>
-                                        <span class="text-gray-300 text-xs sm:text-sm">Cette semaine</span>
-                                    </div>
+                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Pronostics Réussis</p>
+                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-green-400">92%</p>
                                 </div>
-                                <div class="iconeAnim">
-                                    <i class="fas fa-chart-line text-green-400 text-2xl sm:text-3xl"></i>
+                                <div class="icAnim">
+                                    <i class="fas fa-chart-line text-green-400 text-xl lg:text-3xl"></i>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="cardStats bg-gradient-to-br from-gray-900/90 to-gray-800/90 rounded-2xl p-4 sm:p-6 relative overflow-hidden sm:col-span-2 lg:col-span-1">
-                            <div class="absolute inset-0 bg-gradient-to-r from-bleuDash/10 to-indigo-500/10"></div>
+                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden sm:col-span-2 lg:col-span-1 bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
                             <div class="relative flex items-center justify-between">
                                 <div>
-                                    <p class="text-gray-400 text-xs sm:text-sm font-medium">Bonus Récoltés</p>
-                                    <p class="text-xl sm:text-3xl font-bold text-bleuDash">15,750.00 XOF</p>
-                                    <div class="flex items-center mt-2">
-                                        <i class="fas fa-calendar text-bleuDash text-sm mr-1"></i>
-                                        <span class="text-gray-300 text-xs sm:text-sm">Ce mois</span>
-                                    </div>
+                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Bonus Récoltés</p>
+                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-bleuDash">15,750.00 XOF</p>
                                 </div>
-                                <div class="iconeAnim">
-                                    <i class="fas fa-gift text-bleuDash text-2xl sm:text-3xl"></i>
+                                <div class="icAnim">
+                                    <i class="fas fa-gift text-bleuDash text-xl lg:text-3xl"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
                         <div class="lg:col-span-2">
-                            <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-4 sm:p-6 backdrop-blur-xl border border-white/10">
-                                <div class="flex items-center justify-between mb-4 sm:mb-6">
-                                    <h3 class="text-base sm:text-xl font-bold text-white flex items-center titreProno">
-                                        <i class="fas fa-futbol text-bleuDash mr-2 sm:mr-3"></i>
+                            <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
+                                <div class="flex items-center justify-between mb-4 lg:mb-6">
+                                    <h3 class="text-sm sm:text-base lg:text-xl font-bold text-white flex items-center">
+                                        <i class="fas fa-futbol text-bleuDash mr-2 lg:mr-3"></i>
                                         Pronostics du Jour
                                     </h3>
-                                    <button id="btnVoirPronostics" class="bg-gradient-to-r from-bleuDash to-indigo-600 hover:from-indigo-600 hover:to-bleuDash text-white px-3 py-2 rounded-lg text-xs sm:text-sm btnAnim font-medium shadow-lg">
-                                        <i class="fas fa-eye mr-1 sm:mr-2"></i>Tous
+                                    <button id="btnVoirPron" class="bg-gradient-to-r from-bleuDash to-indigo-600 hover:from-indigo-600 hover:to-bleuDash text-white px-2 lg:px-3 py-1 lg:py-2 rounded-lg text-xs lg:text-sm btnAnim font-medium shadow-lg">
+                                        <i class="fas fa-eye mr-1 lg:mr-2"></i>Tous
                                     </button>
                                 </div>
                                 
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                                    <div class="cardProno bg-gradient-to-br from-cyan-900/60 to-blue-900/60 rounded-xl p-3 sm:p-5 border border-cyan-500/30 cardSurvol">
-                                        <div class="flex justify-between items-center mb-3 sm:mb-4">
+                                <div class="grid grid-cols-1 xl:grid-cols-2 gap-3 lg:gap-6">
+                                    <div class="cardPron bg-gradient-to-br from-cyan-900/60 to-blue-900/60 rounded-xl p-3 lg:p-5 border border-cyan-500/30 cardSurv transition-all duration-400 backdrop-blur-xl">
+                                        <div class="flex justify-between items-center mb-3 lg:mb-4">
                                             <span class="text-xs text-cyan-300 bg-cyan-800/50 px-2 py-1 rounded-full">Premier League</span>
-                                            <span class="text-xs bg-orange-500/20 text-orange-400 px-2 sm:px-3 py-1 rounded-full font-medium">Aujourd'hui</span>
+                                            <span class="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded-full font-medium">Aujourd'hui</span>
                                         </div>
                                         
-                                        <div class="flex items-center justify-between mb-3 sm:mb-4">
+                                        <div class="flex items-center justify-between mb-3 lg:mb-4">
                                             <div class="flex flex-col items-center">
                                                 <img 
                                                     src="/assets/img/Liverpool-Logo.png"
-                                                    class="logoEquipe rounded-full flex items-center justify-center mb-1 sm:mb-2" 
+                                                    class="logoEq rounded-full flex items-center justify-center mb-1 lg:mb-2" 
                                                     alt=""
                                                 >
-                                                <span class="text-white font-medium text-xs sm:text-sm">Liverpool</span>
+                                                <span class="text-white font-medium text-xs lg:text-sm text-center">Liverpool</span>
                                             </div>
-                                            <div class="text-gray-400 text-sm sm:text-lg font-bold">VS</div>
+                                            <div class="text-gray-400 text-sm lg:text-lg font-bold">VS</div>
                                             <div class="flex flex-col items-center">
                                                 <img 
                                                     src="/assets/img/Arsenal-Logo.png"
-                                                    class="logoEquipe rounded-full flex items-center justify-center mb-1 sm:mb-2" 
+                                                    class="logoEq rounded-full flex items-center justify-center mb-1 lg:mb-2" 
                                                     alt=""
                                                 >
-                                                <span class="text-white font-medium text-xs sm:text-sm">Arsenal</span>
+                                                <span class="text-white font-medium text-xs lg:text-sm text-center">Arsenal</span>
                                             </div>
                                         </div>
                                         
-                                        <p class="text-gray-400 text-xs mb-3 sm:mb-4 text-center flex items-center justify-center texteProno">
-                                            <i class="fas fa-clock mr-1 sm:mr-2"></i>18:30
+                                        <p class="text-gray-400 text-xs mb-3 lg:mb-4 text-center flex items-center justify-center">
+                                            <i class="fas fa-clock mr-1 lg:mr-2"></i>18:30
                                         </p>
                                         
-                                        <div class="bg-gradient-to-r from-cyan-600/30 to-blue-600/30 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4 text-center border border-cyan-400/30">
-                                            <div class="text-white font-bold text-xs sm:text-sm mb-1">1X2 - Liverpool</div>
-                                            <div class="text-xl sm:text-2xl font-black text-cyan-300">2.10</div>
+                                        <div class="bg-gradient-to-r from-cyan-600/30 to-blue-600/30 rounded-lg p-3 lg:p-4 mb-3 lg:mb-4 text-center border border-cyan-400/30">
+                                            <div class="text-white font-bold text-xs lg:text-sm mb-1">1X2 - Liverpool</div>
+                                            <div class="text-lg lg:text-2xl font-black text-cyan-300">2.10</div>
                                         </div>
                                         
                                         <div class="flex justify-between items-center">
-                                            <span class="text-gray-400 text-xs sm:text-sm">Confiance</span>
-                                            <span class="text-white font-bold px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm bg-gradient-to-r from-green-500 to-green-600">88%</span>
+                                            <span class="text-gray-400 text-xs lg:text-sm">Confiance</span>
+                                            <span class="text-white font-bold px-2 py-1 rounded-full text-xs lg:text-sm bg-gradient-to-r from-green-500 to-green-600">88%</span>
                                         </div>
                                     </div>
-                                    <div class="cardProno bg-gradient-to-br from-cyan-900/60 to-blue-900/60 rounded-xl p-3 sm:p-5 border border-cyan-500/30 cardSurvol">
-                                        <div class="flex justify-between items-center mb-3 sm:mb-4">
+                                    <div class="cardPron bg-gradient-to-br from-cyan-900/60 to-blue-900/60 rounded-xl p-3 lg:p-5 border border-cyan-500/30 cardSurv transition-all duration-400 backdrop-blur-xl">
+                                        <div class="flex justify-between items-center mb-3 lg:mb-4">
                                             <span class="text-xs text-cyan-300 bg-cyan-800/50 px-2 py-1 rounded-full">Premier League</span>
-                                            <span class="text-xs bg-orange-500/20 text-orange-400 px-2 sm:px-3 py-1 rounded-full font-medium">Aujourd'hui</span>
+                                            <span class="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded-full font-medium">Aujourd'hui</span>
                                         </div>
                                         
-                                        <div class="flex items-center justify-between mb-3 sm:mb-4">
+                                        <div class="flex items-center justify-between mb-3 lg:mb-4">
                                             <div class="flex flex-col items-center">
                                                 <img 
                                                     src="/assets/img/Liverpool-Logo.png"
-                                                    class="logoEquipe rounded-full flex items-center justify-center mb-1 sm:mb-2" 
+                                                    class="logoEq rounded-full flex items-center justify-center mb-1 lg:mb-2" 
                                                     alt=""
                                                 >
-                                                <span class="text-white font-medium text-xs sm:text-sm">Liverpool</span>
+                                                <span class="text-white font-medium text-xs lg:text-sm text-center">Liverpool</span>
                                             </div>
-                                            <div class="text-gray-400 text-sm sm:text-lg font-bold">VS</div>
+                                            <div class="text-gray-400 text-sm lg:text-lg font-bold">VS</div>
                                             <div class="flex flex-col items-center">
                                                 <img 
                                                     src="/assets/img/Arsenal-Logo.png"
-                                                    class="logoEquipe rounded-full flex items-center justify-center mb-1 sm:mb-2" 
+                                                    class="logoEq rounded-full flex items-center justify-center mb-1 lg:mb-2" 
                                                     alt=""
                                                 >
-                                                <span class="text-white font-medium text-xs sm:text-sm">Arsenal</span>
+                                                <span class="text-white font-medium text-xs lg:text-sm text-center">Arsenal</span>
                                             </div>
                                         </div>
                                         
-                                        <p class="text-gray-400 text-xs mb-3 sm:mb-4 text-center flex items-center justify-center texteProno">
-                                            <i class="fas fa-clock mr-1 sm:mr-2"></i>18:30
+                                        <p class="text-gray-400 text-xs mb-3 lg:mb-4 text-center flex items-center justify-center">
+                                            <i class="fas fa-clock mr-1 lg:mr-2"></i>18:30
                                         </p>
                                         
-                                        <div class="bg-gradient-to-r from-cyan-600/30 to-blue-600/30 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4 text-center border border-cyan-400/30">
-                                            <div class="text-white font-bold text-xs sm:text-sm mb-1">1X2 - Liverpool</div>
-                                            <div class="text-xl sm:text-2xl font-black text-cyan-300">2.10</div>
+                                        <div class="bg-gradient-to-r from-cyan-600/30 to-blue-600/30 rounded-lg p-3 lg:p-4 mb-3 lg:mb-4 text-center border border-cyan-400/30">
+                                            <div class="text-white font-bold text-xs lg:text-sm mb-1">1X2 - Liverpool</div>
+                                            <div class="text-lg lg:text-2xl font-black text-cyan-300">2.10</div>
                                         </div>
                                         
                                         <div class="flex justify-between items-center">
-                                            <span class="text-gray-400 text-xs sm:text-sm">Confiance</span>
-                                            <span class="text-white font-bold px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm bg-gradient-to-r from-green-500 to-green-600">88%</span>
+                                            <span class="text-gray-400 text-xs lg:text-sm">Confiance</span>
+                                            <span class="text-white font-bold px-2 py-1 rounded-full text-xs lg:text-sm bg-gradient-to-r from-green-500 to-green-600">88%</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="space-y-4 sm:space-y-6">
-                            <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-4 sm:p-6 backdrop-blur-xl border border-white/10">
-                                <div class="flex items-center justify-between mb-4 sm:mb-6">
-                                    <h3 class="text-sm sm:text-lg font-bold text-white flex items-center">
-                                        <i class="fas fa-star text-jauneAccent mr-2 sm:mr-3"></i>
+                        <div class="space-y-4 lg:space-y-6">
+                            <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
+                                <div class="flex items-center justify-between mb-4 lg:mb-6">
+                                    <h3 class="text-sm lg:text-lg font-bold text-white flex items-center">
+                                        <i class="fas fa-star text-jauneAcc mr-2 lg:mr-3"></i>
                                         Bonus du Jour
                                     </h3>
-                                    <button id="btnVoirBonus" class="text-xs bg-gradient-to-r from-jauneAccent to-yellow-500 text-gray-900 px-2 sm:px-3 py-1 sm:py-2 rounded-lg font-medium btnAnim shadow-lg">
+                                    <button id="btnVoirBon" class="text-xs bg-gradient-to-r from-jauneAcc to-yellow-500 text-gray-900 px-2 py-1 lg:px-3 lg:py-2 rounded-lg font-medium btnAnim shadow-lg">
                                         Tous
                                     </button>
                                 </div>
 
-                                <div class="space-y-3 sm:space-y-4">
-                                    <div class="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-red-500/20 to-red-600/20 rounded-xl border border-red-500/30">
-                                        <div class="flex items-center space-x-2 sm:space-x-3">
-                                            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-red-500 rounded-full flex items-center justify-center iconeAnim">
-                                                <i class="fas fa-bullseye text-white text-sm sm:text-base"></i>
+                                <div class="space-y-3 lg:space-y-4">
+                                    <div class="flex items-center justify-between p-3 lg:p-4 bg-gradient-to-r from-red-500/20 to-red-600/20 rounded-xl border border-red-500/30">
+                                        <div class="flex items-center space-x-2 lg:space-x-3">
+                                            <div class="w-8 h-8 lg:w-10 lg:h-10 bg-red-500 rounded-full flex items-center justify-center icAnim">
+                                                <i class="fas fa-bullseye text-white text-sm lg:text-base"></i>
                                             </div>
                                             <div>
-                                                <p class="text-xs sm:text-sm font-medium text-white">Bonus 1xBet</p>
+                                                <p class="text-xs lg:text-sm font-medium text-white">Bonus 1xBet</p>
                                                 <p class="text-xs text-gray-400">Code promo exclusif</p>
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <p class="text-sm sm:text-lg font-bold text-red-400">100%</p>
-                                            <button class="btnBonus text-xs bg-gradient-to-r from-red-500 to-red-600 text-white px-2 py-1 rounded-lg font-medium btnAnim shadow-lg">Réclamer</button>
+                                            <p class="text-sm lg:text-lg font-bold text-red-400">100%</p>
+                                            <button class="btnBon text-xs bg-gradient-to-r from-red-500 to-red-600 text-white px-2 py-1 rounded-lg font-medium btnAnim shadow-lg">Réclamer</button>
                                         </div>
                                     </div>
                                     
-                                    <div class="flex items-center justify-between p-3 sm:p-4  bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-xl border border-blue-500/30">
-                                        <div class="flex items-center space-x-2 sm:space-x-3">
-                                            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500 rounded-full flex items-center justify-center iconeAnim">
-                                                <i class="fas fa-bolt text-white text-sm sm:text-base"></i>
+                                    <div class="flex items-center justify-between p-3 lg:p-4  bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-xl border border-blue-500/30">
+                                        <div class="flex items-center space-x-2 lg:space-x-3">
+                                            <div class="w-8 h-8 lg:w-10 lg:h-10 bg-blue-500 rounded-full flex items-center justify-center icAnim">
+                                                <i class="fas fa-bolt text-white text-sm lg:text-base"></i>
                                             </div>
                                             <div>
-                                                <p class="text-xs sm:text-sm font-medium text-white">Bonus MelBet</p>
+                                                <p class="text-xs lg:text-sm font-medium text-white">Bonus MelBet</p>
                                                 <p class="text-xs text-gray-400">Bonus de bienvenue</p>
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <p class="text-sm sm:text-lg font-bold text-blue-400">150%</p>
-                                            <button class="btnBonus text-xs text-white bg-gradient-to-r from-blue-500 to-blue-600 px-2 py-1 rounded-lg font-medium btnAnim shadow-lg">Réclamer</button>
+                                            <p class="text-sm lg:text-lg font-bold text-blue-400">150%</p>
+                                            <button class="btnBon text-xs text-white bg-gradient-to-r from-blue-500 to-blue-600 px-2 py-1 rounded-lg font-medium btnAnim shadow-lg">Réclamer</button>
                                         </div>
                                     </div>
 
-                                    <div class="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-jauneAccent/20 to-yellow-500/20 rounded-xl border border-jauneAccent/30">
-                                        <div class="flex items-center space-x-2 sm:space-x-3">
-                                            <div class="w-8 h-8 sm:w-10 sm:h-10 bg-jauneAccent rounded-full flex items-center justify-center iconeAnim">
-                                                <i class="fas fa-gift text-sm sm:text-base"></i>
+                                    <div class="flex items-center justify-between p-3 lg:p-4 bg-gradient-to-r from-jauneAcc/20 to-yellow-500/20 rounded-xl border border-jauneAcc/30">
+                                        <div class="flex items-center space-x-2 lg:space-x-3">
+                                            <div class="w-8 h-8 lg:w-10 lg:h-10 bg-jauneAcc rounded-full flex items-center justify-center icAnim">
+                                                <i class="fas fa-gift text-sm lg:text-base"></i>
                                             </div>
                                             <div>
-                                                <p class="text-xs sm:text-sm font-medium text-white">Connexion Quotidienne</p>
+                                                <p class="text-xs lg:text-sm font-medium text-white">Connexion Quotidienne</p>
                                                 <p class="text-xs text-gray-400">Connectez-vous chaque jour</p>
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <p class="text-sm sm:text-lg font-bold text-jauneAccent">5,00 XOF</p>
-                                            <button class="btnBonus text-xs bg-gradient-to-r from-jauneAccent to-yellow-500 px-2 py-1 rounded-lg font-medium btnAnim shadow-lg">Réclamer</button>
+                                            <p class="text-sm lg:text-lg font-bold text-jauneAcc">5,00 XOF</p>
+                                            <button class="btnBon text-xs bg-gradient-to-r from-jauneAcc to-yellow-500 px-2 py-1 rounded-lg font-medium btnAnim shadow-lg">Réclamer</button>
                                         </div>
                                     </div>
                                 </div>
@@ -466,7 +384,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-4 sm:p-6 backdrop-blur-xl border border-white/10">
+                    <div class="bg-gray-800 rounded-2xl p-4 sm:p-6 backdrop-blur-xl border border-white/10">
                         <div class="flex items-center justify-between mb-4 sm:mb-6">
                             <h3 class="text-base sm:text-xl font-bold text-white flex items-center">
                                 <i class="fas fa-history text-bleuDash mr-2 sm:mr-3"></i>
@@ -494,51 +412,35 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-xl border border-blue-500/30">
-                                <div class="flex items-center space-x-2 sm:space-x-3">
-                                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-chart-line text-white text-xs sm:text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-xs sm:text-sm font-medium text-white">Pronostic réussi</p>
-                                        <p class="text-xs text-gray-400">Il y a 4 heures</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm sm:text-lg font-bold text-blue-400">+2,500 XOF</p>
-                                    <span class="text-xs text-blue-400 bg-blue-500/20 px-2 py-1 rounded-full">Gagné</span>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-xl border border-yellow-500/30">
-                                <div class="flex items-center space-x-2 sm:space-x-3">
-                                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-yellow-500 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-gift text-white text-xs sm:text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-xs sm:text-sm font-medium text-white">Bonus réclamé</p>
-                                        <p class="text-xs text-gray-400">Il y a 6 heures</p>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm sm:text-lg font-bold text-yellow-400">+500 XOF</p>
-                                    <span class="text-xs text-yellow-400 bg-yellow-500/20 px-2 py-1 rounded-full">Bonus</span>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-red-500/20 to-pink-500/20 rounded-xl border border-red-500/30">
+                            <div class="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-red-500/20 to-red-600/20 rounded-xl border border-red-500/30">
                                 <div class="flex items-center space-x-2 sm:space-x-3">
                                     <div class="w-8 h-8 sm:w-10 sm:h-10 bg-red-500 rounded-full flex items-center justify-center">
                                         <i class="fas fa-minus text-white text-xs sm:text-sm"></i>
                                     </div>
                                     <div>
-                                        <p class="text-xs sm:text-sm font-medium text-white">Retrait demandé</p>
+                                        <p class="text-xs sm:text-sm font-medium text-white">Retrait effectué</p>
                                         <p class="text-xs text-gray-400">Il y a 1 jour</p>
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-sm sm:text-lg font-bold text-red-400">-10,000 XOF</p>
-                                    <span class="text-xs text-orange-400 bg-orange-500/20 px-2 py-1 rounded-full">En cours</span>
+                                    <p class="text-sm sm:text-lg font-bold text-red-400">-5,000 XOF</p>
+                                    <span class="text-xs text-red-400 bg-red-500/20 px-2 py-1 rounded-full">Réussi</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-jauneAcc/20 to-yellow-500/20 rounded-xl border border-jauneAcc/30">
+                                <div class="flex items-center space-x-2 sm:space-x-3">
+                                    <div class="w-8 h-8 sm:w-10 sm:h-10 bg-jauneAcc rounded-full flex items-center justify-center">
+                                        <i class="fas fa-gift text-white text-xs sm:text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs sm:text-sm font-medium text-white">Bonus réclamé</p>
+                                        <p class="text-xs text-gray-400">Il y a 3 jours</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm sm:text-lg font-bold text-jauneAcc">+2,500 XOF</p>
+                                    <span class="text-xs text-jauneAcc bg-jauneAcc/20 px-2 py-1 rounded-full">Complété</span>
                                 </div>
                             </div>
                         </div>
@@ -549,119 +451,96 @@
     </div>
 
     <script>
-        let sidebarOuvert = false;
+        const btnOuvrMenu = document.getElementById('btnOuvrMenuMob');
+        const btnFermBar = document.getElementById('btnFermBarLat');
+        const barreNav = document.getElementById('barreNavLat');
+        const masq = document.getElementById('masqSide');
+        const btnVoirPron = document.getElementById('btnVoirPron');
+        const btnVoirBon = document.getElementById('btnVoirBon');
+        const btnVoirAct = document.getElementById('btnVoirActivites');
+        const btnsBon = document.querySelectorAll('.btnBon');
 
-        const btnOuvrirMenu = document.getElementById('btnOuvrirMenuMobile');
-        const btnFermerSidebar = document.getElementById('btnFermerBarreLaterale');
-        const sidebar = document.getElementById('barreNavigationLaterale');
-        const masqueSidebar = document.getElementById('masqueSidebar');
-        const boutonsBonus = document.querySelectorAll('.btnBonus');
-        const btnVoirPronostics = document.getElementById('btnVoirPronostics');
-        const btnVoirBonus = document.getElementById('btnVoirBonus');
-        const btnVoirActivites = document.getElementById('btnVoirActivites');
-
-        function toggleSidebar() {
-            sidebarOuvert = !sidebarOuvert;
-            
-            if (sidebarOuvert) {
-                sidebar.classList.add('ouvert');
-                masqueSidebar.classList.add('actif');
-                document.body.style.overflow = 'hidden';
-            } else {
-                sidebar.classList.remove('ouvert');
-                masqueSidebar.classList.remove('actif');
-                document.body.style.overflow = 'auto';
-            }
+        function ouvrirNav() {
+            barreNav.classList.add('ouvert');
+            masq.classList.add('actif');
+            document.body.style.overflow = 'hidden';
         }
 
-        function fermerSidebar() {
-            sidebarOuvert = false;
-            sidebar.classList.remove('ouvert');
-            masqueSidebar.classList.remove('actif');
+        function fermerNav() {
+            barreNav.classList.remove('ouvert');
+            masq.classList.remove('actif');
             document.body.style.overflow = 'auto';
         }
 
-        function allerVersPage(page) {
-            console.log(`Navigation vers: ${page}`);
-            // window.location.href = page;
+        function allerPage(url) {
+            window.location.href = url;
         }
 
-        function reclamerBonus(bouton, typeBonus) {
-            if (bouton.classList.contains('btnBonusClique')) {
-                return;
-            }
+        btnOuvrMenu.addEventListener('click', ouvrirNav);
+        btnFermBar.addEventListener('click', fermerNav);
+        masq.addEventListener('click', fermerNav);
 
-            bouton.classList.add('btnBonusClique');
-            bouton.textContent = 'Réclamé';
-            bouton.disabled = true;
-
-            bouton.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                bouton.style.transform = 'scale(1)';
-            }, 150);
-
-            console.log(`Bonus ${typeBonus} réclamé!`);
-        }
-
-        if (btnOuvrirMenu) {
-            btnOuvrirMenu.addEventListener('click', toggleSidebar);
-        }
-
-        if (btnFermerSidebar) {
-            btnFermerSidebar.addEventListener('click', fermerSidebar);
-        }
-
-        if (masqueSidebar) {
-            masqueSidebar.addEventListener('click', fermerSidebar);
-        }
-
-        if (boutonsBonus) {
-            boutonsBonus.forEach((bouton, index) => {
-                bouton.addEventListener('click', () => {
-                    const typeBonus = ['1xBet', 'MelBet', 'Connexion'][index] || 'Standard';
-                    reclamerBonus(bouton, typeBonus);
-                });
-            });
-        }
-
-        if (btnVoirPronostics) {
-            btnVoirPronostics.addEventListener('click', () => {
-                allerVersPage('dashboardPronostic.html');
-            });
-        }
-
-        if (btnVoirBonus) {
-            btnVoirBonus.addEventListener('click', () => {
-                allerVersPage('dashboardBonus.html');
-            });
-        }
-
-        if (btnVoirActivites) {
-            btnVoirActivites.addEventListener('click', () => {
-                allerVersPage('dashboardTransaction.html');
-            });
-        }
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 1024 && sidebarOuvert) {
-                fermerSidebar();
-            }
+        btnVoirPron.addEventListener('click', () => {
+            allerPage('dashboardPronostic.html');
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.cardStats');
+        btnVoirBon.addEventListener('click', () => {
+            allerPage('dashboardBonus.html');
+        });
+
+        btnVoirAct.addEventListener('click', () => {
+            allerPage('dashboardTransaction.html');
+        });
+
+        btnsBon.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                this.classList.add('btnBonusClick');
+                this.innerHTML = '<i class="fas fa-check mr-1"></i>Réclamé';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    this.classList.remove('btnBonusClick');
+                    this.innerHTML = 'Réclamer';
+                    this.disabled = false;
+                }, 3000);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.cardStat');
             cards.forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.2}s`;
             });
+            
+            const btns = document.querySelectorAll('.btnInteractif');
+            btns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
         });
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sidebarOuvert) {
-                fermerSidebar();
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1024) {
+                fermerNav();
             }
         });
 
-        console.log('Dashboard initialisé avec succès!');
+        document.querySelectorAll('.iconeFlottante').forEach(icone => {
+            icone.style.animation = 'flottement 3s ease-in-out infinite';
+        });
+
+        const btnDeconnexion = document.getElementById('btnDeconnexion');
+        btnDeconnexion.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                window.location.href = '/auth/login.html';
+            }
+        });
     </script>
 </body>
 </html>

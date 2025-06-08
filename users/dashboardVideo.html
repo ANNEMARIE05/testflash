@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Service - Vidéos</title>
+    <link rel="shortcut icon" href="/assets/img/log.jpeg" type="image/jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        
+        @keyframes glissHaut {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes flottement {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .cardVid {
+            animation: glissHaut 0.8s ease-out forwards;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        
+        .cardVid:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btnAnim {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btnAnim::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .btnAnim:hover::before { left: 100%; }
+        .btnAnim:hover { transform: translateY(-2px); }
+        
+        .masqSide {
+            display: none;
+        }
+
+        .masqSide.actif {
+            display: block;
+        }
+        
+        .barreNav {
+            transform: translateX(-100%);
+        }
+        
+        .barreNav.ouvert {
+            transform: translateX(0);
+        }
+        
+        @media (min-width: 1024px) {
+            .barreNav { transform: translateX(0); }
+        }
+
+        .thumbnailVid {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btnPlay {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .btnPlay:hover {
+            background: white;
+            transform: scale(1.1);
+        }
+
+        .filtreVid {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .filtreVid.actif {
+            background: rgba(59, 130, 246, 0.8);
+            border-color: rgba(59, 130, 246, 1);
+        }
+
+        .modalVid {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modalVid.actif {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contenuModal {
+            background: #1f2937;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 90vw;
+            max-height: 90vh;
+            width: 800px;
+            animation: scaleIn 0.3s ease-out;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .lecteurVid {
+            width: 100%;
+            height: 400px;
+            border-radius: 12px;
+            background: #000;
+        }
+
+        .btnFermer {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btnFermer:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .dureeVid {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bleuPrinc': '#1e40af',
+                        'bleuFc': '#1e3a8a',
+                        'bleuDash': '#3b82f6',
+                        'jauneAcc': '#fbbf24',
+                        'vertPar': '#059669'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-900 font-sans min-h-screen overflow-x-hidden">
+    <div id="masqSide" class="masqSide fixed inset-0 bg-black/50 z-40"></div>
+    
+    <!-- Modal Vidéo -->
+    <div id="modalVid" class="modalVid">
+        <button id="btnFermerModal" class="btnFermer">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="contenuModal">
+            <div class="mb-4">
+                <h3 id="titreVidModal" class="text-xl font-bold text-white mb-2"></h3>
+                <p id="descVidModal" class="text-gray-300 text-sm"></p>
+            </div>
+            <video id="lecteurVid" class="lecteurVid" controls>
+                <source src="/assets/videos/onevideo.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+        </div>
+    </div>
+    
+    <div class="flex h-screen">
+        <aside id="barreNavLat" class="barreNav bg-gray-800 text-white w-64 fixed lg:relative h-full transition-transform duration-300 z-50">
+            <div class="p-4 lg:p-6 border-b border-bleuPrinc">
+                <div class="flex items-center justify-between mb-3 lg:mb-4">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-jauneAcc to-yellow-300 rounded-full flex items-center justify-center mr-2 lg:mr-3 iconeFlottante">
+                            <i class="fas fa-user text-bleuFc text-lg lg:text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-sm lg:text-base">Hello Yao</h3>
+                            <p class="text-xs lg:text-sm text-gray-300">Solde: 45,000 XOF</p>
+                        </div>
+                    </div>
+                    <button id="btnFermBar" class="lg:hidden text-white hover:text-gray-300 text-xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="navVers('dashboardRetrait.html')" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-2 lg:px-3 py-1 rounded text-xs lg:text-sm flex-1 btnInt">
+                        <i class="fas fa-money-bill-wave mr-1"></i> Retrait
+                    </button>
+                    <button onclick="navVers('dashboardDepot.html')" class="bg-gradient-to-r from-vertPar to-green-700 hover:from-green-700 hover:to-green-800 px-2 lg:px-3 py-1 rounded text-xs lg:text-sm flex-1 btnInt">
+                        <i class="fas fa-dollar-sign mr-1"></i> Dépôt
+                    </button>
+                </div>
+            </div>
+            
+            <nav class="p-3 lg:p-4">
+                <ul class="space-y-1 lg:space-y-2">
+                    <li><a href="dashboardUser.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-colors text-sm lg:text-base">
+                        <i class="fas fa-home mr-2 lg:mr-3"></i> Dashboard
+                    </a></li>
+                    <li><a href="dashboardDepot.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-plus-circle mr-2 lg:mr-3"></i> Dépôt
+                    </a></li>
+                    <li><a href="dashboardRetrait.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-minus-circle mr-2 lg:mr-3"></i> Retrait
+                    </a></li>
+                    <li><a href="dashboardTransaction.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-list-alt mr-2 lg:mr-3"></i> Mes Transactions
+                    </a></li>
+                    <li><a href="dashboardPronostic.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-futbol mr-2 lg:mr-3"></i> Pronostics
+                    </a></li>
+                    <li><a href="dashboardVideo.html" class="flex items-center p-2 lg:p-3 rounded transition-colors bg-bleuPrinc text-sm lg:text-base">
+                        <i class="fas fa-video mr-2 lg:mr-3"></i> Vidéo
+                    </a></li>
+                    <li><a href="dashboardBonus.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-gift mr-2 lg:mr-3"></i> Bonus
+                    </a></li>
+                    <li><a href="dashboardProfile.html" class="flex items-center p-2 lg:p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-sm lg:text-base">
+                        <i class="fas fa-user-cog mr-2 lg:mr-3"></i> Profil
+                    </a></li>
+                    <li><a href="#" id="btnDeconnexion" class="flex items-center p-2 lg:p-3 rounded hover:bg-red-600 transition-colors mt-6 lg:mt-8 text-sm lg:text-base">
+                        <i class="fas fa-user mr-2 lg:mr-3"></i> Déconnexion
+                    </a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="flex-1 flex flex-col w-full lg:w-auto">
+            <header class="bg-gradient-to-r from-gray-900 to-gray-800 shadow-2xl border-b border-white/10 px-3 sm:px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between backdrop-blur-sm">
+                <div class="flex items-center">
+                    <button id="btnOuvrMenu" class="lg:hidden mr-3 text-white hover:text-jauneAcc transition-colors">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <h1 class="text-base sm:text-lg lg:text-2xl font-bold text-white">Tutoriels Vidéo</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <i class="fas fa-bell text-white text-lg lg:text-xl cursor-pointer hover:text-jauneAcc transition-colors"></i>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6">
+                <div class="max-w-7xl mx-auto space-y-4 lg:space-y-6">
+                    <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 lg:mb-6 gap-4">
+                            <h2 class="text-lg sm:text-xl lg:text-2xl font-bold text-white flex items-center">
+                                <i class="fas fa-play-circle text-bleuDash mr-2 lg:mr-3"></i>
+                                Tutoriels de Formation
+                            </h2>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="filtreVid actif px-3 py-1 rounded-full text-xs lg:text-sm font-medium text-white transition-all" data-filtre="tous">
+                                    Tous
+                                </button>
+                                <button class="filtreVid px-3 py-1 rounded-full text-xs lg:text-sm font-medium text-white transition-all" data-filtre="1xbet">
+                                    1xBet
+                                </button>
+                                <button class="filtreVid px-3 py-1 rounded-full text-xs lg:text-sm font-medium text-white transition-all" data-filtre="melbet">
+                                    MelBet
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6" id="contVideos">
+                            <div class="cardVid bg-gradient-to-br from-gray-700/40 to-gray-600/40 rounded-xl p-4 border border-gray-500/30 backdrop-blur-xl" data-cat="1xbet" onclick="ouvrirVid('Comment créer un compte 1xBet', 'Guide complet pour ouvrir votre compte 1xBet en 5 minutes avec toutes les étapes détaillées.')">
+                                <div class="thumbnailVid mb-4">
+                                    <div class="btnPlay">
+                                        <i class="fas fa-play text-bleuDash text-xl ml-1"></i>
+                                    </div>
+                                    <div class="dureeVid">8:45</div>
+                                </div>
+                                <div class="flex items-center mb-3">
+                                    <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full font-medium">1xBet</span>
+                                </div>
+                                <h3 class="text-white font-bold text-sm lg:text-base mb-2">Comment créer un compte 1xBet</h3>
+                                <p class="text-gray-400 text-xs lg:text-sm mb-3 line-clamp-2">Guide complet pour ouvrir votre compte 1xBet en 5 minutes</p>
+                            </div>
+
+                            <div class="cardVid bg-gradient-to-br from-gray-700/40 to-gray-600/40 rounded-xl p-4 border border-gray-500/30 backdrop-blur-xl" data-cat="1xbet" onclick="ouvrirVid('Comment faire une recharge 1xBet', 'Découvrez toutes les méthodes de dépôt disponibles sur 1xBet : Mobile Money, cartes bancaires, portefeuilles électroniques.')">
+                                <div class="thumbnailVid mb-4">
+                                    <div class="btnPlay">
+                                        <i class="fas fa-play text-bleuDash text-xl ml-1"></i>
+                                    </div>
+                                    <div class="dureeVid">6:22</div>
+                                </div>
+                                <div class="flex items-center mb-3">
+                                    <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full font-medium">1xBet</span>
+                                </div>
+                                <h3 class="text-white font-bold text-sm lg:text-base mb-2">Comment faire une recharge 1xBet</h3>
+                                <p class="text-gray-400 text-xs lg:text-sm mb-3 line-clamp-2">Toutes les méthodes de dépôt disponibles sur 1xBet</p>
+                            </div>
+
+                            <div class="cardVid bg-gradient-to-br from-gray-700/40 to-gray-600/40 rounded-xl p-4 border border-gray-500/30 backdrop-blur-xl" data-cat="1xbet" onclick="ouvrirVid('Comment faire un retrait 1xBet', 'Procédure complète pour retirer vos gains sur 1xBet. Étapes de vérification, méthodes de retrait et délais de traitement.')">
+                                <div class="thumbnailVid mb-4">
+                                    <div class="btnPlay">
+                                        <i class="fas fa-play text-bleuDash text-xl ml-1"></i>
+                                    </div>
+                                    <div class="dureeVid">7:18</div>
+                                </div>
+                                <div class="flex items-center mb-3">
+                                    <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded-full font-medium">1xBet</span>
+                                </div>
+                                <h3 class="text-white font-bold text-sm lg:text-base mb-2">Comment faire un retrait 1xBet</h3>
+                                <p class="text-gray-400 text-xs lg:text-sm mb-3 line-clamp-2">Procédure complète pour retirer vos gains sur 1xBet</p>
+                            </div>
+
+                            <div class="cardVid bg-gradient-to-br from-gray-700/40 to-gray-600/40 rounded-xl p-4 border border-gray-500/30 backdrop-blur-xl" data-cat="melbet" onclick="ouvrirVid('Comment créer un compte MelBet', 'Inscription rapide et sécurisée sur MelBet. Processus étape par étape avec conseils de sécurité.')">
+                                <div class="thumbnailVid mb-4">
+                                    <div class="btnPlay">
+                                        <i class="fas fa-play text-bleuDash text-xl ml-1"></i>
+                                    </div>
+                                    <div class="dureeVid">9:12</div>
+                                </div>
+                                <div class="flex items-center mb-3">
+                                    <span class="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded-full font-medium">MelBet</span>
+                                </div>
+                                <h3 class="text-white font-bold text-sm lg:text-base mb-2">Comment créer un compte MelBet</h3>
+                                <p class="text-gray-400 text-xs lg:text-sm mb-3 line-clamp-2">Inscription rapide et sécurisée sur MelBet</p>
+                            </div>
+
+                            <div class="cardVid bg-gradient-to-br from-gray-700/40 to-gray-600/40 rounded-xl p-4 border border-gray-500/30 backdrop-blur-xl" data-cat="melbet" onclick="ouvrirVid('Comment faire une recharge MelBet', 'Guide des différentes options de dépôt MelBet : Mobile Money, virements bancaires, cryptomonnaies et plus encore.')">
+                                <div class="thumbnailVid mb-4">
+                                    <div class="btnPlay">
+                                        <i class="fas fa-play text-bleuDash text-xl ml-1"></i>
+                                    </div>
+                                    <div class="dureeVid">5:47</div>
+                                </div>
+                                <div class="flex items-center mb-3">
+                                    <span class="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded-full font-medium">MelBet</span>
+                                </div>
+                                <h3 class="text-white font-bold text-sm lg:text-base mb-2">Comment faire une recharge MelBet</h3>
+                                <p class="text-gray-400 text-xs lg:text-sm mb-3 line-clamp-2">Guide des différentes options de dépôt MelBet</p>
+                            </div>
+
+                            <div class="cardVid bg-gradient-to-br from-gray-700/40 to-gray-600/40 rounded-xl p-4 border border-gray-500/30 backdrop-blur-xl" data-cat="melbet" onclick="ouvrirVid('Comment faire un retrait MelBet', 'Étapes détaillées pour effectuer un retrait sur MelBet. Vérifications nécessaires, limites et temps de traitement.')">
+                                <div class="thumbnailVid mb-4">
+                                    <div class="btnPlay">
+                                        <i class="fas fa-play text-bleuDash text-xl ml-1"></i>
+                                    </div>
+                                    <div class="dureeVid">8:33</div>
+                                </div>
+                                <div class="flex items-center mb-3">
+                                    <span class="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded-full font-medium">MelBet</span>
+                                </div>
+                                <h3 class="text-white font-bold text-sm lg:text-base mb-2">Comment faire un retrait MelBet</h3>
+                                <p class="text-gray-400 text-xs lg:text-sm mb-3 line-clamp-2">Étapes détaillées pour effectuer un retrait sur MelBet</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
+                        <h3 class="text-lg lg:text-xl font-bold text-white mb-4 flex items-center">
+                            <i class="fas fa-info-circle text-bleuDash mr-2 lg:mr-3"></i>
+                            Conseils d'Utilisation
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-lg p-4 border border-green-500/30">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-lightbulb text-white text-sm"></i>
+                                    </div>
+                                    <h4 class="text-white font-semibold text-sm">Regardez attentivement</h4>
+                                </div>
+                                <p class="text-gray-300 text-xs lg:text-sm">Suivez chaque étape des tutoriels pour éviter les erreurs lors de vos opérations.</p>
+                            </div>
+                            <div class="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg p-4 border border-blue-500/30">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-shield-alt text-white text-sm"></i>
+                                    </div>
+                                    <h4 class="text-white font-semibold text-sm">Sécurité avant tout</h4>
+                                </div>
+                                <p class="text-gray-300 text-xs lg:text-sm">Vérifiez toujours que vous êtes sur le site officiel avant de saisir vos informations.</p>
+                            </div>
+                            <div class="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-lg p-4 border border-yellow-500/30">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-clock text-white text-sm"></i>
+                                    </div>
+                                    <h4 class="text-white font-semibold text-sm">Temps de traitement</h4>
+                                </div>
+                                <p class="text-gray-300 text-xs lg:text-sm">Les dépôts sont instantanés, les retraits peuvent prendre 1 à 24 heures selon la méthode.</p>
+                            </div>
+                            <div class="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg p-4 border border-purple-500/30">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-question-circle text-white text-sm"></i>
+                                    </div>
+                                    <h4 class="text-white font-semibold text-sm">Besoin d'aide ?</h4>
+                                </div>
+                                <p class="text-gray-300 text-xs lg:text-sm">Contactez notre support 24h/7j si vous rencontrez des difficultés.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        const barreNavLat = document.getElementById('barreNavLat');
+        const btnOuvrMenu = document.getElementById('btnOuvrMenu');
+        const btnFermBar = document.getElementById('btnFermBar');
+        const masqSide = document.getElementById('masqSide');
+        const modalVid = document.getElementById('modalVid');
+        const btnFermerModal = document.getElementById('btnFermerModal');
+        const lecteurVid = document.getElementById('lecteurVid');
+        const titreVidModal = document.getElementById('titreVidModal');
+        const descVidModal = document.getElementById('descVidModal');
+        const contVideos = document.getElementById('contVideos');
+        const filtresVid = document.querySelectorAll('.filtreVid');
+
+        // Navigation
+        function navVers(page) {
+            window.location.href = page;
+        }
+
+        // Gestion du menu latéral
+        btnOuvrMenu.addEventListener('click', () => {
+            barreNavLat.classList.add('ouvert');
+            masqSide.classList.add('actif');
+        });
+
+        btnFermBar.addEventListener('click', () => {
+            barreNavLat.classList.remove('ouvert');
+            masqSide.classList.remove('actif');
+        });
+
+        masqSide.addEventListener('click', () => {
+            barreNavLat.classList.remove('ouvert');
+            masqSide.classList.remove('actif');
+        });
+
+        // Gestion des filtres vidéo
+        filtresVid.forEach(filtre => {
+            filtre.addEventListener('click', () => {
+                // Retirer la classe active de tous les filtres
+                filtresVid.forEach(f => f.classList.remove('actif'));
+                // Ajouter la classe active au filtre cliqué
+                filtre.classList.add('actif');
+
+                const categorieFiltre = filtre.getAttribute('data-filtre');
+                filtrerVideos(categorieFiltre);
+            });
+        });
+
+        // Fonction de filtrage des vidéos
+        function filtrerVideos(categorie) {
+            const cardsVid = document.querySelectorAll('.cardVid');
+            
+            cardsVid.forEach(card => {
+                if (categorie === 'tous') {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    const cardCategorie = card.getAttribute('data-cat');
+                    if (cardCategorie === categorie) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 100);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                }
+            });
+        }
+
+        // Fonction pour ouvrir la modal vidéo
+        function ouvrirVid(titre, description) {
+            titreVidModal.textContent = titre;
+            descVidModal.textContent = description;
+            modalVid.classList.add('actif');
+            
+            // Démarrer la vidéo (optionnel)
+            lecteurVid.currentTime = 0;
+            
+            // Empêcher le scroll du body
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fermer la modal vidéo
+        function fermerModal() {
+            modalVid.classList.remove('actif');
+            lecteurVid.pause();
+            lecteurVid.currentTime = 0;
+            
+            // Réactiver le scroll du body
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners pour fermer la modal
+        btnFermerModal.addEventListener('click', fermerModal);
+
+        modalVid.addEventListener('click', (e) => {
+            if (e.target === modalVid) {
+                fermerModal();
+            }
+        });
+
+        // Fermer la modal avec la touche Échap
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalVid.classList.contains('actif')) {
+                fermerModal();
+            }
+        });
+
+        // Animation des cards au chargement
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.cardVid');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Gestion responsive du menu
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                barreNavLat.classList.remove('ouvert');
+                masqSide.classList.remove('actif');
+            }
+        });
+
+        // Animation smooth pour les boutons
+        document.querySelectorAll('.btnAnim').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transform = 'translateY(-2px)';
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Effet de survol pour les cards vidéo
+        document.querySelectorAll('.cardVid').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px)';
+                card.style.boxShadow = '0 20px 40px rgba(59, 130, 246, 0.3)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = 'none';
+            });
+        });
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            // Masquer toutes les cards initialement pour l'animation
+            const cards = document.querySelectorAll('.cardVid');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+            });
+        });
+
+        document.querySelectorAll('.iconeFlottante').forEach(icone => {
+            icone.style.animation = 'flottement 3s ease-in-out infinite';
+        });
+
+        const btnDeconnexion = document.getElementById('btnDeconnexion');
+        btnDeconnexion.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                window.location.href = '/auth/login.html';
+            }
+        });
+    </script>
+</body>
+</html>
