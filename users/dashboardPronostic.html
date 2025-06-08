@@ -16,7 +16,7 @@
             to { transform: translateY(0); opacity: 1; }
         }
         
-        @keyframes flotte {
+        @keyframes flottement {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
         }
@@ -142,7 +142,7 @@
             <div class="p-4 lg:p-6 border-b border-bleuPrinc">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-r from-jauneAcc to-yellow-300 rounded-full flex items-center justify-center mr-3 icFlotte">
+                        <div class="w-12 h-12 bg-gradient-to-r from-jauneAcc to-yellow-300 rounded-full flex items-center justify-center mr-3 iconeFlottante">
                             <i class="fas fa-user text-bleuFc text-xl"></i>
                         </div>
                         <div>
@@ -586,6 +586,10 @@
                     icon.style.transform = 'scale(1)';
                 }, 300);
             }, 3000);
+        });
+
+        document.querySelectorAll('.iconeFlottante').forEach(icone => {
+            icone.style.animation = 'flottement 3s ease-in-out infinite';
         });
 
         const btnDeconnexion = document.getElementById('btnDeconnexion');
