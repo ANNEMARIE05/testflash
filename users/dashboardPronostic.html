@@ -206,59 +206,47 @@
                     <h1 class="text-base sm:text-lg lg:text-2xl font-bold text-white">Mes Pronostics</h1>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <div class="relative">
-                        <i class="fas fa-bell text-white text-lg lg:text-xl cursor-pointer hover:text-jauneAcc transition-colors"></i>
+                    <div class="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center">
+                        <a href="/users/dashboardProfile.html"><i class="fas fa-user text-white text-sm"></i></a>
                     </div>
                 </div>
             </header>
 
             <main class="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6">
                 <div class="max-w-7xl mx-auto space-y-4 lg:space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
-                        <div class="carteStat statGagne rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden backdrop-filter backdrop-blur-xl border">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6">
+                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
                             <div class="relative flex items-center justify-between">
                                 <div>
-                                    <p class="text-green-300 text-xs lg:text-sm font-medium">Pronostics Gagnés</p>
-                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-green-400">47</p>
+                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Solde Bonus</p>
+                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-jauneAcc">2,450.00 XOF</p>
                                 </div>
                                 <div class="icAnim">
-                                    <i class="fas fa-check-circle text-green-400 text-xl lg:text-3xl"></i>
+                                    <i class="fas fa-wallet text-jauneAcc text-xl lg:text-3xl"></i>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="carteStat statPerdu rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden backdrop-filter backdrop-blur-xl border">
+                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
                             <div class="relative flex items-center justify-between">
                                 <div>
-                                    <p class="text-red-300 text-xs lg:text-sm font-medium">Pronostics Perdus</p>
-                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-red-400">1</p>
+                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Pronostics Réussis</p>
+                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-green-400">92%</p>
                                 </div>
                                 <div class="icAnim">
-                                    <i class="fas fa-times-circle text-red-400 text-xl lg:text-3xl"></i>
+                                    <i class="fas fa-chart-line text-green-400 text-xl lg:text-3xl"></i>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="carteStat statEnCours rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden backdrop-filter backdrop-blur-xl border">
+                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden sm:col-span-2 lg:col-span-1 bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
                             <div class="relative flex items-center justify-between">
                                 <div>
-                                    <p class="text-yellow-300 text-xs lg:text-sm font-medium">En Cours</p>
-                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-yellow-400">3</p>
+                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Bonus Récoltés</p>
+                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-bleuDash">15,750.00 XOF</p>
                                 </div>
                                 <div class="icAnim">
-                                    <i class="fas fa-clock text-yellow-400 text-xl lg:text-3xl"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="carteStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
-                            <div class="relative flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Taux de Réussite</p>
-                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-bleuDash">98%</p>
-                                </div>
-                                <div class="icAnim">
-                                    <i class="fas fa-chart-line text-bleuDash text-xl lg:text-3xl"></i>
+                                    <i class="fas fa-gift text-bleuDash text-xl lg:text-3xl"></i>
                                 </div>
                             </div>
                         </div>
@@ -274,11 +262,11 @@
                                 <button class="filtrBtn actif px-3 py-1 rounded-lg text-xs font-medium bg-gray-700 text-white" data-filtre="tous">
                                     Tous
                                 </button>
+                                <button class="filtrBtn px-3 py-1 rounded-lg text-xs font-medium bg-gray-700 text-white" data-filtre="encours">
+                                    Aujourd'hui
+                                </button>
                                 <button class="filtrBtn px-3 py-1 rounded-lg text-xs font-medium bg-gray-700 text-white" data-filtre="gagne">
                                     Gagnés
-                                </button>
-                                <button class="filtrBtn px-3 py-1 rounded-lg text-xs font-medium bg-gray-700 text-white" data-filtre="encours">
-                                    En Cours
                                 </button>
                             </div>
                         </div>
@@ -499,6 +487,11 @@
                     </div>
                 </div>
             </main>
+        </div>
+        <div class="fixed bottom-6 right-6 z-40">
+            <a href="https://wa.me/+2250777169313" class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-400 transition-all transform hover:scale-110 animate-bounce">
+                <i class="fab fa-whatsapp"></i>
+            </a>
         </div>
     </div>
 
