@@ -26,25 +26,79 @@
             50% { transform: scale(1.05); }
         }
         
-        .cardStat { animation: glisHaut 0.8s ease-out forwards; }
-        .btnAnim { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }
-        .btnAnim::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: left 0.6s ease; }
+        .cardStat {
+            animation: glisHaut 0.8s ease-out forwards;
+        }
+        
+        .btnAnim {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btnAnim::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+        
         .btnAnim:hover::before { left: 100%; }
         .btnAnim:hover { transform: translateY(-2px); }
-        .iconeFlottante { animation: flottement 3s ease-in-out infinite; }
-        .btnPulse { animation: pulse 2s infinite; }
-        .progressBar { background: linear-gradient(90deg, #10b981 0%, #059669 100%); transition: width 0.5s ease; }
-        .quizHidden { display: none; }
-        .quizVisible { display: block; }
         
-        .barreNav { transform: translateX(-100%); }
-        .barreNav.ouvert { transform: translateX(0); }
-        .fondObscur { opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-        .fondObscur.actif { opacity: 1; visibility: visible; }
+        .fondObscur {
+            display: none;
+        }
+
+        .fondObscur.actif {
+            display: block;
+        }
+        
+        .barreNav {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .barreNav.ouvert {
+            transform: translateX(0);
+        }
+        
+        .progressBar {
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            transition: width 0.5s ease;
+        }
+        
+        .quizCache {
+            display: none;
+        }
+        
+        .quizVisible {
+            display: block;
+        }
+        
+        .quizHidden {
+            display: none;
+        }
+        
+        .iconeFlottante {
+            animation: flottement 3s ease-in-out infinite;
+        }
+        
+        .btnPulse {
+            animation: pulse 2s infinite;
+        }
         
         @media (min-width: 1024px) {
-            .barreNav { transform: translateX(0); }
-            .fondObscur { display: none; }
+            .barreNav { 
+                transform: translateX(0); 
+            }
+            .fondObscur {
+                display: none !important;
+            }
         }
     </style>
     <script>
@@ -147,7 +201,7 @@
             <div class="p-4 lg:p-6">
                 <div class="max-w-7xl mx-auto space-y-4 lg:space-y-6">
                     
-                    <div id="statsCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6"></div>
+                    <div id="cartesStat" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6"></div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                         <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
@@ -168,13 +222,13 @@
                                     </div>
                                     <h4 class="text-lg font-bold text-white mb-2">Quiz Quotidien</h4>
                                     <p class="text-gray-400 text-sm mb-4">Répondez à 10 questions et gagnez 100 XOF</p>
-                                    <button id="btnCommencerQuiz" class="bg-gradient-to-r from-jauneAcc to-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-medium btnAnim shadow-lg btnPulse">
+                                    <button id="btnDemarrerQuiz" class="bg-gradient-to-r from-jauneAcc to-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-medium btnAnim shadow-lg btnPulse">
                                         <i class="fas fa-play mr-2"></i>Commencer le Quiz
                                     </button>
                                 </div>
                             </div>
 
-                            <div id="quizJeu" class="quizHidden">
+                            <div id="quizJeu" class="quizCache">
                                 <div class="mb-4">
                                     <div class="flex justify-between text-sm text-gray-400 mb-2">
                                         <span>Question <span id="numQuest">1</span>/10</span>
@@ -186,22 +240,22 @@
                                 </div>
                                 
                                 <div class="mb-6">
-                                    <h4 id="questionText" class="text-white font-medium mb-4"></h4>
+                                    <h4 id="txtQuestion" class="text-white font-medium mb-4"></h4>
                                     <div id="reponses" class="space-y-2"></div>
                                 </div>
                                 
                                 <div class="flex justify-between">
-                                    <button id="btnPrevQuest" class="bg-gray-600 text-white px-4 py-2 rounded-lg btnAnim" disabled>
+                                    <button id="btnPrecedent" class="bg-gray-600 text-white px-4 py-2 rounded-lg btnAnim" disabled>
                                         <i class="fas fa-arrow-left mr-2"></i>Précédent
                                     </button>
-                                    <button id="btnNextQuest" class="bg-bleuDash text-white px-4 py-2 rounded-lg btnAnim" disabled>
+                                    <button id="btnSuivant" class="bg-bleuDash text-white px-4 py-2 rounded-lg btnAnim" disabled>
                                         Suivant<i class="fas fa-arrow-right ml-2"></i>
                                     </button>
                                 </div>
                             </div>
 
-                            <div id="quizResultat" class="quizHidden text-center">
-                                <div id="iconResultat" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 iconeFlottante">
+                            <div id="quizResultat" class="quizCache text-center">
+                                <div id="iconeResultat" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 iconeFlottante">
                                     <i class="text-3xl"></i>
                                 </div>
                                 <h4 id="titreResultat" class="text-xl font-bold mb-2"></h4>
@@ -209,7 +263,7 @@
                                 <div id="bonusGagne" class="bg-gradient-to-r from-jauneAcc/20 to-yellow-500/20 rounded-lg p-4 mb-4 border border-jauneAcc/30">
                                     <p class="text-jauneAcc font-bold text-lg">Bonus Gagné: <span id="montantBonus">0</span> XOF</p>
                                 </div>
-                                <button id="btnRecommencer" class="bg-gradient-to-r from-bleuDash to-indigo-600 text-white px-6 py-3 rounded-lg font-medium btnAnim">
+                                <button id="btnRestart" class="bg-gradient-to-r from-bleuDash to-indigo-600 text-white px-6 py-3 rounded-lg font-medium btnAnim">
                                     <i class="fas fa-redo mr-2"></i>Recommencer
                                 </button>
                             </div>
@@ -226,7 +280,7 @@
                                 </span>
                             </div>
 
-                            <div id="vipTasks" class="space-y-4"></div>
+                            <div id="tachesVip" class="space-y-4"></div>
                         </div>
                     </div>
 
@@ -273,7 +327,7 @@
     <div id="modalNotif" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-gray-800 rounded-2xl p-6 max-w-sm w-full border border-white/10">
             <div class="text-center">
-                <div id="iconNotif" class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"></div>
+                <div id="iconeNotif" class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"></div>
                 <h4 id="titreNotif" class="text-white font-bold text-lg mb-2"></h4>
                 <p id="msgNotif" class="text-gray-400 text-sm mb-4"></p>
                 <button id="btnFermNotif" class="bg-bleuDash text-white px-6 py-2 rounded-lg btnAnim">OK</button>
@@ -282,7 +336,7 @@
     </div>
 
 <script>
-const donnes = {
+const data = {
     stats: [
         { nom: "Bonus Dispo", val: "2,450.00 XOF", icone: "fas fa-coins", couleur: "jauneAcc" },
         { nom: "Bonus Réclamés", val: "15,750.00 XOF", icone: "fas fa-trophy", couleur: "green-400" },
@@ -323,9 +377,9 @@ const donnes = {
 
 let questActu = 0, scoreQuiz = 0, repUser = [];
 
-function renduStats() {
-    const cont = document.getElementById('statsCards');
-    cont.innerHTML = donnes.stats.map(stat => `
+function afficherStats() {
+    const cont = document.getElementById('cartesStat');
+    cont.innerHTML = data.stats.map(stat => `
         <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
             <div class="relative flex items-center justify-between">
                 <div>
@@ -340,9 +394,9 @@ function renduStats() {
     `).join('');
 }
 
-function renduVip() {
-    const cont = document.getElementById('vipTasks');
-    cont.innerHTML = donnes.tachesVip.map((tache, i) => `
+function afficherVip() {
+    const cont = document.getElementById('tachesVip');
+    cont.innerHTML = data.tachesVip.map((tache, i) => `
         <div class="bg-gradient-to-r from-${tache.couleur}-500/20 to-${tache.couleur}-600/20 rounded-xl p-4 border border-${tache.couleur}-500/30">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center">
@@ -381,15 +435,14 @@ function renduVip() {
     `).join('');
 }
 
-function renduBookmakers() {
+function afficherBookmakers() {
     const cont = document.getElementById('bookmakers');
-    cont.innerHTML = donnes.bookmakers.map(book => `
+    cont.innerHTML = data.bookmakers.map(book => `
         <div class="bg-gradient-to-r from-${book.couleur}-500/20 to-${book.couleur}-600/20 rounded-xl p-4 lg:p-6 border border-${book.couleur}-500/30">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center">
                     <div class="w-12 h-12 bg-${book.couleur}-500 rounded-full flex items-center justify-center mr-3">
-                        <i class="${book.icone} text-white text-xl"></i>
-                    </div>
+                        <i class="${book.icone} text-white text-xl"></i></div>
                     <div>
                         <h4 class="text-white font-bold text-lg">${book.nom}</h4>
                         <p class="text-gray-400 text-sm">${book.desc}</p>
@@ -413,9 +466,9 @@ function renduBookmakers() {
     `).join('');
 }
 
-function renduBonusQuot() {
+function afficherBonusQuot() {
     const cont = document.getElementById('bonusQuot');
-    cont.innerHTML = donnes.bonusQuot.map((bonus, i) => `
+    cont.innerHTML = data.bonusQuot.map((bonus, i) => `
         <div class="bg-gradient-to-r from-${bonus.couleur}/20 to-${bonus.couleur === 'jauneAcc' ? 'yellow-500' : bonus.couleur + '-500'}/20 rounded-xl p-4 border border-${bonus.couleur === 'jauneAcc' ? 'yellow-500' : bonus.couleur + '-500'}/30">
             <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center">
@@ -438,9 +491,9 @@ function renduBonusQuot() {
     `).join('');
 }
 
-function renduHistBonus() {
+function afficherHistBonus() {
     const cont = document.getElementById('histBonus');
-    cont.innerHTML = donnes.histBonus.map(hist => `
+    cont.innerHTML = data.histBonus.map(hist => `
         <div class="bg-gray-700 rounded-lg p-4 flex items-center justify-between">
             <div class="flex items-center">
                 <div class="w-10 h-10 bg-${hist.couleur === 'jauneAcc' ? 'yellow-500' : hist.couleur + '-500'} rounded-full flex items-center justify-center mr-3">
@@ -456,16 +509,16 @@ function renduHistBonus() {
     `).join('');
 }
 
-function afficherQuiz() {
-    document.getElementById('quizAccueil').className = 'quizHidden';
+function demarrerQuiz() {
+    document.getElementById('quizAccueil').className = 'quizCache';
     document.getElementById('quizJeu').className = 'quizVisible';
     chargerQuestion();
 }
 
 function chargerQuestion() {
-    const quest = donnes.quiz[questActu];
+    const quest = data.quiz[questActu];
     document.getElementById('numQuest').textContent = questActu + 1;
-    document.getElementById('questionText').textContent = quest.q;
+    document.getElementById('txtQuestion').textContent = quest.q;
     document.getElementById('progressQuiz').style.width = `${((questActu + 1) / 10) * 100}%`;
     
     const contRep = document.getElementById('reponses');
@@ -475,8 +528,8 @@ function chargerQuestion() {
         </button>
     `).join('');
     
-    document.getElementById('btnPrevQuest').disabled = questActu === 0;
-    document.getElementById('btnNextQuest').disabled = true;
+    document.getElementById('btnPrecedent').disabled = questActu === 0;
+    document.getElementById('btnSuivant').disabled = true;
 }
 
 function selectionnerReponse(index) {
@@ -486,7 +539,7 @@ function selectionnerReponse(index) {
             ? 'btnReponse w-full text-left p-3 rounded-lg bg-bleuDash text-white transition-all'
             : 'btnReponse w-full text-left p-3 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-all';
     });
-    document.getElementById('btnNextQuest').disabled = false;
+    document.getElementById('btnSuivant').disabled = false;
 }
 
 function questionSuivante() {
@@ -511,16 +564,16 @@ function questionPrecedente() {
 function terminerQuiz() {
     scoreQuiz = 0;
     repUser.forEach((rep, i) => {
-        if (rep === donnes.quiz[i].c) scoreQuiz++;
+        if (rep === data.quiz[i].c) scoreQuiz++;
     });
     
-    document.getElementById('quizJeu').className = 'quizHidden';
+    document.getElementById('quizJeu').className = 'quizCache';
     document.getElementById('quizResultat').className = 'quizVisible';
     
     const pourcentage = (scoreQuiz / 10) * 100;
     const bonusGagne = scoreQuiz >= 7 ? 5000 : scoreQuiz >= 5 ? 3000 : scoreQuiz >= 3 ? 1000 : 0;
     
-    const iconResult = document.getElementById('iconResultat');
+    const iconResult = document.getElementById('iconeResultat');
     const titreResult = document.getElementById('titreResultat');
     const msgResult = document.getElementById('msgResultat');
     
@@ -557,13 +610,13 @@ function recommencerQuiz() {
     questActu = 0;
     scoreQuiz = 0;
     repUser = [];
-    document.getElementById('quizResultat').className = 'quizHidden';
+    document.getElementById('quizResultat').className = 'quizCache';
     document.getElementById('quizAccueil').className = 'quizVisible';
 }
 
 function afficherNotification(titre, message, type) {
     const modal = document.getElementById('modalNotif');
-    const icon = document.getElementById('iconNotif');
+    const icon = document.getElementById('iconeNotif');
     const titreEl = document.getElementById('titreNotif');
     const msgEl = document.getElementById('msgNotif');
     
@@ -629,33 +682,41 @@ function aller(url) {
     window.location.href = url;
 }
 
-function toggleMenu() {
+function ouvrirMenu() {
     const menu = document.getElementById('menu');
     const fond = document.getElementById('fondMenu');
     
-    menu.classList.toggle('ouvert');
-    fond.classList.toggle('actif');
+    menu.classList.add('ouvert');
+    fond.classList.add('actif');
+}
+
+function fermerMenu() {
+    const menu = document.getElementById('menu');
+    const fond = document.getElementById('fondMenu');
+    
+    menu.classList.remove('ouvert');
+    fond.classList.remove('actif');
 }
 
 // Événements
 document.addEventListener('DOMContentLoaded', function() {
     // Rendu initial
-    renduStats();
-    renduVip();
-    renduBookmakers();
-    renduBonusQuot();
-    renduHistBonus();
+    afficherStats();
+    afficherVip();
+    afficherBookmakers();
+    afficherBonusQuot();
+    afficherHistBonus();
     
-    // Menu mobile
-    document.getElementById('btnOuvrir').addEventListener('click', toggleMenu);
-    document.getElementById('btnFermer').addEventListener('click', toggleMenu);
-    document.getElementById('fondMenu').addEventListener('click', toggleMenu);
+    // Menu mobile - événements séparés pour ouvrir et fermer
+    document.getElementById('btnOuvrir').addEventListener('click', ouvrirMenu);
+    document.getElementById('btnFermer').addEventListener('click', fermerMenu);
+    document.getElementById('fondMenu').addEventListener('click', fermerMenu);
     
     // Quiz
-    document.getElementById('btnCommencerQuiz').addEventListener('click', afficherQuiz);
-    document.getElementById('btnNextQuest').addEventListener('click', questionSuivante);
-    document.getElementById('btnPrevQuest').addEventListener('click', questionPrecedente);
-    document.getElementById('btnRecommencer').addEventListener('click', recommencerQuiz);
+    document.getElementById('btnDemarrerQuiz').addEventListener('click', demarrerQuiz);
+    document.getElementById('btnSuivant').addEventListener('click', questionSuivante);
+    document.getElementById('btnPrecedent').addEventListener('click', questionPrecedente);
+    document.getElementById('btnRestart').addEventListener('click', recommencerQuiz);
     
     // Délégation d'événements pour les réponses du quiz
     document.getElementById('reponses').addEventListener('click', function(e) {
@@ -685,8 +746,15 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Autres boutons
-    document.getElementById('btnPartager')?.addEventListener('click', partagerCode);
-    document.getElementById('btnVerifId')?.addEventListener('click', verifierIdBookmaker);
+    const btnPartager = document.getElementById('btnPartager');
+    if (btnPartager) {
+        btnPartager.addEventListener('click', partagerCode);
+    }
+    
+    const btnVerifId = document.getElementById('btnVerifId');
+    if (btnVerifId) {
+        btnVerifId.addEventListener('click', verifierIdBookmaker);
+    }
     
     // Modal notification
     document.getElementById('btnFermNotif').addEventListener('click', fermerNotification);
@@ -698,32 +766,15 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = 'index.html';
         }
     });
-    
-    // Animation des cartes au scroll
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animationDelay = Math.random() * 0.3 + 's';
-                entry.target.classList.add('cardStat');
-            }
-        });
-    });
-    
-    document.querySelectorAll('.bg-gray-800').forEach(card => {
-        observer.observe(card);
-    });
 });
 
 // Mise à jour du score en temps réel
 setInterval(() => {
-    if (document.getElementById('quizJeu').classList.contains('quizVisible')) {
-        document.getElementById('scoreQuiz').textContent = `Score: ${scoreQuiz}`;
+    const scoreEl = document.getElementById('scoreQuiz');
+    if (scoreEl && document.getElementById('quizJeu').classList.contains('quizVisible')) {
+        scoreEl.textContent = `Score: ${scoreQuiz}`;
     }
 }, 100);
-
-document.querySelectorAll('.iconeFlottante').forEach(icone => {
-    icone.style.animation = 'flottement 3s ease-in-out infinite';
-});
 </script>
 </body>
 </html>

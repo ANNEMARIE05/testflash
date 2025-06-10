@@ -75,18 +75,12 @@
                         </button>
                         <h1 class="text-sm sm:text-xl lg:text-2xl font-semibold text-gray-800">Gestion Utilisateurs</h1>
                     </div>
-                    <div class="flex items-center">
-                        <div class="flex items-center space-x-4">
-                            <button onclick="ouvrirModal()" class="bg-bleu-principal text-white px-3 py-2 sm:px-4 rounded-lg hover:bg-bleu-fonce transition-colors text-sm sm:text-base">
-                                <i class="fas fa-plus mr-1 sm:mr-2"></i>
-                                <span class="hidden sm:inline">Ajouter </span>Utilisateur
-                            </button>
-                            <div class="relative">
-                                <i class="fas fa-bell text-gray-600 text-lg lg:text-xl"></i>
-                                <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
-                            </div>
-                            <img src="https://img.freepik.com/vecteurs-premium/icone-profil-avatar-par-defaut-image-utilisateur-medias-sociaux-icone-avatar-gris-silhouette-profil-vide-illustration-vectorielle_561158-3383.jpg?uid=R99967860&semt=ais_hybrid&w=740" alt="Avatar" class="w-8 h-8 rounded-full">
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <i class="fas fa-bell text-gray-600 text-lg lg:text-xl"></i>
+                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center" id="notif">0</span>
                         </div>
+                        <img src="https://img.freepik.com/vecteurs-premium/icone-profil-avatar-par-defaut-image-utilisateur-medias-sociaux-icone-avatar-gris-silhouette-profil-vide-illustration-vectorielle_561158-3383.jpg?uid=R99967860&semt=ais_hybrid&w=740" alt="Avatar" class="w-8 h-8 rounded-full">
                     </div>
                 </div>
             </header>
@@ -140,6 +134,12 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="flex justify-end mb-5">
+                    <button onclick="ouvrirModal()" class="bg-bleu-principal text-white px-3 py-2 sm:px-4 rounded-lg hover:bg-bleu-fonce transition-colors text-sm sm:text-base">
+                        <i class="fas fa-plus mr-1 sm:mr-2"></i>
+                        <span class="inline">Ajouter </span>Utilisateur
+                    </button>
                 </div>
 
                 <div class="bg-white rounded-lg shadow-md">

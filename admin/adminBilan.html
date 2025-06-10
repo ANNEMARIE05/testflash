@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Bilan</title>
+    <link rel="shortcut icon" href="/assets/img/log.jpeg" type="image/jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen">
+        <aside id="menu" class="bg-white shadow-lg w-64 fixed h-full z-30 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+            <div class="p-6 bg-blue-600 flex justify-between items-center">
+                <h2 class="text-white text-xl font-bold">Admin Panel</h2>
+                <button id="btnFermer" class="lg:hidden text-white hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <nav class="mt-4">
+                <a href="dashboardAdmin.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="adminPronostic.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-plus-circle mr-3"></i>
+                    Nouveau Pronostic
+                </a>
+                <a href="adminMesProno.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-futbol mr-3"></i>
+                    Mes Pronostiques
+                </a>
+                <a href="adminCoordonnee.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-bell mr-3"></i>
+                    Coordonnées
+                </a>
+                <a href="adminVideo.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-video mr-3"></i>
+                    Nouvelle Vidéo
+                </a>
+                <a href="adminHistorique.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-history mr-3"></i>
+                    Mes Historiques
+                </a>
+                <a href="adminUser.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-users mr-3"></i>
+                    Utilisateurs
+                </a>
+                <a href="adminTransaction.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-credit-card mr-3"></i>
+                    Transactions
+                </a>
+                <a href="adminBonus.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-gift mr-3"></i>
+                    Bonus
+                </a>
+                <a href="adminVip.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-crown mr-3"></i>
+                    Utilisateurs VIP
+                </a>
+                <a href="#" class="flex items-center px-6 py-3 text-blue-600 bg-blue-50 border-r-3 border-blue-600">
+                    <i class="fas fa-chart-line mr-3"></i>
+                    Bilan
+                </a>
+                <button id="btnDeco" class="w-full flex items-center px-6 py-3 text-red-600 hover:bg-red-50 transition-colors mt-4">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Déconnexion
+                </button>
+            </nav>
+        </aside>
+
+        <div class="flex-1 lg:ml-64">
+            <header class="bg-white shadow-sm border-b">
+                <div class="flex items-center justify-between px-4 lg:px-6 py-4">
+                    <div class="flex items-center">
+                        <button id="btnOuvrir" class="lg:hidden text-gray-600 mr-4">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <h1 class="text-xl lg:text-2xl font-semibold text-gray-800">Dashboard - Bilan</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <i class="fas fa-bell text-gray-600 text-lg lg:text-xl"></i>
+                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                        </div>
+                        <img src="https://img.freepik.com/vecteurs-premium/icone-profil-avatar-par-defaut-image-utilisateur-medias-sociaux-icone-avatar-gris-silhouette-profil-vide-illustration-vectorielle_561158-3383.jpg?uid=R99967860&semt=ais_hybrid&w=740" alt="Avatar" class="w-8 h-8 rounded-full">
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-4 lg:p-6">
+                <!-- Section Filtres -->
+                <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4 lg:mb-0">
+                            <i class="fas fa-chart-bar mr-2 text-blue-600"></i>
+                            Bilan des Activités
+                        </h2>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <button class="filtre-btn active bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all hover:bg-blue-700" data-periode="aujourd'hui">
+                                Aujourd'hui
+                            </button>
+                            <button class="filtre-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-300" data-periode="hier">
+                                Hier
+                            </button>
+                            <button class="filtre-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-300" data-periode="mois-actuel">
+                                Mois Actuel
+                            </button>
+                            <button class="filtre-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-300" data-periode="mois-dernier">
+                                Mois Dernier
+                            </button>
+                            <button class="filtre-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:bg-gray-300" data-periode="tous">
+                                Tous
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="text-sm text-gray-600 mb-4">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        Période sélectionnée: <span id="periode-active" class="font-semibold">Aujourd'hui</span>
+                        <span class="ml-4">
+                            <i class="fas fa-clock mr-1"></i>
+                            Dernière mise à jour: <span id="derniere-maj">Il y a quelques instants</span>
+                        </span>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden lg:hidden"></div>
+
+    <script>
