@@ -9,17 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        * { font-family: 'Inter', sans-serif; }
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
         
         @keyframes glissHaut {
             from { transform: translateY(50px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes rebond {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
         }
         
         @keyframes flottement {
@@ -32,30 +29,15 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         
-        .cardRet {
+        .cardDepot {
             animation: glissHaut 0.8s ease-out forwards;
             backdrop-filter: blur(20px);
-        }
-        
-        .icAnim {
-            animation: rebond 1s ease-out;
-            transition: transform 0.4s ease;
-        }
-        
-        .icAnim:hover {
-            transform: rotate(360deg) scale(1.2);
-            animation: flotte 2s ease-in-out infinite;
-        }
-        
-        .btnAnim {
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .btnAnim::before {
@@ -69,106 +51,136 @@
             transition: left 0.6s ease;
         }
         
-        .btnAnim:hover::before { left: 100%; }
-        .btnAnim:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .btnAnim:hover::before {
+            left: 100%;
+        }
+        
+        .btnAnim:hover {
+            transform: translateY(-2px);
+        }
 
-        .dropdown {
-            position: relative;
+        .sideBar {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .sideBar.ouvert {
+            transform: translateX(0);
         }
 
         .menuDrop {
-            display: none;
             position: absolute;
             top: 100%;
             left: 0;
             right: 0;
             background: #374151;
             border: 1px solid #4b5563;
-            border-radius: 12px;
+            border-radius: 0.75rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
             z-index: 10;
-            max-height: 200px;
-            overflow-y: auto;
         }
 
-        .menuDrop.show {
-            display: block;
+        .menuDrop.ouvert {
+            max-height: 300px;
+            border-color: #3b82f6;
         }
 
         .itemDrop {
             display: flex;
             align-items: center;
-            padding: 12px 16px;
+            padding: 0.75rem 1rem;
             cursor: pointer;
-            border-bottom: 1px solid #4b5563;
             transition: background-color 0.2s;
         }
 
         .itemDrop:hover {
-            background: #4b5563;
-        }
-
-        .itemDrop:last-child {
-            border-bottom: none;
+            background-color: #4b5563;
         }
 
         .itemDrop img {
             width: 24px;
             height: 24px;
-            margin-right: 12px;
+            margin-right: 0.75rem;
             border-radius: 4px;
         }
 
-        .choixPlat input[type="radio"]:checked + div {
-            border-color: #fbbf24;
-            background: rgba(251, 191, 36, 0.1);
+        .itemDrop span {
+            color: white;
+            font-weight: 500;
         }
 
-        .loader {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-left: 4px solid #3b82f6;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+        .fondObscur {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
 
-        .navBar { 
-            transform: translateX(-100%); 
-            transition: transform 0.3s ease;
-        }
-        .navBar.open { transform: translateX(0); }
-
-        @media (min-width: 1024px) {
-            .navBar { transform: translateX(0); }
+        .fondObscur.actif {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .etap { display: none; }
-        .etap.actif { display: block; }
+        .etap {
+            display: none;
+        }
+
+        .etap.actif {
+            display: block;
+        }
+
+        .dropdown {
+            position: relative;
+        }
 
         .modal {
-            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
             z-index: 1000;
         }
 
-        .modal.show {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         .modalContent {
-            background: #1f2937;
-            border-radius: 12px;
-            padding: 24px;
+            background: #374151;
+            padding: 2rem;
+            border-radius: 1rem;
             max-width: 400px;
             width: 90%;
-            margin: 20px;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .choixPlat input[type="radio"]:checked + div {
+            border-color: #fbbf24;
+            background-color: #1f2937;
+        }
+
+        @media (min-width: 1024px) {
+            .sideBar {
+                transform: translateX(0);
+            }
+            .fondObscur {
+                display: none;
+            }
         }
     </style>
     <script>
@@ -176,46 +188,45 @@
             theme: {
                 extend: {
                     colors: {
-                        'bleuP': '#1e40af',
-                        'bleuF': '#1e3a8a',
-                        'bleuD': '#3b82f6',
-                        'bleuC': '#dbeafe',
-                        'jauneA': '#fbbf24',
-                        'jauneC': '#fef3c7',
-                        'vertP': '#059669',
-                        'rougeP': '#dc2626',
-                        'violetP': '#7c3aed'
+                        'bleuPrinc': '#1e40af',
+                        'bleuFonce': '#1e3a8a',
+                        'bleuDash': '#3b82f6',
+                        'bleuClair': '#dbeafe',
+                        'jauneAcc': '#fbbf24',
+                        'jauneClair': '#fef3c7',
+                        'vertPar': '#16a34a'
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-gray-900 font-sans min-h-screen overflow-x-hidden">
-    <div id="masque" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
-    
-    <div class="flex h-screen">
-        <aside id="navLat" class="navBar bg-gray-800 text-white w-64 fixed lg:relative h-full z-50">
-            <div class="p-4 lg:p-6 border-b border-bleuP">
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="flex">
+        <div id="fondMenu" class="fixed inset-0 bg-black bg-opacity-50 z-40 fondObscur"></div>
+        
+        <div id="menu" class="w-64 bg-gray-800 min-h-screen fixed left-0 top-0 z-50 sideBar">
+            <button id="btnFermer" class="lg:hidden absolute top-4 right-4 text-white text-xl p-2 hover:bg-gray-700 rounded-lg transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="p-4 lg:p-6 border-b border-bleuPrinc">
                 <div class="flex items-center justify-between mb-3 lg:mb-4">
                     <div class="flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-r from-jauneA to-yellow-300 rounded-full flex items-center justify-center mr-2 lg:mr-3 icAnim iconeFlottante">
-                            <i class="fas fa-user text-bleuF text-xl"></i>
+                        <div class="w-12 h-12 bg-gradient-to-r from-jauneAcc to-yellow-300 rounded-full flex items-center justify-center mr-3 icone iconeFlottante">
+                            <i class="fas fa-user text-bleuFonce text-xl"></i>
                         </div>
                         <div>
                             <h3 class="font-semibold text-base">Hello Yao</h3>
                             <p class="text-sm text-gray-300">Solde: 45,000 XOF</p>
                         </div>
                     </div>
-                    <button id="btnFerm" class="lg:hidden text-red-500 hover:text-red-400 text-lg lg:text-xl">
-                        <i class="fas fa-times"></i>
-                    </button>
                 </div>
-                <div class="flex gap-1 lg:gap-2">
-                    <button onclick="allerPage('dashboardRetrait.html')" class="bg-gradient-to-r from-rougeP to-red-700 hover:from-red-700 hover:to-red-800 px-3 py-1 rounded text-sm flex-1 btnAnim">
+                <div class="flex gap-2">
+                    <button onclick="aller('dashboardRetrait.html')" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-3 py-1 rounded text-sm flex-1 transition-all duration-300 transform hover:scale-105">
                         <i class="fas fa-money-bill-wave mr-1"></i> Retrait
                     </button>
-                    <button onclick="allerPage('dashboardDepot.html')" class="bg-gradient-to-r from-vertP to-green-700 hover:from-green-700 hover:to-green-800 px-3 py-1 rounded text-sm flex-1 btnAnim">
+                    <button onclick="aller('dashboardDepot.html')" class="bg-gradient-to-r from-vertPar to-green-700 hover:from-green-700 hover:to-green-800 px-3 py-1 rounded text-sm flex-1 transition-all duration-300 transform hover:scale-105">
                         <i class="fas fa-dollar-sign mr-1"></i> Dépôt
                     </button>
                 </div>
@@ -224,56 +235,56 @@
             <nav class="p-3 lg:p-4">
                 <ul class="space-y-1 lg:space-y-2">
                     <li><a href="dashboardUser.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-home mr-3 text-base"></i> Dashboard
+                        <i class="fas fa-home mr-3"></i> Dashboard
                     </a></li>
                     <li><a href="dashboardDepot.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-plus-circle mr-3"></i> Dépôt
+                        <i class="fas fa-arrow-down mr-3"></i> Dépôt
                     </a></li>
-                    <li><a href="dashboardRetrait.html" class="flex items-center p-3 rounded bg-bleuP transition-colors text-base">
-                        <i class="fas fa-minus-circle mr-3"></i> Retrait
+                    <li><a href="dashboardRetrait.html" class="flex items-center p-3 rounded transition-colors bg-bleuPrinc text-base">
+                        <i class="fas fa-arrow-up mr-3"></i> Retrait
                     </a></li>
                     <li><a href="dashboardTransaction.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-list-alt mr-3"></i> Mes Transactions
+                        <i class="fas fa-exchange-alt mr-3"></i> Mes Transactions
                     </a></li>
                     <li><a href="dashboardPronostic.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-futbol mr-3"></i> Pronostics
+                        <i class="fas fa-chart-line mr-3"></i> Pronostics
                     </a></li>
                     <li><a href="dashboardVideo.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-video mr-3 text-base"></i> Vidéo
+                        <i class="fas fa-video mr-3"></i> Vidéo
                     </a></li>
                     <li><a href="dashboardBonus.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-gift mr-3 text-base"></i> Bonus
+                        <i class="fas fa-gift mr-3"></i> Bonus
                     </a></li>
                     <li><a href="dashboardProfile.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
                         <i class="fas fa-user-cog mr-3"></i> Profil
                     </a></li>
                     <li><a href="#" id="btnDeco" class="flex items-center p-3 rounded hover:bg-red-600 transition-colors mt-6 lg:mt-8 text-base">
-                        <i class="fas fa-sign-out-alt mr-3 text-base"></i> Déconnexion
+                        <i class="fas fa-user mr-3"></i> Déconnexion
                     </a></li>
                 </ul>
             </nav>
-        </aside>
+        </div>
 
-        <div class="flex-1 flex flex-col w-full lg:w-auto">
+        <div class="flex-1 lg:ml-64">
             <header class="bg-gradient-to-r from-gray-900 to-gray-800 shadow-2xl border-b border-white/10 px-3 sm:px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between backdrop-blur-sm">
                 <div class="flex items-center">
-                    <button id="btnMenu" class="lg:hidden mr-3 lg:mr-4 text-white hover:text-jauneA transition-colors">
-                        <i class="fas fa-bars text-base lg:text-xl"></i>
+                    <button id="btnOuvrir" class="lg:hidden mr-3 text-white hover:text-jauneAcc transition-colors">
+                        <i class="fas fa-bars text-xl"></i>
                     </button>
                     <h1 class="text-base sm:text-lg lg:text-2xl font-bold text-white">Effectuer un Retrait</h1>
                 </div>
-                <div class="flex items-center space-x-2 lg:space-x-4">
+                <div class="flex items-center space-x-4">
                     <div class="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center">
-                        <a href="dashboardProfile.html"><i class="fas fa-user text-white text-sm"></i></a>
+                        <a href="/users/dashboardProfile.html"><i class="fas fa-user text-white text-sm"></i></a>
                     </div>
                 </div>
             </header>
 
-            <main class="flex-1 overflow-y-auto p-2 sm:p-3 lg:p-6">
+            <div class="p-4 lg:p-6">
                 <div class="max-w-6xl mx-auto">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-2">
-                            <div class="bg-gray-800 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl border border-gray-700 cardRet">
+                            <div class="bg-gray-800 rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl border border-gray-700 cardDepot">
                                 
                                 <div id="etap1" class="etap actif">
                                     <div class="text-center mb-6 lg:mb-8">
@@ -466,290 +477,302 @@
                                         <i class="fas fa-check text-white text-2xl lg:text-3xl"></i>
                                     </div>
                                     <h2 class="text-lg lg:text-2xl font-bold text-white mb-4">Retrait Effectué avec Succès!</h2>
-                                    <p class="text-sm lg:text-base text-gray-400 mb-6">Votre transaction a été traitée avec succès</p>
-                                    
-                                    <div class="bg-green-900/30 border border-green-500 rounded-xl p-4 lg:p-6 mb-6">
-                                        <div class="flex items-center justify-center mb-4">
-                                            <i class="fas fa-money-bill-wave text-green-400 hidden md:flex text-xl mr-3"></i>
-                                            <span class="text-white font-bold text-lg">Montant retiré: </span>
-                                            <span id="montantSucces" class="text-green-400 font-bold text-xl ml-2"></span>
-                                            <span class="text-white font-bold text-xl ml-1">FCFA</span>
-                                        </div>
-                                        <p class="text-center text-white text-sm lg:text-base">
-                                            Vous recevrez une confirmation par SMS dans quelques minutes.
-                                        </p>
-                                    </div>
-
-                                    <button onclick="retourDashboard()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 lg:py-4 px-6 lg:px-8 rounded-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-sm lg:text-base">
+                                    <p class="text-sm lg:text-base text-gray-400 mb-6">Votre retrait a été traité avec succès. Vous recevrez un SMS de confirmation sous peu.</p>
+                                    <button onclick="retourAccueil()" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 lg:py-4 px-4 lg:px-6 rounded-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-xl text-sm lg:text-base">
                                         <i class="fas fa-home mr-2"></i>
                                         Retour au Dashboard
                                     </button>
                                 </div>
                             </div>
-                            </div>
                         </div>
+                    </div>
 
-                        <div class="lg:col-span-1">
-                            <div class="space-y-6">
-                                <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-2xl">
-                                    <div class="flex items-center space-x-3 mb-6">
-                                        <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
-                                            <i class="fas fa-info-circle text-white"></i>
-                                        </div>
-                                        <h3 class="text-xl font-bold text-white">Informations Importantes</h3>
+                    <div class="lg:col-span-1">
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 border border-gray-700 shadow-2xl">
+                                <div class="flex items-center space-x-3 mb-6">
+                                    <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-info-circle text-white"></i>
                                     </div>
-        
-                                    <div class="space-y-4">
-                                        <div class="flex items-start space-x-3">
-                                            <i class="fas fa-clock text-yellow-400 mt-1"></i>
-                                            <div>
-                                                <h4 class="font-semibold text-white mb-1">Délai de Traitement</h4>
-                                                <p class="text-sm text-gray-400">Les retraits sont traités sous 24h ouvrables</p>
-                                            </div>
+                                    <h3 class="text-xl font-bold text-white">Informations Importantes</h3>
+                                </div>
+    
+                                <div class="space-y-4">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-clock text-yellow-400 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-semibold text-white mb-1">Délai de Traitement</h4>
+                                            <p class="text-sm text-gray-400">Les retraits sont traités sous 24h ouvrables</p>
                                         </div>
-        
-                                        <div class="flex items-start space-x-3">
-                                            <i class="fas fa-coins text-yellow-400 mt-1"></i>
-                                            <div>
-                                                <h4 class="font-semibold text-white mb-1">Montant Minimum</h4>
-                                                <p class="text-sm text-gray-400">Retrait minimum: 1,000 FCFA</p>
-                                            </div>
+                                    </div>
+    
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-coins text-yellow-400 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-semibold text-white mb-1">Frais de dépôt</h4>
+                                            <p class="text-sm text-gray-400">Retrait minimum: 1,000 FCFA</p>
                                         </div>
-        
-                                        <div class="flex items-start space-x-3">
-                                            <i class="fas fa-shield-alt text-yellow-400 mt-1"></i>
-                                            <div>
-                                                <h4 class="font-semibold text-white mb-1">Sécurité</h4>
-                                                <p class="text-sm text-gray-400">Toutes les transactions sont sécurisées</p>
-                                            </div>
+                                    </div>
+    
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-shield-alt text-yellow-400 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-semibold text-white mb-1">Sécurité</h4>
+                                            <p class="text-sm text-gray-400">Toutes les transactions sont sécurisées</p>
                                         </div>
-        
-                                        <div class="flex items-start space-x-3">
-                                            <i class="fas fa-headset text-yellow-400 mt-1"></i>
-                                            <div>
-                                                <h4 class="font-semibold text-white mb-1">Support</h4>
-                                                <p class="text-sm text-gray-400">Assistance 24h/24 et 7j/7</p>
-                                            </div>
+                                    </div>
+    
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-headset text-yellow-400 mt-1"></i>
+                                        <div>
+                                            <h4 class="font-semibold text-white mb-1">Support</h4>
+                                            <p class="text-sm text-gray-400">Assistance 24h/24 et 7j/7</p>
                                         </div>
                                     </div>
                                 </div>
-        
-                                <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-6 border border-green-500/20">
-                                    <div class="flex items-center space-x-3 mb-3">
-                                        <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
-                                            <i class="fas fa-shield-alt text-white"></i>
-                                        </div>
-                                        <h4 class="text-lg font-bold text-green-400">Sécurité Garantie</h4>
+                            </div>
+    
+                            <div class="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-6 border border-green-500/20">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-shield-alt text-white"></i>
                                     </div>
-                                    <p class="text-sm text-gray-300">Toutes vos transactions sont cryptées et sécurisées. Vos données personnelles sont protégées selon les standards internationaux.</p>
+                                    <h4 class="text-lg font-bold text-green-400">Sécurité Garantie</h4>
                                 </div>
+                                <p class="text-sm text-gray-300">Toutes vos transactions sont cryptées et sécurisées. Vos données personnelles sont protégées selon les standards internationaux.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Modal de succès -->
-                <div id="modalSucces" class="modal">
-                    <div class="modalContent">
-                        <div class="text-center">
-                            <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-check text-white text-2xl"></i>
-                            </div>
-                            <h3 class="text-xl font-bold text-white mb-4">Retrait Effectué!</h3>
-                            <p id="messageSucces" class="text-gray-300 mb-6 text-sm lg:text-base"></p>
-                            <button onclick="fermerModal()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-all">
-                                Fermer
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-        <div class="fixed bottom-6 right-6 z-40">
-            <a href="https://wa.me/+2250777169313" class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-400 transition-all transform hover:scale-110 animate-bounce">
-                <i class="fab fa-whatsapp"></i>
-            </a>
+            </div>
         </div>
     </div>
+</div>
+<div class="fixed bottom-6 right-6 z-40">
+    <a href="https://wa.me/+2250777169313" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-400 transition-all transform hover:scale-110 animate-bounce">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</div>
 
-    <script>
-        let etapActuelle = 1;
-        let chronoInterval;
-        let tempsRestant = 1200; // 20 minutes en secondes
+<div id="modalConfirm" class="modal">
+    <div class="modalContent">
+        <div class="text-center">
+            <div class="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-4">Confirmer la Déconnexion</h3>
+            <p class="text-gray-300 mb-6">Êtes-vous sûr de vouloir vous déconnecter?</p>
+            <div class="flex gap-4">
+                <button id="btnAnnuler" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    Annuler
+                </button>
+                <button id="btnConfirmer" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    Déconnexion
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
-        // Gestion du menu mobile
-        document.getElementById('btnMenu').addEventListener('click', function() {
-            const nav = document.getElementById('navLat');
-            const masque = document.getElementById('masque');
-            nav.classList.add('open');
-            masque.classList.remove('hidden');
-        });
+<script>
+    // Variables globales
+    let chronoInterval;
+    let tempsRestant = 20 * 60; // 20 minutes en secondes
+    let methodePaiementSelectionnee = '';
 
-        document.getElementById('btnFerm').addEventListener('click', function() {
-            fermerMenu();
-        });
+    // Gestion du menu mobile
+    const btnOuvrir = document.getElementById('btnOuvrir');
+    const btnFermer = document.getElementById('btnFermer');
+    const menu = document.getElementById('menu');
+    const fondMenu = document.getElementById('fondMenu');
 
-        document.getElementById('masque').addEventListener('click', function() {
-            fermerMenu();
-        });
+    btnOuvrir.addEventListener('click', () => {
+        menu.classList.add('ouvert');
+        fondMenu.classList.add('actif');
+    });
 
-        function fermerMenu() {
-            const nav = document.getElementById('navLat');
-            const masque = document.getElementById('masque');
-            nav.classList.remove('open');
-            masque.classList.add('hidden');
+    btnFermer.addEventListener('click', fermerMenu);
+    fondMenu.addEventListener('click', fermerMenu);
+
+    function fermerMenu() {
+        menu.classList.remove('ouvert');
+        fondMenu.classList.remove('actif');
+    }
+
+    // Gestion du dropdown méthode de paiement
+    const btnDrop = document.getElementById('btnDrop');
+    const listeDrop = document.getElementById('listeDrop');
+    const optSel = document.getElementById('optSel');
+    const imgSel = document.getElementById('imgSel');
+
+    btnDrop.addEventListener('click', () => {
+        listeDrop.classList.toggle('ouvert');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!btnDrop.contains(e.target) && !listeDrop.contains(e.target)) {
+            listeDrop.classList.remove('ouvert');
         }
+    });
 
-        // Gestion du dropdown
-        document.getElementById('btnDrop').addEventListener('click', function() {
-            document.getElementById('listeDrop').classList.toggle('show');
+    document.querySelectorAll('.itemDrop').forEach(item => {
+        item.addEventListener('click', () => {
+            const value = item.getAttribute('data-value');
+            const imgSrc = item.getAttribute('data-img');
+            const text = item.querySelector('span').textContent;
+            
+            methodePaiementSelectionnee = value;
+            optSel.textContent = text;
+            imgSel.src = imgSrc;
+            imgSel.classList.remove('hidden');
+            
+            listeDrop.classList.remove('ouvert');
         });
+    });
 
-        document.querySelectorAll('.itemDrop').forEach(item => {
-            item.addEventListener('click', function() {
-                const value = this.dataset.value;
-                const img = this.dataset.img;
-                const text = this.textContent.trim();
-                
-                document.getElementById('optSel').textContent = text;
-                document.getElementById('imgSel').src = img;
-                document.getElementById('imgSel').classList.remove('hidden');
-                document.getElementById('listeDrop').classList.remove('show');
-            });
-        });
+    // Gestion du formulaire de demande
+    document.getElementById('formDem').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const montant = document.getElementById('montant').value;
+        const plateforme = document.getElementById('plat').value;
+        
+        if (!montant || !plateforme) {
+            alert('Veuillez remplir tous les champs obligatoires');
+            return;
+        }
+        
+        if (montant < 1000) {
+            alert('Le montant minimum est de 1000 FCFA');
+            return;
+        }
+        
+        // Passer à l'étape d'attente
+        changerEtape('etapAtt');
+        
+        // Simuler l'attente de 3 minutes
+        setTimeout(() => {
+            afficherCoordonnees(montant, plateforme);
+        }, 3000); // 3 secondes pour la démo (normalement 3 minutes)
+    });
 
-        // Fermer dropdown si clic à l'extérieur
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.dropdown')) {
-                document.getElementById('listeDrop').classList.remove('show');
+    // Afficher les coordonnées
+    function afficherCoordonnees(montant, plateforme) {
+        const villes = ['Abidjan', 'Bouaké', 'Daloa', 'Yamoussoukro', 'San-Pédro'];
+        const rues = ['Rue 12', 'Avenue 7', 'Boulevard 3', 'Rue du Commerce', 'Avenue de la Paix'];
+        
+        document.getElementById('montantAff').textContent = montant;
+        document.getElementById('nomPlat').textContent = plateforme.toUpperCase();
+        document.getElementById('villeAff').textContent = villes[Math.floor(Math.random() * villes.length)];
+        document.getElementById('rueAff').textContent = rues[Math.floor(Math.random() * rues.length)];
+        document.getElementById('montantFin').value = montant;
+        
+        changerEtape('etapCoord');
+        demarrerChrono();
+    }
+
+    // Gestion du chronomètre
+    function demarrerChrono() {
+        const chronoElement = document.getElementById('chrono');
+        
+        chronoInterval = setInterval(() => {
+            const minutes = Math.floor(tempsRestant / 60);
+            const secondes = tempsRestant % 60;
+            
+            chronoElement.textContent = `${minutes.toString().padStart(2, '0')}:${secondes.toString().padStart(2, '0')}`;
+            
+            if (tempsRestant <= 0) {
+                clearInterval(chronoInterval);
+                alert('Temps écoulé! Veuillez recommencer la procédure.');
+                changerEtape('etap1');
+                tempsRestant = 20 * 60;
             }
-        });
+            
+            tempsRestant--;
+        }, 1000);
+    }
 
-        // Gestion du formulaire de demande
-        document.getElementById('formDem').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const montant = document.getElementById('montant').value;
-            const plateforme = document.getElementById('plat').value;
-            
-            if (!montant || !plateforme || montant < 1000) {
-                alert('Veuillez remplir tous les champs et respecter le montant minimum de 1000 FCFA');
-                return;
-            }
-            
-            // Passer à l'étape d'attente
-            changerEtape('etapAtt');
-            
-            // Simuler l'attente de 3 minutes
-            setTimeout(() => {
-                afficherCoordonnees(montant, plateforme);
-            }, 5000); // 5 secondes pour la démo, normalement 3 minutes
-        });
-
-        function changerEtape(nouvelleEtape) {
-            document.querySelectorAll('.etap').forEach(etap => {
-                etap.classList.remove('actif');
-            });
-            document.getElementById(nouvelleEtape).classList.add('actif');
+    // Gestion du formulaire de retrait
+    document.getElementById('formRet').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const identifiant = document.getElementById('id').value;
+        const code = document.getElementById('code').value;
+        const montant = document.getElementById('montantFin').value;
+        const telephone = document.getElementById('tel').value;
+        const plateformeDest = document.querySelector('input[name="platDest"]:checked');
+        
+        if (!identifiant || !code || !montant || !telephone || !plateformeDest || !methodePaiementSelectionnee) {
+            alert('Veuillez remplir tous les champs obligatoires');
+            return;
         }
-
-        function afficherCoordonnees(montant, plateforme) {
-            // Coordonnées simulées
-            const coordonnees = {
-                ville: "Abidjan",
-                rue: "Boulevard de la République, près de la station Shell"
-            };
-            
-            document.getElementById('montantAff').textContent = montant;
-            document.getElementById('montantFin').value = montant;
-            document.getElementById('villeAff').textContent = coordonnees.ville;
-            document.getElementById('rueAff').textContent = coordonnees.rue;
-            document.getElementById('nomPlat').textContent = plateforme.toUpperCase();
-            
-            changerEtape('etapCoord');
-            demarrerChrono();
-        }
-
-        function demarrerChrono() {
-            chronoInterval = setInterval(() => {
-                const minutes = Math.floor(tempsRestant / 60);
-                const secondes = tempsRestant % 60;
-                
-                document.getElementById('chrono').textContent = 
-                    `${minutes.toString().padStart(2, '0')}:${secondes.toString().padStart(2, '0')}`;
-                
-                if (tempsRestant <= 0) {
-                    clearInterval(chronoInterval);
-                    alert('Temps écoulé! Veuillez recommencer votre demande.');
-                    location.reload();
-                }
-                
-                tempsRestant--;
-            }, 1000);
-        }
-
-        // Gestion du formulaire de retrait
-        document.getElementById('formRet').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const identifiant = document.getElementById('id').value;
-            const code = document.getElementById('code').value;
-            const montant = document.getElementById('montantFin').value;
-            const telephone = document.getElementById('tel').value;
-            const methodePaiement = document.getElementById('optSel').textContent;
-            const plateforme = document.querySelector('input[name="platDest"]:checked');
-            
-            if (!identifiant || !code || !montant || !telephone || 
-                methodePaiement === 'Sélectionnez une méthode' || !plateforme) {
-                alert('Veuillez remplir tous les champs obligatoires');
-                return;
-            }
-            
-            // Arrêter le chrono
+        
+        // Simuler le traitement
+        setTimeout(() => {
             clearInterval(chronoInterval);
-            
-            // Afficher le modal de succès
-            const message = `Votre retrait de ${montant} FCFA a été effectué avec succès. Vous recevrez une confirmation par SMS.`;
-            document.getElementById('messageSucces').textContent = message;
-            document.getElementById('montantSucces').textContent = montant;
-            document.getElementById('modalSucces').classList.add('show');
-    
-            // Passer à l'étape de succès après fermeture du modal
-            setTimeout(() => {
-                changerEtape('etapSucces');
-            }, 100);
-        });
+            afficherSucces(montant, plateformeDest.value, optSel.textContent);
+        }, 2000);
+    });
 
-        function fermerModal() {
-            document.getElementById('modalSucces').classList.remove('show');
+    // Afficher le succès
+    function afficherSucces(montant, plateforme, methode) {
+        
+        changerEtape('etapSucces');
+    }
+
+    // Changer d'étape
+    function changerEtape(nouvelleEtape) {
+        document.querySelectorAll('.etap').forEach(etape => {
+            etape.classList.remove('actif');
+        });
+        document.getElementById(nouvelleEtape).classList.add('actif');
+    }
+
+    // Retour à l'accueil
+    function retourAccueil() {
+        window.location.href = 'dashboardUser.html';
+    }
+
+    // Navigation
+    function aller(page) {
+        window.location.href = page;
+    }
+
+    // Gestion de la déconnexion
+    const btnDeco = document.getElementById('btnDeco');
+    const modalConfirm = document.getElementById('modalConfirm');
+    const btnAnnuler = document.getElementById('btnAnnuler');
+    const btnConfirmer = document.getElementById('btnConfirmer');
+
+    btnDeco.addEventListener('click', (e) => {
+        e.preventDefault();
+        modalConfirm.style.display = 'flex';
+    });
+
+    btnAnnuler.addEventListener('click', () => {
+        modalConfirm.style.display = 'none';
+    });
+
+    btnConfirmer.addEventListener('click', () => {
+        window.location.href = 'login.html';
+    });
+
+    // Fermer la modal en cliquant à l'extérieur
+    modalConfirm.addEventListener('click', (e) => {
+        if (e.target === modalConfirm) {
+            modalConfirm.style.display = 'none';
         }
+    });
 
-        function retourDashboard() {
-            window.location.href = 'dashboardUser.html';
-        }
+    // Animation au chargement
+    window.addEventListener('load', () => {
+        document.querySelector('.cardDepot').style.animationDelay = '0.2s';
+    });
 
-        function allerPage(page) {
-            window.location.href = page;
-        }
+    document.querySelectorAll('.iconeFlottante').forEach(icone => {
+    icone.style.animation = 'flottement 3s ease-in-out infinite';
+});
+</script>
 
-        // Gestion de la déconnexion
-        document.getElementById('btnDeco').addEventListener('click', function(e) {
-            e.preventDefault();
-            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-                window.location.href = 'index.html';
-            }
-        });
-
-        // Animation au chargement
-        window.addEventListener('load', function() {
-            document.querySelectorAll('.cardRet').forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.2}s`;
-            });
-        });
-
-        document.querySelectorAll('.iconeFlottante').forEach(icone => {
-            icone.style.animation = 'flottement 3s ease-in-out infinite';
-        });
-    </script>
 </body>
 </html>

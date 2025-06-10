@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flash Service - Pronostics</title>
+    <title>Flash Service - Dashboard</title>
     <link rel="shortcut icon" href="/assets/img/log.jpeg" type="image/jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -69,6 +69,7 @@
         
         .barreNav {
             transform: translateX(-100%);
+            transition: transform 0.3s ease;
         }
         
         .barreNav.ouvert {
@@ -124,41 +125,44 @@
                 extend: {
                     colors: {
                         'bleuPrinc': '#1e40af',
-                        'bleuFc': '#1e3a8a',
+                        'bleuFonce': '#1e3a8a',
                         'bleuDash': '#3b82f6',
+                        'bleuClair': '#dbeafe',
                         'jauneAcc': '#fbbf24',
-                        'vertPar': '#059669'
+                        'jauneClair': '#fef3c7',
+                        'vertPar': '#16a34a'
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-gray-900 font-sans min-h-screen overflow-x-hidden">
-    <div id="masq" class="masqSide fixed inset-0 bg-black/50 z-40"></div>
-    
-    <div class="flex h-screen">
-        <aside id="nav" class="barreNav bg-gray-800 text-white w-64 fixed lg:relative h-full transition-transform duration-300 z-50">
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="flex">
+        <div id="fondMenu" class="fixed inset-0 bg-black bg-opacity-50 z-40 fondObscur hidden"></div>
+        
+        <div id="menu" class="w-64 bg-gray-800 min-h-screen fixed left-0 top-0 z-50 barreNav">
+            <button id="btnFermer" class="lg:hidden absolute top-4 right-4 text-white text-xl p-2 hover:bg-gray-700 rounded-lg transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+
             <div class="p-4 lg:p-6 border-b border-bleuPrinc">
-                <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-between mb-3 lg:mb-4">
                     <div class="flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-r from-jauneAcc to-yellow-300 rounded-full flex items-center justify-center mr-3 iconeFlottante">
-                            <i class="fas fa-user text-bleuFc text-xl"></i>
+                        <div class="w-12 h-12 bg-gradient-to-r from-jauneAcc to-yellow-300 rounded-full flex items-center justify-center mr-3 icone iconeFlottante">
+                            <i class="fas fa-user text-bleuFonce text-xl"></i>
                         </div>
                         <div>
                             <h3 class="font-semibold text-base">Hello Yao</h3>
                             <p class="text-sm text-gray-300">Solde: 45,000 XOF</p>
                         </div>
                     </div>
-                    <button id="btnFerm" class="lg:hidden text-white hover:text-gray-300 text-xl">
-                        <i class="fas fa-times"></i>
-                    </button>
                 </div>
                 <div class="flex gap-2">
-                    <button onclick="allerPage('dashboardRetrait.html')" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-3 py-1 rounded text-sm flex-1 btnInter">
+                    <button onclick="aller('dashboardRetrait.html')" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-3 py-1 rounded text-sm flex-1 transition-all duration-300 transform hover:scale-105">
                         <i class="fas fa-money-bill-wave mr-1"></i> Retrait
                     </button>
-                    <button onclick="allerPage('dashboardDepot.html')" class="bg-gradient-to-r from-vertPar to-green-700 hover:from-green-700 hover:to-green-800 px-3 py-1 rounded text-sm flex-1 btnInter">
+                    <button onclick="aller('dashboardDepot.html')" class="bg-gradient-to-r from-vertPar to-green-700 hover:from-green-700 hover:to-green-800 px-3 py-1 rounded text-sm flex-1 transition-all duration-300 transform hover:scale-105">
                         <i class="fas fa-dollar-sign mr-1"></i> Dépôt
                     </button>
                 </div>
@@ -170,16 +174,16 @@
                         <i class="fas fa-home mr-3"></i> Dashboard
                     </a></li>
                     <li><a href="dashboardDepot.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-plus-circle mr-3"></i> Dépôt
+                        <i class="fas fa-arrow-down mr-3"></i> Dépôt
                     </a></li>
                     <li><a href="dashboardRetrait.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-minus-circle mr-3"></i> Retrait
+                        <i class="fas fa-arrow-up mr-3"></i> Retrait
                     </a></li>
                     <li><a href="dashboardTransaction.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-list-alt mr-3"></i> Mes Transactions
+                        <i class="fas fa-exchange-alt mr-3"></i> Mes Transactions
                     </a></li>
-                    <li><a href="dashboardPronostic.html" class="flex items-center p-3 rounded hover:text-white transition-all bg-bleuPrinc text-white text-base">
-                        <i class="fas fa-futbol mr-3"></i> Pronostics
+                    <li><a href="dashboardPronostic.html" class="flex items-center p-3 rounded transition-colors bg-bleuPrinc text-base">
+                        <i class="fas fa-chart-line mr-3"></i> Pronostics
                     </a></li>
                     <li><a href="dashboardVideo.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
                         <i class="fas fa-video mr-3"></i> Vidéo
@@ -190,17 +194,17 @@
                     <li><a href="dashboardProfile.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
                         <i class="fas fa-user-cog mr-3"></i> Profil
                     </a></li>
-                    <li><a href="#" id="btnDeconnexion" class="flex items-center p-3 rounded hover:bg-red-600 transition-colors mt-6 lg:mt-8 text-base">
+                    <li><a href="#" id="btnDeco" class="flex items-center p-3 rounded hover:bg-red-600 transition-colors mt-6 lg:mt-8 text-base">
                         <i class="fas fa-user mr-3"></i> Déconnexion
                     </a></li>
                 </ul>
             </nav>
-        </aside>
+        </div>
 
-        <div class="flex-1 flex flex-col w-full lg:w-auto">
+        <div class="flex-1 lg:ml-64">
             <header class="bg-gradient-to-r from-gray-900 to-gray-800 shadow-2xl border-b border-white/10 px-3 sm:px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between backdrop-blur-sm">
                 <div class="flex items-center">
-                    <button id="btnMenu" class="lg:hidden mr-3 text-white hover:text-jauneAcc transition-colors">
+                    <button id="btnOuvrir" class="lg:hidden mr-3 text-white hover:text-jauneAcc transition-colors">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                     <h1 class="text-base sm:text-lg lg:text-2xl font-bold text-white">Mes Pronostics</h1>
@@ -212,44 +216,9 @@
                 </div>
             </header>
 
-            <main class="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6">
+            <div class="p-4 lg:p-6">
                 <div class="max-w-7xl mx-auto space-y-4 lg:space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6">
-                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
-                            <div class="relative flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Solde Bonus</p>
-                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-jauneAcc">2,450.00 XOF</p>
-                                </div>
-                                <div class="icAnim">
-                                    <i class="fas fa-wallet text-jauneAcc text-xl lg:text-3xl"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
-                            <div class="relative flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Pronostics Réussis</p>
-                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-green-400">92%</p>
-                                </div>
-                                <div class="icAnim">
-                                    <i class="fas fa-chart-line text-green-400 text-xl lg:text-3xl"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden sm:col-span-2 lg:col-span-1 bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
-                            <div class="relative flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Bonus Récoltés</p>
-                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-bleuDash">15,750.00 XOF</p>
-                                </div>
-                                <div class="icAnim">
-                                    <i class="fas fa-gift text-bleuDash text-xl lg:text-3xl"></i>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6" id="statsContainer">
                     </div>
 
                     <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
@@ -258,347 +227,306 @@
                                 <i class="fas fa-futbol text-bleuDash mr-2 lg:mr-3"></i>
                                 Tous les Pronostics
                             </h3>
-                            <div class="flex flex-wrap gap-2">
-                                <button class="filtrBtn actif px-3 py-1 rounded-lg text-xs font-medium bg-gray-700 text-white" data-filtre="tous">
-                                    Tous
-                                </button>
-                                <button class="filtrBtn px-3 py-1 rounded-lg text-xs font-medium bg-gray-700 text-white" data-filtre="encours">
-                                    Aujourd'hui
-                                </button>
-                                <button class="filtrBtn px-3 py-1 rounded-lg text-xs font-medium bg-gray-700 text-white" data-filtre="gagne">
-                                    Gagnés
-                                </button>
+                            <div class="flex flex-wrap gap-2" id="filtresCont">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4 lg:gap-6" id="contPron">
-                            <div class="cartePron carteAujourdhui rounded-xl p-4 lg:p-5 border carteSurv transition-all duration-400 backdrop-blur-xl" data-stat="encours">
-                                <div class="flex justify-between items-center mb-3 lg:mb-4">
-                                    <span class="text-xs text-green-300 bg-green-800/50 px-2 py-1 rounded-full">La Liga</span>
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded-full">Aujourd'hui</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center justify-between mb-3 lg:mb-4">
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/Real-Madrid-Logo.png" alt="real madrid" class="logoEq rounded-full">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">Real Madrid</span>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-gray-400 text-sm lg:text-lg font-bold">VS</div>
-                                        <div class="text-yellow-400 font-bold text-sm">20:30</div>
-                                    </div>
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/Barcelona-Logo.png" alt="real madrid" class="logoEq rounded-full">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">Barcelone</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-gradient-to-r from-cyan-600/30 to-blue-600/30 rounded-lg p-3 lg:p-4 mb-3 lg:mb-4 text-center border border-green-400/30">
-                                    <div class="text-white font-bold text-xs lg:text-sm mb-1">1X2 - Real Madrid</div>
-                                    <div class="text-lg lg:text-2xl font-black text-blue-300">1.95</div>
-                                </div>
-                                
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-400 text-xs lg:text-sm">Confiance</span>
-                                    <span class="text-yellow-400 font-bold text-sm lg:text-base">85%</span>
-                                </div>
-                            </div>
-
-                            <div class="cartePron carteAujourdhui rounded-xl p-4 lg:p-5 border carteSurv transition-all duration-400 backdrop-blur-xl" data-stat="encours">
-                                <div class="flex justify-between items-center mb-3 lg:mb-4">
-                                    <span class="text-xs text-green-300 bg-green-800/50 px-2 py-1 rounded-full">Premier League</span>
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded-full">Aujourd'hui</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center justify-between mb-3 lg:mb-4">
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/Manchester-City-Logo.png" class="logoEq rounded-full mb-1 lg:mb-2" alt="">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">Man City</span>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-gray-400 text-sm lg:text-lg font-bold">VS</div>
-                                        <div class="text-yellow-400 font-bold text-sm">16:00</div>
-                                    </div>
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/Chelsea-Logo.png" class="logoEq rounded-full mb-1 lg:mb-2" alt="">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">Chelsea</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-gradient-to-r from-cyan-600/30 to-blue-600/30 rounded-lg p-3 lg:p-4 mb-3 lg:mb-4 text-center border border-green-400/30">
-                                    <div class="text-white font-bold text-xs lg:text-sm mb-1">BTTS - Oui</div>
-                                    <div class="text-lg lg:text-2xl font-black text-blue-300">1.75</div>
-                                </div>
-                                
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-400 text-xs lg:text-sm">Confiance</span>
-                                    <span class="text-yellow-400 font-bold text-sm lg:text-base">75%</span>
-                                </div>
-                            </div>
-
-                            <div class="cartePron carteAujourdhui rounded-xl p-4 lg:p-5 border carteSurv transition-all duration-400 backdrop-blur-xl" data-stat="encours">
-                                <div class="flex justify-between items-center mb-3 lg:mb-4">
-                                    <span class="text-xs text-green-300 bg-green-800/50 px-2 py-1 rounded-full">Premier League</span>
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded-full">Aujourd'hui</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center justify-between mb-3 lg:mb-4">
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/Manchester-City-Logo.png" class="logoEq rounded-full mb-1 lg:mb-2" alt="">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">Man City</span>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-gray-400 text-sm lg:text-lg font-bold">VS</div>
-                                        <div class="text-yellow-400 font-bold text-sm">16:00</div>
-                                    </div>
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/Chelsea-Logo.png" class="logoEq rounded-full mb-1 lg:mb-2" alt="">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">Chelsea</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-gradient-to-r from-cyan-600/30 to-blue-600/30 rounded-lg p-3 lg:p-4 mb-3 lg:mb-4 text-center border border-green-400/30">
-                                    <div class="text-white font-bold text-xs lg:text-sm mb-1">BTTS - Oui</div>
-                                    <div class="text-lg lg:text-2xl font-black text-blue-300">1.75</div>
-                                </div>
-                                
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-400 text-xs lg:text-sm">Confiance</span>
-                                    <span class="text-yellow-400 font-bold text-sm lg:text-base">75%</span>
-                                </div>
-                            </div>
-
-                            <div class="cartePron carteGagne rounded-xl p-4 lg:p-5 border carteSurv transition-all duration-400 backdrop-blur-xl" data-stat="gagne">
-                                <div class="flex justify-between items-center mb-3 lg:mb-4">
-                                    <span class="text-xs text-blue-300 bg-blue-800/50 px-2 py-1 rounded-full">Ligue 1</span>
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full font-medium"><i class="fas fa-check mr-1"></i>Gagné
-                                        </span>
-                                        <span class="text-xs bg-gray-500/20 text-gray-400 px-2 py-1 rounded-full">Hier</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center justify-between mb-3 lg:mb-4">
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/PSG-Logo.png" class="logoEq rounded-full mb-1 lg:mb-2" alt="">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">PSG</span>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-gray-400 text-sm lg:text-lg font-bold">VS</div>
-                                        <div class="text-green-400 font-bold text-sm">3-0</div>
-                                    </div>
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/Chelsea-Logo.png" class="logoEq rounded-full mb-1 lg:mb-2" alt="">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">Rennes</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-gradient-to-r from-green-600/30 to-teal-600/30 rounded-lg p-3 lg:p-4 mb-3 lg:mb-4 text-center border border-blue-400/30">
-                                    <div class="text-white font-bold text-xs lg:text-sm mb-1">Plus de 2.5 Buts</div>
-                                    <div class="text-lg lg:text-2xl font-black text-green-300">1.65</div>
-                                </div>
-                                
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-400 text-xs lg:text-sm">Confiance</span>
-                                    <span class="text-green-400 font-bold text-sm lg:text-base">92%</span>
-                                </div>
-                            </div>
-
-                            <div class="cartePron carteGagne rounded-xl p-4 lg:p-5 border carteSurv transition-all duration-400 backdrop-blur-xl" data-stat="gagne">
-                                <div class="flex justify-between items-center mb-3 lg:mb-4">
-                                    <span class="text-xs text-blue-300 bg-blue-800/50 px-2 py-1 rounded-full">La Liga</span>
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full font-medium">
-                                            <i class="fas fa-check mr-1"></i>Gagné
-                                        </span>
-                                        <span class="text-xs bg-gray-500/20 text-gray-400 px-2 py-1 rounded-full">Il y a 2 jours</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center justify-between mb-3 lg:mb-4">
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/Chelsea-Logo.png" class="logoEq rounded-full mb-1 lg:mb-2" alt="">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">Real Madrid</span>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-gray-400 text-sm lg:text-lg font-bold">VS</div>
-                                        <div class="text-green-400 font-bold text-sm">4-1</div>
-                                    </div>
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/Chelsea-Logo.png" class="logoEq rounded-full mb-1 lg:mb-2" alt="">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">Villarreal</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-gradient-to-r from-green-600/30 to-teal-600/30 rounded-lg p-3 lg:p-4 mb-3 lg:mb-4 text-center border border-blue-400/30">
-                                    <div class="text-white font-bold text-xs lg:text-sm mb-1">1X2 - Real Madrid</div>
-                                    <div class="text-lg lg:text-2xl font-black text-green-300">1.80</div>
-                                </div>
-                                
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-400 text-xs lg:text-sm">Confiance</span>
-                                    <span class="text-green-400 font-bold text-sm lg:text-base">95%</span>
-                                </div>
-                            </div>
-
-                            <div class="cartePron cartePerdu rounded-xl p-4 lg:p-5 border carteSurv transition-all duration-400 backdrop-blur-xl" data-stat="perdu">
-                                <div class="flex justify-between items-center mb-3 lg:mb-4">
-                                    <span class="text-xs text-red-300 bg-red-800/50 px-2 py-1 rounded-full">Serie A</span>
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded-full font-medium">
-                                            <i class="fas fa-times mr-1"></i>Perdu
-                                        </span>
-                                        <span class="text-xs bg-gray-500/20 text-gray-400 px-2 py-1 rounded-full">Hier</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center justify-between mb-3 lg:mb-4">
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/Chelsea-Logo.png" class="logoEq rounded-full mb-1 lg:mb-2" alt="">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">Juventus</span>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="text-gray-400 text-sm lg:text-lg font-bold">VS</div>
-                                        <div class="text-red-400 font-bold text-sm">1-2</div>
-                                    </div>
-                                    <div class="flex flex-col items-center">
-                                        <img src="/assets/img/Chelsea-Logo.png" class="logoEq rounded-full mb-1 lg:mb-2" alt="">
-                                        <span class="text-white font-medium text-xs lg:text-sm text-center">AC Milan</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-gradient-to-r from-red-600/30 to-rose-600/30 rounded-lg p-3 lg:p-4 mb-3 lg:mb-4 text-center border border-red-400/30">
-                                    <div class="text-white font-bold text-xs lg:text-sm mb-1">1X2 - Juventus</div>
-                                    <div class="text-lg lg:text-2xl font-black text-red-300">1.80</div>
-                                </div>
-                                
-                                <div class="flex justify-between items-center">
-                                    <span class="text-gray-400 text-xs lg:text-sm">Perte</span>
-                                    <span class="text-red-400 font-bold text-sm lg:text-base">-2,000 XOF</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
-        <div class="fixed bottom-6 right-6 z-40">
-            <a href="https://wa.me/+2250777169313" class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-400 transition-all transform hover:scale-110 animate-bounce">
-                <i class="fab fa-whatsapp"></i>
-            </a>
+    </div>
+    <div class="fixed bottom-6 right-6 z-40">
+        <a href="https://wa.me/+2250777169313" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-400 transition-all transform hover:scale-110 animate-bounce">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <div id="modaleDepot" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center opacity-0 transition-all duration-300">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full mx-4 border transform scale-75 opacity-0 transition-all duration-300">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-clock text-white text-2xl"></i>
+                </div>
+                
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Demande en attente</h3>
+                <p class="text-gray-600 mb-6 leading-relaxed">Votre demande de dépôt est en attente de validation. Veuillez envoyer votre recharge à Flash Service via Moov Money en composant</p>
+                
+                <div class="bg-gray-100 rounded-xl p-4 mb-6 border">
+                    <a href="#" class="font-bold text-blue-600 text-xs sm:text-md md:text-lg break-all">*155*2*1*0171137378*montant*code secret#</a>
+                </div>
+                
+                <button id="btnFermerModale" class="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-xl font-medium transition-all duration-300">
+                    Fermer
+                </button>
+            </div>
         </div>
     </div>
 
-    <script>
-        // Navigation mobile
-        const btnMenu = document.getElementById('btnMenu');
-        const nav = document.getElementById('nav');
-        const masq = document.getElementById('masq');
-        const btnFerm = document.getElementById('btnFerm');
-
-        btnMenu.addEventListener('click', () => {
-            nav.classList.add('ouvert');
-            masq.classList.add('actif');
-        });
-
-        function fermerNav() {
-            nav.classList.remove('ouvert');
-            masq.classList.remove('actif');
+<script>
+const donnees = {
+    stats: [
+        { titre: 'Solde Bonus', valeur: '2,450.00 XOF', couleur: 'jauneAcc', icone: 'fas fa-wallet' },
+        { titre: 'Pronostics Réussis', valeur: '92%', couleur: 'green-400', icone: 'fas fa-chart-line' },
+        { titre: 'Bonus Récoltés', valeur: '15,750.00 XOF', couleur: 'bleuDash', icone: 'fas fa-gift' }
+    ],
+    filtres: [
+        { nom: 'Tous', valeur: 'tous', actif: true },
+        { nom: 'Aujourd\'hui', valeur: 'encours', actif: false },
+        { nom: 'Gagnés', valeur: 'gagne', actif: false }
+    ],
+    pronostics: [
+        {
+            ligue: 'La Liga',
+            etat: 'encours',
+            equipe1: { nom: 'Real Madrid', logo: '/assets/img/Real-Madrid-Logo.png' },
+            equipe2: { nom: 'Barcelone', logo: '/assets/img/Barcelona-Logo.png' },
+            heure: '20:30',
+            pari: '1X2 - Real Madrid',
+            cote: '1.95',
+            confiance: '85%',
+            date: 'Aujourd\'hui'
+        },
+        {
+            ligue: 'Premier League',
+            etat: 'encours',
+            equipe1: { nom: 'Man City', logo: '/assets/img/Manchester-City-Logo.png' },
+            equipe2: { nom: 'Chelsea', logo: '/assets/img/Chelsea-Logo.png' },
+            heure: '16:00',
+            pari: 'BTTS - Oui',
+            cote: '1.75',
+            confiance: '75%',
+            date: 'Aujourd\'hui'
+        },
+        {
+            ligue: 'Ligue 1',
+            etat: 'gagne',
+            equipe1: { nom: 'PSG', logo: '/assets/img/PSG-Logo.png' },
+            equipe2: { nom: 'Rennes', logo: '/assets/img/Chelsea-Logo.png' },
+            score: '3-0',
+            pari: 'Plus de 2.5 Buts',
+            cote: '1.65',
+            confiance: '92%',
+            date: 'Hier'
+        },
+        {
+            ligue: 'Serie A',
+            etat: 'perdu',
+            equipe1: { nom: 'Juventus', logo: '/assets/img/Chelsea-Logo.png' },
+            equipe2: { nom: 'AC Milan', logo: '/assets/img/Chelsea-Logo.png' },
+            score: '1-2',
+            pari: '1X2 - Juventus',
+            cote: '1.80',
+            perte: '-2,000 XOF',
+            date: 'Hier'
         }
+    ]
+};
 
-        btnFerm.addEventListener('click', fermerNav);
-        masq.addEventListener('click', fermerNav);
+const menu = document.getElementById('menu');
+const fondMenu = document.getElementById('fondMenu');
+const btnOuvrir = document.getElementById('btnOuvrir');
+const btnFermer = document.getElementById('btnFermer');
+const btnDeco = document.getElementById('btnDeco');
+const statsContainer = document.getElementById('statsContainer');
+const filtresCont = document.getElementById('filtresCont');
+const contPron = document.getElementById('contPron');
 
-        // Navigation vers d'autres pages
-        function allerPage(page) {
-            window.location.href = page;
-        }
+function genererStats() {
+    statsContainer.innerHTML = donnees.stats.map(stat => `
+        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
+            <div class="relative flex items-center justify-between">
+                <div>
+                    <p class="text-gray-400 text-xs lg:text-sm font-medium">${stat.titre}</p>
+                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-${stat.couleur}">${stat.valeur}</p>
+                </div>
+                <div class="icAnim">
+                    <i class="${stat.icone} text-${stat.couleur} text-xl lg:text-3xl"></i>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
 
-        // Gestion des filtres
-        const filtresBtn = document.querySelectorAll('.filtrBtn');
-        const cartesPron = document.querySelectorAll('.cartePron');
+function genererFiltres() {
+    filtresCont.innerHTML = donnees.filtres.map(filtre => `
+        <button class="filtrBtn ${filtre.actif ? 'actif' : ''} px-3 py-1 rounded-lg text-xs font-medium bg-gray-700 text-white" data-filtre="${filtre.valeur}">
+            ${filtre.nom}
+        </button>
+    `).join('');
+}
 
-        filtresBtn.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Retirer la classe active de tous les boutons
-                filtresBtn.forEach(b => b.classList.remove('actif'));
-                // Ajouter la classe active au bouton cliqué
-                btn.classList.add('actif');
+function genererPronostics() {
+    contPron.innerHTML = donnees.pronostics.map(pron => {
+        const classeEtat = pron.etat === 'gagne' ? 'carteGagne' : pron.etat === 'perdu' ? 'cartePerdu' : 'carteAujourdhui';
+        const badgeEtat = pron.etat === 'gagne' ? 
+            `<span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded-full font-medium"><i class="fas fa-check mr-1"></i>Gagné</span>` :
+            pron.etat === 'perdu' ?
+            `<span class="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded-full font-medium"><i class="fas fa-times mr-1"></i>Perdu</span>` :
+            `<span class="text-xs bg-orange-500/20 text-orange-400 px-2 py-1 rounded-full">${pron.date}</span>`;
+        
+        const scoreOuHeure = pron.score ? `<div class="text-${pron.etat === 'gagne' ? 'green' : 'red'}-400 font-bold text-sm">${pron.score}</div>` : 
+                              `<div class="text-yellow-400 font-bold text-sm">${pron.heure}</div>`;
+        
+        const bgGradient = pron.etat === 'gagne' ? 'from-green-600/30 to-teal-600/30' : 
+                          pron.etat === 'perdu' ? 'from-red-600/30 to-rose-600/30' : 
+                          'from-cyan-600/30 to-blue-600/30';
+        
+        const texteCote = pron.etat === 'gagne' ? 'green-300' : 
+                         pron.etat === 'perdu' ? 'red-300' : 'blue-300';
+        
+        const infoConf = pron.etat === 'perdu' ? 
+            `<span class="text-gray-400 text-xs lg:text-sm">Perte</span>
+             <span class="text-red-400 font-bold text-sm lg:text-base">${pron.perte}</span>` :
+            `<span class="text-gray-400 text-xs lg:text-sm">Confiance</span>
+             <span class="text-${pron.etat === 'gagne' ? 'green' : 'yellow'}-400 font-bold text-sm lg:text-base">${pron.confiance}</span>`;
 
-                const filtre = btn.getAttribute('data-filtre');
+        return `
+            <div class="cartePron ${classeEtat} rounded-xl p-4 lg:p-5 border carteSurv transition-all duration-400 backdrop-blur-xl" data-stat="${pron.etat}">
+                <div class="flex justify-between items-center mb-3 lg:mb-4">
+                    <span class="text-xs text-${pron.etat === 'gagne' ? 'blue' : pron.etat === 'perdu' ? 'red' : 'green'}-300 bg-${pron.etat === 'gagne' ? 'blue' : pron.etat === 'perdu' ? 'red' : 'green'}-800/50 px-2 py-1 rounded-full">${pron.ligue}</span>
+                    <div class="flex items-center gap-2">
+                        ${badgeEtat}
+                        ${pron.etat !== 'encours' ? `<span class="text-xs bg-gray-500/20 text-gray-400 px-2 py-1 rounded-full">${pron.date}</span>` : ''}
+                    </div>
+                </div>
                 
-                cartesPron.forEach(carte => {
-                    if (filtre === 'tous') {
-                        carte.style.display = 'block';
-                    } else {
-                        const statCarte = carte.getAttribute('data-stat');
-                        if (statCarte === filtre) {
-                            carte.style.display = 'block';
-                        } else {
-                            carte.style.display = 'none';
-                        }
-                    }
-                });
-            });
-        });
+                <div class="flex items-center justify-between mb-3 lg:mb-4">
+                    <div class="flex flex-col items-center">
+                        <img src="${pron.equipe1.logo}" alt="${pron.equipe1.nom}" class="logoEq rounded-full mb-1 lg:mb-2">
+                        <span class="text-white font-medium text-xs lg:text-sm text-center">${pron.equipe1.nom}</span>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-gray-400 text-sm lg:text-lg font-bold">VS</div>
+                        ${scoreOuHeure}
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <img src="${pron.equipe2.logo}" alt="${pron.equipe2.nom}" class="logoEq rounded-full mb-1 lg:mb-2">
+                        <span class="text-white font-medium text-xs lg:text-sm text-center">${pron.equipe2.nom}</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r ${bgGradient} rounded-lg p-3 lg:p-4 mb-3 lg:mb-4 text-center border border-${pron.etat === 'gagne' ? 'blue' : pron.etat === 'perdu' ? 'red' : 'green'}-400/30">
+                    <div class="text-white font-bold text-xs lg:text-sm mb-1">${pron.pari}</div>
+                    <div class="text-lg lg:text-2xl font-black text-${texteCote}">${pron.cote}</div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    ${infoConf}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
 
-        // Animation des statistiques au chargement
-        window.addEventListener('load', () => {
-            const cartesStat = document.querySelectorAll('.carteStat');
-            cartesStat.forEach((carte, index) => {
-                setTimeout(() => {
-                    carte.style.opacity = '0';
-                    carte.style.transform = 'translateY(20px)';
-                    carte.style.transition = 'all 0.6s ease-out';
-                    
-                    setTimeout(() => {
-                        carte.style.opacity = '1';
-                        carte.style.transform = 'translateY(0)';
-                    }, 100);
-                }, index * 200);
-            });
-        });
+function initInterface() {
+    genererStats();
+    genererFiltres();
+    genererPronostics();
+    
+    const filtresBtns = document.querySelectorAll('.filtrBtn');
+    const cartesPron = document.querySelectorAll('.cartePron');
 
-        // Effet de survol amélioré pour les cartes
-        document.querySelectorAll('.cartePron').forEach(carte => {
-            carte.addEventListener('mouseenter', () => {
-                carte.style.transform = 'translateY(-8px) scale(1.02)';
-                carte.style.boxShadow = '0 20px 40px rgba(0,0,0,0.4)';
-            });
+    filtresBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filtresBtns.forEach(b => b.classList.remove('actif'));
+            btn.classList.add('actif');
+
+            const filtre = btn.getAttribute('data-filtre');
             
-            carte.addEventListener('mouseleave', () => {
-                carte.style.transform = 'translateY(0) scale(1)';
-                carte.style.boxShadow = '';
+            cartesPron.forEach(carte => {
+                if (filtre === 'tous') {
+                    carte.style.display = 'block';
+                } else {
+                    const statCarte = carte.getAttribute('data-stat');
+                    carte.style.display = statCarte === filtre ? 'block' : 'none';
+                }
             });
         });
+    });
+}
 
-        // Animation des icônes
-        document.querySelectorAll('.icAnim').forEach(icon => {
-            setInterval(() => {
-                icon.style.transform = 'scale(1.1)';
-                setTimeout(() => {
-                    icon.style.transform = 'scale(1)';
-                }, 300);
-            }, 3000);
-        });
+btnOuvrir.addEventListener('click', () => {
+    menu.classList.add('ouvert');
+    fondMenu.classList.remove('hidden');
+    fondMenu.classList.add('masqSide', 'actif');
+});
 
-        document.querySelectorAll('.iconeFlottante').forEach(icone => {
-            icone.style.animation = 'flottement 3s ease-in-out infinite';
-        });
+btnFermer.addEventListener('click', () => {
+    menu.classList.remove('ouvert');
+    fondMenu.classList.add('hidden');
+    fondMenu.classList.remove('masqSide', 'actif');
+});
 
-        const btnDeconnexion = document.getElementById('btnDeconnexion');
-        btnDeconnexion.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-                window.location.href = '/auth/login.html';
-            }
-        });
-    </script>
+fondMenu.addEventListener('click', () => {
+    menu.classList.remove('ouvert');
+    fondMenu.classList.add('hidden');
+    fondMenu.classList.remove('masqSide', 'actif');
+});
+
+btnDeco.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+        window.location.href = 'login.html';
+    }
+});
+
+function aller(page) {
+    window.location.href = page;
+}
+
+document.addEventListener('DOMContentLoaded', initInterface);
+
+window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024) {
+        menu.classList.remove('ouvert');
+        fondMenu.classList.add('hidden');
+        fondMenu.classList.remove('masqSide', 'actif');
+    }
+});
+
+window.addEventListener('load', () => {
+    const cartesStat = document.querySelectorAll('.carteStat');
+    cartesStat.forEach((carte, index) => {
+        setTimeout(() => {
+            carte.style.opacity = '0';
+            carte.style.transform = 'translateY(20px)';
+            carte.style.transition = 'all 0.6s ease-out';
+            
+            setTimeout(() => {
+                carte.style.opacity = '1';
+                carte.style.transform = 'translateY(0)';
+            }, 100);
+        }, index * 200);
+    });
+});
+
+document.querySelectorAll('.cartePron').forEach(carte => {
+    carte.addEventListener('mouseenter', () => {
+        carte.style.transform = 'translateY(-8px) scale(1.02)';
+        carte.style.boxShadow = '0 20px 40px rgba(0,0,0,0.4)';
+    });
+    
+    carte.addEventListener('mouseleave', () => {
+        carte.style.transform = 'translateY(0) scale(1)';
+        carte.style.boxShadow = '';
+    });
+});
+
+document.querySelectorAll('.icAnim').forEach(icon => {
+    setInterval(() => {
+        icon.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            icon.style.transform = 'scale(1)';
+        }, 300);
+    }, 3000);
+});
+
+document.querySelectorAll('.iconeFlottante').forEach(icone => {
+    icone.style.animation = 'flottement 3s ease-in-out infinite';
+});
+</script>
 </body>
 </html>

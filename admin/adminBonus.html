@@ -51,9 +51,13 @@
                     <i class="fas fa-credit-card mr-3"></i>
                     Transactions
                 </a>
-                <a href="adminBonus.html" class="flex items-center px-6 py-3 text-bleu-principal bg-blue-50 border-r-3 border-bleu-principal">
+                <a href="#" class="flex items-center px-6 py-3 text-bleu-principal bg-blue-50 border-r-3 border-bleu-principal">
                     <i class="fas fa-gift mr-3"></i>
                     Bonus
+                </a>
+                <a href="adminVip.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-crown mr-3"></i>
+                    Utilisateurs VIP
                 </a>
                 <button id="deco" class="w-full flex items-center px-6 py-3 text-red-600 hover:bg-red-50 transition-colors mt-8">
                     <i class="fas fa-sign-out-alt mr-3"></i>
@@ -83,67 +87,26 @@
 
             <main class="p-4 lg:p-6">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
-                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <div>
-                                <p class="text-gray-500 text-sm">Quiz Actifs</p>
-                                <p class="text-2xl lg:text-3xl font-bold text-bleu-principal" id="nbQuiz">5</p>
-                            </div>
-                            <div class="bg-blue-100 p-3 rounded-full">
-                                <i class="fas fa-question-circle text-bleu-principal text-lg lg:text-xl"></i>
-                            </div>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-2">Bonus: 500 XOF/jour</p>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <div>
-                                <p class="text-gray-500 text-sm">Membres VIP</p>
-                                <p class="text-2xl lg:text-3xl font-bold text-jaune-accent" id="nbVip">23</p>
-                            </div>
-                            <div class="bg-yellow-100 p-3 rounded-full">
-                                <i class="fas fa-crown text-jaune-accent text-lg lg:text-xl"></i>
-                            </div>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-2">Bonus: 1000 XOF/mois</p>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <div>
-                                <p class="text-gray-500 text-sm">Total Bonus Distribués</p>
-                                <p class="text-2xl lg:text-3xl font-bold text-green-600" id="totalBonus">125,500</p>
-                            </div>
-                            <div class="bg-green-100 p-3 rounded-full">
-                                <i class="fas fa-coins text-green-600 text-lg lg:text-xl"></i>
-                            </div>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-2">XOF ce mois</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 mb-6 lg:mb-8">
                     <div class="bg-white rounded-lg shadow-md">
                         <div class="px-4 lg:px-6 py-4 border-b">
-                            <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Créer un Quiz Quotidien</h2>
+                            <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Quiz Standard</h2>
                         </div>
                         <div class="p-4 lg:p-6">
-                            <form id="formQuiz">
-                                <div class="mb-4">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Titre du Quiz</label>
-                                    <input type="text" id="titreQuiz" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu-principal" placeholder="Quiz Football du jour">
+                            <form id="formQuizStd" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Titre</label>
+                                    <input type="text" id="titreQuizStd" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu-principal" placeholder="Quiz Standard">
                                 </div>
-                                <div class="mb-4">
+                                <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                                    <textarea id="descQuiz" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu-principal h-20" placeholder="Testez vos connaissances football..."></textarea>
+                                    <textarea id="descQuizStd" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu-principal h-20" placeholder="Description du quiz..."></textarea>
                                 </div>
-                                <div class="mb-6">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Montant du Bonus (XOF)</label>
-                                    <input type="number" id="montantQuiz" value="500" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu-principal">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Montant (XOF)</label>
+                                    <input type="number" id="montantQuizStd" value="500" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu-principal">
                                 </div>
                                 <button type="submit" class="w-full bg-bleu-principal text-white py-2 px-4 rounded-lg hover:bg-bleu-fonce transition-colors">
-                                    <i class="fas fa-plus mr-2"></i>Créer le Quiz
+                                    <i class="fas fa-plus mr-2"></i>Créer Quiz Standard
                                 </button>
                             </form>
                         </div>
@@ -151,31 +114,72 @@
 
                     <div class="bg-white rounded-lg shadow-md">
                         <div class="px-4 lg:px-6 py-4 border-b">
-                            <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Gestion Bonus VIP</h2>
+                            <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Quiz VIP</h2>
                         </div>
                         <div class="p-4 lg:p-6">
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Montant Bonus VIP Mensuel</label>
-                                <input type="number" id="bonusVip" value="1000" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu-principal">
-                                <p class="text-sm text-gray-500 mt-1">XOF par mois</p>
-                            </div>
-                            <div class="mb-6">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Prochaine Distribution</label>
-                                <input type="date" id="dateDistrib" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu-principal">
-                            </div>
-                            <button onclick="majBonusVip()" class="w-full bg-jaune-accent text-white py-2 px-4 rounded-lg hover:bg-yellow-500 transition-colors mb-3">
-                                <i class="fas fa-save mr-2"></i>Sauvegarder
-                            </button>
-                            <button onclick="distribuerBonus()" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
-                                <i class="fas fa-gift mr-2"></i>Distribuer Maintenant
-                            </button>
+                            <form id="formQuizVip" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Titre</label>
+                                    <input type="text" id="titreQuizVip" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-jaune-accent" placeholder="Quiz VIP">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                    <textarea id="descQuizVip" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-jaune-accent h-20" placeholder="Description du quiz VIP..."></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Montant (XOF)</label>
+                                    <input type="number" id="montantQuizVip" value="1000" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-jaune-accent">
+                                </div>
+                                <button type="submit" class="w-full bg-jaune-accent text-white py-2 px-4 rounded-lg hover:bg-yellow-500 transition-colors">
+                                    <i class="fas fa-crown mr-2"></i>Créer Quiz VIP
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md">
+                        <div class="px-4 lg:px-6 py-4 border-b">
+                            <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Mardi Bonus</h2>
+                        </div>
+                        <div class="p-4 lg:p-6">
+                            <form id="formMardiBonus" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Type Client</label>
+                                    <select id="typeClient" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                        <option value="standard">Client Standard</option>
+                                        <option value="vip">Client VIP</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Critère</label>
+                                    <select id="critere" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                        <option value="nb_depot">Nombre de dépôt les plus élevé</option>
+                                        <option value="somme_depot">Somme total de dépôt les plus élevé</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de bénéficiaires</label>
+                                    <select id="nbBenef" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                        <option value="5">5 premiers</option>
+                                        <option value="10">10 premiers</option>
+                                        <option value="30">30 premiers</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Montant Bonus (XOF)</label>
+                                    <input type="number" id="montantMardiBonus" value="2000" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                </div>
+                                <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
+                                    <i class="fas fa-filter mr-2"></i>Appliquer Filtre
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-white rounded-lg shadow-md mb-6">
                     <div class="px-4 lg:px-6 py-4 border-b">
-                        <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Quiz Actifs</h2>
+                        <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Quiz Standard Actifs</h2>
                     </div>
                     <div class="hidden md:block overflow-x-auto">
                         <table class="w-full">
@@ -188,17 +192,45 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="tableQuiz" class="divide-y divide-gray-200">
+                            <tbody id="tableQuizStd" class="divide-y divide-gray-200">
                             </tbody>
                         </table>
                     </div>
-                    <div class="md:hidden" id="quizMobile">
+                    <div class="md:hidden" id="quizStdMobile">
                     </div>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-md">
+                <div class="bg-white rounded-lg shadow-md mb-6">
                     <div class="px-4 lg:px-6 py-4 border-b">
-                        <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Membres VIP</h2>
+                        <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Quiz VIP Actifs</h2>
+                    </div>
+                    <div class="hidden md:block overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Titre</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Participants</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Bonus</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableQuizVip" class="divide-y divide-gray-200">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="md:hidden" id="quizVipMobile">
+                    </div>
+                </div>
+
+                <div id="beneficiairesSection" class="bg-white rounded-lg shadow-md hidden">
+                    <div class="px-4 lg:px-6 py-4 border-b">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Bénéficiaires Mardi Bonus</h2>
+                            <button id="btnAttribuerBonus" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                <i class="fas fa-gift mr-2"></i>Attribuer Bonus
+                            </button>
+                        </div>
                     </div>
                     <div class="hidden md:block overflow-x-auto">
                         <table class="w-full">
@@ -206,16 +238,16 @@
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nom</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut VIP</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Dernier Bonus</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Téléphone</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Valeur</th>
                                 </tr>
                             </thead>
-                            <tbody id="tableVip" class="divide-y divide-gray-200">
+                            <tbody id="tableBeneficiaires" class="divide-y divide-gray-200">
                             </tbody>
                         </table>
                     </div>
-                    <div class="md:hidden" id="vipMobile">
+                    <div class="md:hidden" id="beneficiairesMobile">
                     </div>
                 </div>
             </main>
@@ -224,6 +256,358 @@
 
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden lg:hidden"></div>
 
-    <script src="/script/adminBonus.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bleu-principal': '#1e40af',
+                        'bleu-fonce': '#1e3a8a',
+                        'jaune-accent': '#fbbf24',
+                        'jaune-clair': '#fef3c7'
+                    }
+                }
+            }
+        }
+
+        const ouvrirMenu = document.getElementById('ouvrirMenu');
+        const fermerMenu = document.getElementById('fermerMenu');
+        const menu = document.getElementById('menu');
+        const overlay = document.getElementById('overlay');
+
+        ouvrirMenu.addEventListener('click', () => {
+            menu.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        });
+
+        fermerMenu.addEventListener('click', () => {
+            menu.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        overlay.addEventListener('click', () => {
+            menu.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        let quizStd = [
+            { id: 1, titre: 'Quiz Football Ligue 1', participants: 45, bonus: 500, statut: 'Actif', date: '2025-06-06' },
+            { id: 2, titre: 'Quiz Champions League', participants: 32, bonus: 500, statut: 'Actif', date: '2025-06-05' },
+            { id: 3, titre: 'Quiz Premier League', participants: 28, bonus: 500, statut: 'Terminé', date: '2025-06-04' }
+        ];
+
+        let quizVip = [
+            { id: 1, titre: 'Quiz VIP Champions', participants: 12, bonus: 1000, statut: 'Actif', date: '2025-06-06' },
+            { id: 2, titre: 'Quiz VIP Liga', participants: 8, bonus: 1000, statut: 'Actif', date: '2025-06-05' }
+        ];
+
+        let clients = [
+            { id: 1, nom: 'Koné Moussa', email: 'moussa@email.com', tel: '07 00 00 00 01', type: 'vip', nb_depot: 25, somme_depot: 125000 },
+            { id: 2, nom: 'Diabaté Fatou', email: 'fatou@email.com', tel: '07 00 00 00 02', type: 'standard', nb_depot: 30, somme_depot: 95000 },
+            { id: 3, nom: 'Traoré Ibrahim', email: 'ibrahim@email.com', tel: '07 00 00 00 03', type: 'vip', nb_depot: 20, somme_depot: 150000 },
+            { id: 4, nom: 'Kouadio Aya', email: 'aya@email.com', tel: '07 00 00 00 04', type: 'standard', nb_depot: 35, somme_depot: 80000 },
+            { id: 5, nom: 'Bamba Sekou', email: 'sekou@email.com', tel: '07 00 00 00 05', type: 'vip', nb_depot: 15, somme_depot: 200000 },
+            { id: 6, nom: 'Ouattara Marie', email: 'marie@email.com', tel: '07 00 00 00 06', type: 'standard', nb_depot: 40, somme_depot: 70000 }
+        ];
+
+        function affQuizStd() {
+            const table = document.getElementById('tableQuizStd');
+            const mobile = document.getElementById('quizStdMobile');
+            
+            table.innerHTML = '';
+            mobile.innerHTML = '';
+
+            quizStd.forEach(q => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${q.titre}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${q.participants}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${q.bonus} XOF</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs rounded-full ${q.statut === 'Actif' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+                            ${q.statut}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                        <button onclick="modQuizStd(${q.id})" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition-colors text-xs">
+                            <i class="fas fa-edit mr-1"></i>Modifier
+                        </button>
+                        <button onclick="suppQuizStd(${q.id})" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition-colors text-xs">
+                            <i class="fas fa-trash mr-1"></i>Supprimer
+                        </button>
+                    </td>
+                `;
+                table.appendChild(row);
+
+                const card = document.createElement('div');
+                card.className = 'border-b border-gray-200 p-4';
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-medium text-gray-900">${q.titre}</p>
+                                <p class="text-sm text-gray-500">${q.participants} participants</p>
+                            </div>
+                            <span class="px-2 py-1 text-xs rounded-full ${q.statut === 'Actif' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+                                ${q.statut}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p class="text-lg font-bold text-gray-900">${q.bonus} XOF</p>
+                            <div class="flex space-x-2">
+                                <button onclick="modQuizStd(${q.id})" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition-colors text-xs">
+                                    <i class="fas fa-edit mr-1"></i>Modifier
+                                </button>
+                                <button onclick="suppQuizStd(${q.id})" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition-colors text-xs">
+                                    <i class="fas fa-trash mr-1"></i>Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                mobile.appendChild(card);
+            });
+        }
+
+        function affQuizVip() {
+            const table = document.getElementById('tableQuizVip');
+            const mobile = document.getElementById('quizVipMobile');
+            
+            table.innerHTML = '';
+            mobile.innerHTML = '';
+
+            quizVip.forEach(q => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${q.titre}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${q.participants}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${q.bonus} XOF</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs rounded-full ${q.statut === 'Actif' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+                            ${q.statut}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                        <button onclick="modQuizVip(${q.id})" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition-colors text-xs">
+                            <i class="fas fa-edit mr-1"></i>Modifier
+                        </button>
+                        <button onclick="suppQuizVip(${q.id})" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition-colors text-xs">
+                            <i class="fas fa-trash mr-1"></i>Supprimer
+                        </button>
+                    </td>
+                `;
+                table.appendChild(row);
+
+                const card = document.createElement('div');
+                card.className = 'border-b border-gray-200 p-4';
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-medium text-gray-900">${q.titre}</p>
+                                <p class="text-sm text-gray-500">${q.participants} participants</p>
+                            </div>
+                            <span class="px-2 py-1 text-xs rounded-full ${q.statut === 'Actif' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+                                ${q.statut}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p class="text-lg font-bold text-gray-900">${q.bonus} XOF</p>
+                            <div class="flex space-x-2">
+                                <button onclick="modQuizVip(${q.id})" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition-colors text-xs">
+                                    <i class="fas fa-edit mr-1"></i>Modifier
+                                </button>
+                                <button onclick="suppQuizVip(${q.id})" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition-colors text-xs">
+                                    <i class="fas fa-trash mr-1"></i>Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                mobile.appendChild(card);
+            });
+        }
+
+        function affBenef(benef, montant) {
+            const table = document.getElementById('tableBeneficiaires');
+            const mobile = document.getElementById('beneficiairesMobile');
+            const section = document.getElementById('beneficiairesSection');
+            
+            table.innerHTML = '';
+            mobile.innerHTML = '';
+            section.classList.remove('hidden');
+
+            benef.forEach(b => {
+                const valeur = document.getElementById('critere').value === 'nb_depot' ? b.nb_depot + ' dépôts' : b.somme_depot.toLocaleString() + ' XOF';
+                
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${b.nom}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${b.email}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${b.tel}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <span class="px-2 py-1 text-xs rounded-full ${b.type === 'vip' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800'}">
+                            ${b.type.toUpperCase()}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${valeur}</td>
+                `;
+                table.appendChild(row);
+
+                const card = document.createElement('div');
+                card.className = 'border-b border-gray-200 p-4';
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-medium text-gray-900">${b.nom}</p>
+                                <p class="text-sm text-gray-500">${b.email}</p>
+                                <p class="text-sm text-gray-500">${b.tel}</p>
+                            </div>
+                            <span class="px-2 py-1 text-xs rounded-full ${b.type === 'vip' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800'}">
+                                ${b.type.toUpperCase()}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm font-medium text-gray-900">${valeur}</p>
+                            <p class="text-lg font-bold text-green-600">${montant} XOF</p>
+                        </div>
+                    </div>
+                `;
+                mobile.appendChild(card);
+            });
+        }
+
+        // Gestion des formulaires
+        document.getElementById('formQuizStd').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const titre = document.getElementById('titreQuizStd').value;
+            const desc = document.getElementById('descQuizStd').value;
+            const montant = document.getElementById('montantQuizStd').value;
+            
+            if (titre && desc && montant) {
+                const newId = quizStd.length > 0 ? Math.max(...quizStd.map(q => q.id)) + 1 : 1;
+                quizStd.push({
+                    id: newId,
+                    titre: titre,
+                    participants: 0,
+                    bonus: parseInt(montant),
+                    statut: 'Actif',
+                    date: new Date().toISOString().split('T')[0]
+                });
+                
+                affQuizStd();
+                this.reset();
+                document.getElementById('montantQuizStd').value = '500';
+                alert('Quiz Standard créé avec succès !');
+            }
+        });
+
+        document.getElementById('formQuizVip').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const titre = document.getElementById('titreQuizVip').value;
+            const desc = document.getElementById('descQuizVip').value;
+            const montant = document.getElementById('montantQuizVip').value;
+            
+            if (titre && desc && montant) {
+                const newId = quizVip.length > 0 ? Math.max(...quizVip.map(q => q.id)) + 1 : 1;
+                quizVip.push({
+                    id: newId,
+                    titre: titre,
+                    participants: 0,
+                    bonus: parseInt(montant),
+                    statut: 'Actif',
+                    date: new Date().toISOString().split('T')[0]
+                });
+                
+                affQuizVip();
+                this.reset();
+                document.getElementById('montantQuizVip').value = '1000';
+                alert('Quiz VIP créé avec succès !');
+            }
+        });
+
+        document.getElementById('formMardiBonus').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const typeClient = document.getElementById('typeClient').value;
+            const critere = document.getElementById('critere').value;
+            const nbBenef = parseInt(document.getElementById('nbBenef').value);
+            const montant = parseInt(document.getElementById('montantMardiBonus').value);
+            
+            // Filtrer les clients selon le type
+            let clientsFiltres = clients.filter(c => c.type === typeClient);
+            
+            // Trier selon le critère
+            if (critere === 'nb_depot') {
+                clientsFiltres.sort((a, b) => b.nb_depot - a.nb_depot);
+            } else {
+                clientsFiltres.sort((a, b) => b.somme_depot - a.somme_depot);
+            }
+            
+            // Prendre les N premiers
+            const beneficiaires = clientsFiltres.slice(0, nbBenef);
+            
+            affBenef(beneficiaires, montant);
+        });
+
+        document.getElementById('btnAttribuerBonus').addEventListener('click', function() {
+            const montant = document.getElementById('montantMardiBonus').value;
+            if (confirm(`Confirmer l'attribution du bonus de ${montant} XOF aux bénéficiaires sélectionnés ?`)) {
+                alert('Bonus attribué avec succès aux bénéficiaires !');
+                document.getElementById('beneficiairesSection').classList.add('hidden');
+            }
+        });
+
+        // Fonctions de modification et suppression
+        function modQuizStd(id) {
+            const quiz = quizStd.find(q => q.id === id);
+            if (quiz) {
+                const nouveauTitre = prompt('Nouveau titre:', quiz.titre);
+                if (nouveauTitre) {
+                    quiz.titre = nouveauTitre;
+                    affQuizStd();
+                }
+            }
+        }
+
+        function suppQuizStd(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce quiz ?')) {
+                quizStd = quizStd.filter(q => q.id !== id);
+                affQuizStd();
+            }
+        }
+
+        function modQuizVip(id) {
+            const quiz = quizVip.find(q => q.id === id);
+            if (quiz) {
+                const nouveauTitre = prompt('Nouveau titre:', quiz.titre);
+                if (nouveauTitre) {
+                    quiz.titre = nouveauTitre;
+                    affQuizVip();
+                }
+            }
+        }
+
+        function suppQuizVip(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce quiz VIP ?')) {
+                quizVip = quizVip.filter(q => q.id !== id);
+                affQuizVip();
+            }
+        }
+
+        // Déconnexion
+        document.getElementById('deco').addEventListener('click', function() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Initialisation
+        affQuizStd();
+        affQuizVip();
+    </script>
 </body>
 </html>

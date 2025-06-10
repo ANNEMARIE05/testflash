@@ -3,37 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flash Service - Mes Transactions</title>
+    <title>Flash Service - Dashboard</title>
     <link rel="shortcut icon" href="/assets/img/log.jpeg" type="image/jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        * { font-family: 'Inter', sans-serif; }
-
-        @keyframes flotte {
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        @keyframes glissHaut {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes flottement {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
         }
 
-        .masque {
-            display: none;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        .masque.actif {
-            display: block;
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         
-        .nav {
+        .cardDepot {
+            animation: glissHaut 0.8s ease-out forwards;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btnAnim::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .btnAnim:hover::before {
+            left: 100%;
+        }
+        
+        .btnAnim:hover {
+            transform: translateY(-2px);
+        }
+
+        .sideBar {
             transform: translateX(-100%);
+            transition: transform 0.3s ease;
         }
         
-        .nav.ouvert {
+        .sideBar.ouvert {
             transform: translateX(0);
         }
-        
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #374151;
+            border: 1px solid #4b5563;
+            border-radius: 0.75rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .dropdown-menu.ouvert {
+            max-height: 300px;
+            border-color: #3b82f6;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background-color: #4b5563;
+        }
+
+        .dropdown-item img {
+            width: 24px;
+            height: 24px;
+            margin-right: 0.75rem;
+            border-radius: 4px;
+        }
+
+        .dropdown-item span {
+            color: white;
+            font-weight: 500;
+        }
+
+        .fondObscur {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .fondObscur.actif {
+            opacity: 1;
+            visibility: visible;
+        }
+
         @media (min-width: 1024px) {
-            .nav { transform: translateX(0); }
+            .sideBar {
+                transform: translateX(0);
+            }
+            .fondObscur {
+                display: none;
+            }
         }
     </style>
     <script>
@@ -44,23 +139,29 @@
                         'bleuPrinc': '#1e40af',
                         'bleuFonce': '#1e3a8a',
                         'bleuDash': '#3b82f6',
+                        'bleuClair': '#dbeafe',
                         'jauneAcc': '#fbbf24',
-                        'vertPar': '#059669'
+                        'jauneClair': '#fef3c7',
+                        'vertPar': '#16a34a'
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-gray-900 font-sans min-h-screen overflow-x-hidden">
-    <div id="masque" class="masque fixed inset-0 bg-black/50 z-40"></div>
-    
-    <div class="flex h-screen">
-        <aside id="nav" class="nav bg-gray-800 text-white w-64 fixed lg:relative h-full transition-transform duration-300 z-50">
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="flex">
+        <div id="fondMenu" class="fixed inset-0 bg-black bg-opacity-50 z-40 fondObscur"></div>
+        
+        <div id="menu" class="w-64 bg-gray-800 min-h-screen fixed left-0 top-0 z-50 sideBar">
+            <button id="btnFermer" class="lg:hidden absolute top-4 right-4 text-white text-xl p-2 hover:bg-gray-700 rounded-lg transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+
             <div class="p-4 lg:p-6 border-b border-bleuPrinc">
                 <div class="flex items-center justify-between mb-3 lg:mb-4">
                     <div class="flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-r from-jauneAcc to-yellow-300 rounded-full flex items-center justify-center mr-3 icone">
+                        <div class="w-12 h-12 bg-gradient-to-r from-jauneAcc to-yellow-300 rounded-full flex items-center justify-center mr-3 icone iconeFlottante">
                             <i class="fas fa-user text-bleuFonce text-xl"></i>
                         </div>
                         <div>
@@ -68,9 +169,6 @@
                             <p class="text-sm text-gray-300">Solde: 45,000 XOF</p>
                         </div>
                     </div>
-                    <button id="fermer" class="lg:hidden text-white hover:text-gray-300 text-xl">
-                        <i class="fas fa-times"></i>
-                    </button>
                 </div>
                 <div class="flex gap-2">
                     <button onclick="aller('dashboardRetrait.html')" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-3 py-1 rounded text-sm flex-1 transition-all duration-300 transform hover:scale-105">
@@ -88,16 +186,16 @@
                         <i class="fas fa-home mr-3"></i> Dashboard
                     </a></li>
                     <li><a href="dashboardDepot.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-plus-circle mr-3"></i> Dépôt
+                        <i class="fas fa-arrow-down mr-3"></i> Dépôt
                     </a></li>
                     <li><a href="dashboardRetrait.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-minus-circle mr-3"></i> Retrait
+                        <i class="fas fa-arrow-up mr-3"></i> Retrait
                     </a></li>
                     <li><a href="dashboardTransaction.html" class="flex items-center p-3 rounded transition-colors bg-bleuPrinc text-base">
-                        <i class="fas fa-list-alt mr-3"></i> Mes Transactions
+                        <i class="fas fa-exchange-alt mr-3"></i> Mes Transactions
                     </a></li>
                     <li><a href="dashboardPronostic.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-futbol mr-3"></i> Pronostics
+                        <i class="fas fa-chart-line mr-3"></i> Pronostics
                     </a></li>
                     <li><a href="dashboardVideo.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
                         <i class="fas fa-video mr-3"></i> Vidéo
@@ -108,17 +206,17 @@
                     <li><a href="dashboardProfile.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
                         <i class="fas fa-user-cog mr-3"></i> Profil
                     </a></li>
-                    <li><a href="#" id="btnDeconnexion" class="flex items-center p-3 rounded hover:bg-red-600 transition-colors mt-6 lg:mt-8 text-base">
+                    <li><a href="#" id="btnDeco" class="flex items-center p-3 rounded hover:bg-red-600 transition-colors mt-6 lg:mt-8 text-base">
                         <i class="fas fa-user mr-3"></i> Déconnexion
                     </a></li>
                 </ul>
             </nav>
-        </aside>
+        </div>
 
-        <div class="flex-1 flex flex-col w-full lg:w-auto">
+        <div class="flex-1 lg:ml-64">
             <header class="bg-gradient-to-r from-gray-900 to-gray-800 shadow-2xl border-b border-white/10 px-3 sm:px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between backdrop-blur-sm">
                 <div class="flex items-center">
-                    <button id="ouvrir" class="lg:hidden mr-3 text-white hover:text-jauneAcc transition-colors">
+                    <button id="btnOuvrir" class="lg:hidden mr-3 text-white hover:text-jauneAcc transition-colors">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                     <h1 class="text-base sm:text-lg lg:text-2xl font-bold text-white">Mes Transactions</h1>
@@ -130,57 +228,9 @@
                 </div>
             </header>
 
-            <main class="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6">
+            <div class="p-4 lg:p-6">
                 <div class="max-w-7xl mx-auto space-y-4 lg:space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
-                        <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Total Dépôts</p>
-                                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-green-400">125,500 XOF</p>
-                                </div>
-                                <div class="w-10 h-10 lg:w-12 lg:h-12 bg-green-500/20 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-arrow-up text-green-400 text-lg lg:text-xl"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Total Retraits</p>
-                                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-red-400">78,000 XOF</p>
-                                </div>
-                                <div class="w-10 h-10 lg:w-12 lg:h-12 bg-red-500/20 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-arrow-down text-red-400 text-lg lg:text-xl"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Bonus Reçus</p>
-                                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-jauneAcc">12,750 XOF</p>
-                                </div>
-                                <div class="w-10 h-10 lg:w-12 lg:h-12 bg-jauneAcc/20 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-gift text-jauneAcc text-lg lg:text-xl"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Nb Transactions</p>
-                                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-bleuDash">47</p>
-                                </div>
-                                <div class="w-10 h-10 lg:w-12 lg:h-12 bg-bleuDash/20 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-exchange-alt text-bleuDash text-lg lg:text-xl"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="stats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6"></div>
 
                     <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 lg:mb-6 space-y-3 sm:space-y-0">
@@ -215,338 +265,171 @@
                                         <th class="text-left py-3 px-4 text-gray-400 font-medium text-sm">Statut</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tableau" class="divide-y divide-gray-700">
-                                    <tr class="hover:bg-gray-700/50 transition-colors">
-                                        <td class="py-4 px-4 text-white text-sm">07/06/2025 14:30</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs font-medium flex items-center w-fit">
-                                                <i class="fas fa-plus mr-1"></i>Dépôt
-                                            </span>
-                                        </td>
-                                        <td class="py-4 px-4 text-green-400 font-bold text-sm">+15,000 XOF</td>
-                                        <td class="py-4 px-4 text-white text-sm">Orange Money</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs">Réussi</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-700/50 transition-colors">
-                                        <td class="py-4 px-4 text-white text-sm">06/06/2025 09:15</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-red-500/20 text-red-400 px-2 py-1 rounded-full text-xs font-medium flex items-center w-fit">
-                                                <i class="fas fa-minus mr-1"></i>Retrait
-                                            </span>
-                                        </td>
-                                        <td class="py-4 px-4 text-red-400 font-bold text-sm">-5,000 XOF</td>
-                                        <td class="py-4 px-4 text-white text-sm">MTN Money</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs">Réussi</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-700/50 transition-colors">
-                                        <td class="py-4 px-4 text-white text-sm">05/06/2025 16:45</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-jauneAcc/20 text-jauneAcc px-2 py-1 rounded-full text-xs font-medium flex items-center w-fit">
-                                                <i class="fas fa-gift mr-1"></i>Bonus
-                                            </span>
-                                        </td>
-                                        <td class="py-4 px-4 text-jauneAcc font-bold text-sm">+2,500 XOF</td>
-                                        <td class="py-4 px-4 text-white text-sm">1xBet Bonus</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs">Complété</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-700/50 transition-colors">
-                                        <td class="py-4 px-4 text-white text-sm">04/06/2025 11:20</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs font-medium flex items-center w-fit">
-                                                <i class="fas fa-plus mr-1"></i>Dépôt
-                                            </span>
-                                        </td>
-                                        <td class="py-4 px-4 text-green-400 font-bold text-sm">+25,000 XOF</td>
-                                        <td class="py-4 px-4 text-white text-sm">Moov Money</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs">Réussi</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-700/50 transition-colors">
-                                        <td class="py-4 px-4 text-white text-sm">03/06/2025 13:05</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-red-500/20 text-red-400 px-2 py-1 rounded-full text-xs font-medium flex items-center w-fit">
-                                                <i class="fas fa-minus mr-1"></i>Retrait
-                                            </span>
-                                        </td>
-                                        <td class="py-4 px-4 text-red-400 font-bold text-sm">-12,000 XOF</td>
-                                        <td class="py-4 px-4 text-white text-sm">Orange Money</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded-full text-xs">En cours</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-700/50 transition-colors">
-                                        <td class="py-4 px-4 text-white text-sm">02/06/2025 08:30</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-jauneAcc/20 text-jauneAcc px-2 py-1 rounded-full text-xs font-medium flex items-center w-fit">
-                                                <i class="fas fa-gift mr-1"></i>Bonus
-                                            </span>
-                                        </td>
-                                        <td class="py-4 px-4 text-jauneAcc font-bold text-sm">+5,000 XOF</td>
-                                        <td class="py-4 px-4 text-white text-sm">Connexion Quotidienne</td>
-                                        <td class="py-4 px-4">
-                                            <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded-full text-xs">Complété</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="tableau" class="divide-y divide-gray-700"></tbody>
                             </table>
                         </div>
 
-                        <div class="lg:hidden space-y-3" id="mobile">
-                            <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-4 border border-green-500/30">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                                            <i class="fas fa-plus text-white text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-white font-medium text-sm">Dépôt</p>
-                                            <p class="text-gray-400 text-xs">07/06/2025 14:30</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-green-400 font-bold text-sm">+15,000 XOF</p>
-                                        <span class="text-xs text-green-400 bg-green-500/20 px-2 py-1 rounded-full">Réussi</span>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-center text-xs text-gray-400">
-                                    <span>Orange Money</span>
-                                    <span>#TXN001245</span>
-                                </div>
-                            </div>
+                        <div class="lg:hidden space-y-3" id="mobile"></div>
 
-                            <div class="bg-gradient-to-r from-red-500/20 to-red-600/20 rounded-xl p-4 border border-red-500/30">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                                            <i class="fas fa-minus text-white text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-white font-medium text-sm">Retrait</p>
-                                            <p class="text-gray-400 text-xs">06/06/2025 09:15</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-red-400 font-bold text-sm">-5,000 XOF</p>
-                                        <span class="text-xs text-green-400 bg-green-500/20 px-2 py-1 rounded-full">Réussi</span>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-center text-xs text-gray-400">
-                                    <span>MTN Money</span>
-                                    <span>#TXN001244</span>
-                                </div>
-                            </div>
-
-                            <div class="bg-gradient-to-r from-jauneAcc/20 to-yellow-500/20 rounded-xl p-4 border border-jauneAcc/30">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-8 h-8 bg-jauneAcc rounded-full flex items-center justify-center">
-                                            <i class="fas fa-gift text-white text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-white font-medium text-sm">Bonus</p>
-                                            <p class="text-gray-400 text-xs">05/06/2025 16:45</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-jauneAcc font-bold text-sm">+2,500 XOF</p>
-                                        <span class="text-xs text-jauneAcc bg-jauneAcc/20 px-2 py-1 rounded-full">Complété</span>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-center text-xs text-gray-400">
-                                    <span>1xBet Bonus</span>
-                                    <span>#BON001089</span>
-                                </div>
-                            </div>
-
-                            <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-4 border border-green-500/30">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                                            <i class="fas fa-plus text-white text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-white font-medium text-sm">Dépôt</p>
-                                            <p class="text-gray-400 text-xs">04/06/2025 11:20</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-green-400 font-bold text-sm">+25,000 XOF</p>
-                                        <span class="text-xs text-green-400 bg-green-500/20 px-2 py-1 rounded-full">Réussi</span>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-center text-xs text-gray-400">
-                                    <span>Moov Money</span>
-                                    <span>#TXN001243</span>
-                                </div>
-                            </div>
-
-                            <div class="bg-gradient-to-r from-red-500/20 to-red-600/20 rounded-xl p-4 border border-red-500/30">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                                            <i class="fas fa-minus text-white text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-white font-medium text-sm">Retrait</p>
-                                            <p class="text-gray-400 text-xs">03/06/2025 13:05</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-red-400 font-bold text-sm">-12,000 XOF</p>
-                                        <span class="text-xs text-yellow-400 bg-yellow-500/20 px-2 py-1 rounded-full">En cours</span>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-center text-xs text-gray-400">
-                                    <span>Orange Money</span>
-                                    <span>#TXN001242</span>
-                                </div>
-                            </div>
-
-                            <div class="bg-gradient-to-r from-jauneAcc/20 to-yellow-500/20 rounded-xl p-4 border border-jauneAcc/30">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center space-x-3">
-                                        <div class="w-8 h-8 bg-jauneAcc rounded-full flex items-center justify-center">
-                                            <i class="fas fa-gift text-white text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-white font-medium text-sm">Bonus</p>
-                                            <p class="text-gray-400 text-xs">02/06/2025 08:30</p>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-jauneAcc font-bold text-sm">+5,000 XOF</p>
-                                        <span class="text-xs text-jauneAcc bg-jauneAcc/20 px-2 py-1 rounded-full">Complété</span>
-                                    </div>
-                                </div>
-                                <div class="flex justify-between items-center text-xs text-gray-400">
-                                    <span>Connexion Quotidienne</span>
-                                    <span>#BON001088</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-center mt-6">
-                            <button class="bg-bleuPrinc hover:bg-bleuFonce text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors">
-                                Charger plus
-                            </button>
+                        <div class="flex flex-col sm:flex-row justify-between items-center mt-6 pt-4 border-t border-gray-700 space-y-3 sm:space-y-0">
+                            <p class="text-gray-400 text-sm" id="infoPagination">Affichage de 1-6 sur 47 transactions</p>
+                            <div class="flex space-x-2">
+                                <button class="px-3 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm">
+                                    <i class="fas fa-chevron-left mr-1"></i>Précédent
+                                </button>
+                                <button class="px-3 py-2 bg-bleuDash text-white rounded-lg hover:bg-blue-600 transition-colors text-sm">
+                                    Suivant<i class="fas fa-chevron-right ml-1"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
-        <div class="fixed bottom-6 right-6 z-40">
-            <a href="https://wa.me/+2250777169313" class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-400 transition-all transform hover:scale-110 animate-bounce">
-                <i class="fab fa-whatsapp"></i>
-            </a>
+            </div>
         </div>
     </div>
+    <div class="fixed bottom-6 right-6 z-40">
+        <a href="https://wa.me/+2250777169313" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-400 transition-all transform hover:scale-110 animate-bounce">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
 
-    <script>
-        const nav = document.getElementById('nav');
-        const masque = document.getElementById('masque');
-        const ouvrir = document.getElementById('ouvrir');
-        const fermer = document.getElementById('fermer');
+<script>
+const donnees = {
+    stats: [
+        {titre: "Total Dépôts", montant: "125,500 XOF", couleur: "green", icone: "fas fa-arrow-up"},
+        {titre: "Total Retraits", montant: "78,000 XOF", couleur: "red", icone: "fas fa-arrow-down"},
+        {titre: "Bonus Reçus", montant: "12,750 XOF", couleur: "jauneAcc", icone: "fas fa-gift"},
+        {titre: "Nb Transactions", montant: "47", couleur: "bleuDash", icone: "fas fa-exchange-alt"}
+    ],
+    txns: [
+        {date: "07/06/2025 14:30", type: "depot", montant: "+15,000 XOF", methode: "Orange Money", statut: "Réussi", id: "TXN001245"},
+        {date: "06/06/2025 09:15", type: "retrait", montant: "-5,000 XOF", methode: "MTN Money", statut: "Réussi", id: "TXN001244"},
+        {date: "05/06/2025 16:45", type: "bonus", montant: "+2,500 XOF", methode: "1xBet Bonus", statut: "Complété", id: "BON001089"},
+        {date: "04/06/2025 11:20", type: "depot", montant: "+25,000 XOF", methode: "Moov Money", statut: "Réussi", id: "TXN001243"},
+        {date: "03/06/2025 13:05", type: "retrait", montant: "-12,000 XOF", methode: "Orange Money", statut: "En cours", id: "TXN001242"},
+        {date: "02/06/2025 08:30", type: "bonus", montant: "+5,000 XOF", methode: "Connexion Quotidienne", statut: "Complété", id: "BON001088"}
+    ]
+};
 
-        function ouvrirNav() {
-            nav.classList.add('ouvert');
-            masque.classList.add('actif');
-            document.body.style.overflow = 'hidden';
-        }
+const couleurType = {
+    depot: {bg: "green-500/20", txt: "green-400", icone: "fas fa-plus", nom: "Dépôt"},
+    retrait: {bg: "red-500/20", txt: "red-400", icone: "fas fa-minus", nom: "Retrait"},
+    bonus: {bg: "jauneAcc/20", txt: "jauneAcc", icone: "fas fa-gift", nom: "Bonus"}
+};
 
-        function fermerNav() {
-            nav.classList.remove('ouvert');
-            masque.classList.remove('actif');
-            document.body.style.overflow = 'auto';
-        }
+const couleurStatut = {
+    "Réussi": {bg: "green-500/20", txt: "green-400"},
+    "Complété": {bg: "jauneAcc/20", txt: "jauneAcc"},
+    "En cours": {bg: "yellow-500/20", txt: "yellow-400"}
+};
 
-        ouvrir.addEventListener('click', ouvrirNav);
-        fermer.addEventListener('click', fermerNav);
-        masque.addEventListener('click', fermerNav);
+function creerStats() {
+    const conteneur = document.getElementById('stats');
+    conteneur.innerHTML = donnees.stats.map(stat => `
+        <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-gray-400 text-xs lg:text-sm font-medium">${stat.titre}</p>
+                    <p class="text-lg sm:text-xl lg:text-2xl font-bold text-${stat.couleur === 'jauneAcc' ? 'jauneAcc' : stat.couleur + '-400'}">${stat.montant}</p>
+                </div>
+                <div class="w-10 h-10 lg:w-12 lg:h-12 bg-${stat.couleur === 'jauneAcc' ? 'jauneAcc' : stat.couleur + '-500'}/20 rounded-full flex items-center justify-center">
+                    <i class="${stat.icone} text-${stat.couleur === 'jauneAcc' ? 'jauneAcc' : stat.couleur + '-400'} text-lg lg:text-xl"></i>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
 
-        function aller(page) {
-            window.location.href = page;
-        }
+function creerTableau() {
+    const tableau = document.getElementById('tableau');
+    tableau.innerHTML = donnees.txns.map(txn => {
+        const typeData = couleurType[txn.type];
+        const statutData = couleurStatut[txn.statut];
+        return `
+            <tr class="hover:bg-gray-700/50 transition-colors">
+                <td class="py-4 px-4 text-white text-sm">${txn.date}</td>
+                <td class="py-4 px-4">
+                    <span class="bg-${typeData.bg} text-${typeData.txt} px-2 py-1 rounded-full text-xs font-medium flex items-center w-fit">
+                        <i class="${typeData.icone} mr-1"></i>${typeData.nom}
+                    </span>
+                </td>
+                <td class="py-4 px-4 text-${typeData.txt} font-bold text-sm">${txn.montant}</td>
+                <td class="py-4 px-4 text-white text-sm">${txn.methode}</td>
+                <td class="py-4 px-4">
+                    <span class="bg-${statutData.bg} text-${statutData.txt} px-2 py-1 rounded-full text-xs">${txn.statut}</span>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
 
-        // Filtrage des transactions
-        const periodeSelect = document.getElementById('periode');
-        const typeSelect = document.getElementById('type');
-        const tableau = document.getElementById('tableau');
-        const mobile = document.getElementById('mobile');
+function creerMobile() {
+    const mobile = document.getElementById('mobile');
+    mobile.innerHTML = donnees.txns.map(txn => {
+        const typeData = couleurType[txn.type];
+        const statutData = couleurStatut[txn.statut];
+        return `
+            <div class="bg-gradient-to-r from-${typeData.bg} to-${typeData.bg.replace('500', '600')} rounded-xl p-4 border border-${typeData.bg.replace('/20', '/30')}">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-${typeData.bg.replace('/20', '')} rounded-full flex items-center justify-center">
+                            <i class="${typeData.icone} text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <p class="text-white font-medium text-sm">${typeData.nom}</p>
+                            <p class="text-gray-400 text-xs">${txn.date}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-${typeData.txt} font-bold text-sm">${txn.montant}</p>
+                        <span class="text-xs text-${statutData.txt} bg-${statutData.bg} px-2 py-1 rounded-full">${txn.statut}</span>
+                    </div>
+                </div>
+                <div class="flex justify-between items-center text-xs text-gray-400">
+                    <span>${txn.methode}</span>
+                    <span>#${txn.id}</span>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
 
-        function filtrerTransactions() {
-            const periode = periodeSelect.value;
-            const type = typeSelect.value;
-            
-            // Ici, vous pourriez implémenter la logique de filtrage
-            // Pour l'exemple, on simule juste un feedback visuel
-            console.log('Filtrage:', { periode, type });
-        }
+function gererMenu() {
+    const menu = document.getElementById('menu');
+    const btnOuvrir = document.getElementById('btnOuvrir');
+    const btnFermer = document.getElementById('btnFermer');
+    const fondMenu = document.getElementById('fondMenu');
 
-        periodeSelect.addEventListener('change', filtrerTransactions);
-        typeSelect.addEventListener('change', filtrerTransactions);
+    btnOuvrir.addEventListener('click', () => {
+        menu.classList.add('ouvert');
+        fondMenu.classList.add('actif');
+    });
 
-        // Animation des icônes
-        const icones = document.querySelectorAll('.icone');
-        icones.forEach(icone => {
-            icone.style.animation = 'flotte 3s ease-in-out infinite';
-        });
+    btnFermer.addEventListener('click', () => {
+        menu.classList.remove('ouvert');
+        fondMenu.classList.remove('actif');
+    });
 
-        // Gestion responsive
-        function ajusterAffichage() {
-            const largeur = window.innerWidth;
-            if (largeur < 1024) {
-                fermerNav();
-            }
-        }
+    fondMenu.addEventListener('click', () => {
+        menu.classList.remove('ouvert');
+        fondMenu.classList.remove('actif');
+    });
+}
 
-        window.addEventListener('resize', ajusterAffichage);
-        ajusterAffichage();
+document.addEventListener('DOMContentLoaded', () => {
+    creerStats();
+    creerTableau();
+    creerMobile();
+    gererMenu();
+});
 
-        // Simulation de données en temps réel
-        function mettreAJourDonnees() {
-            // Simulation de mise à jour des statistiques
-            const elements = document.querySelectorAll('[data-stat]');
-            elements.forEach(element => {
-                // Animation subtile pour indiquer une mise à jour
-                element.style.transform = 'scale(1.02)';
-                setTimeout(() => {
-                    element.style.transform = 'scale(1)';
-                }, 200);
-            });
-        }
+function aller(url) {
+    window.location.href = url;
+}
 
-        // Mise à jour toutes les 30 secondes
-        setInterval(mettreAJourDonnees, 30000);
-
-        // Effet de survol sur les cartes de transaction
-        const cartes = document.querySelectorAll('.bg-gradient-to-r');
-        cartes.forEach(carte => {
-            carte.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-                this.style.boxShadow = '0 10px 25px rgba(0,0,0,0.3)';
-            });
-            
-            carte.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-                this.style.boxShadow = 'none';
-            });
-        });
-
-        const btnDeconnexion = document.getElementById('btnDeconnexion');
-        btnDeconnexion.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-                window.location.href = '/auth/login.html';
-            }
-        });
-    </script>
+document.querySelectorAll('.iconeFlottante').forEach(icone => {
+    icone.style.animation = 'flottement 3s ease-in-out infinite';
+});
+</script>
 </body>
 </html>

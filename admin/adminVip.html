@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilisateurs VIP - Dashboard Admin</title>
+    <link rel="shortcut icon" href="/assets/img/log.jpeg" type="image/jpeg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="flex h-screen">
+        <aside id="menu" class="bg-white shadow-lg w-64 fixed h-full z-30 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+            <div class="p-6 bg-blue-600 flex justify-between items-center">
+                <h2 class="text-white text-xl font-bold">Admin Panel</h2>
+                <button id="btnFermer" class="lg:hidden text-white hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <nav class="mt-8">
+                <a href="dashboardAdmin.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="adminPronostic.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-plus-circle mr-3"></i>
+                    Nouveau Pronostic
+                </a>
+                <a href="adminMesProno.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-futbol mr-3"></i>
+                    Mes Pronostiques
+                </a>
+                <a href="adminCoordonnee.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-bell mr-3"></i>
+                    Coordonnées
+                </a>
+                <a href="adminVideo.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-video mr-3"></i>
+                    Nouvelle Vidéo
+                </a>
+                <a href="adminHistorique.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-history mr-3"></i>
+                    Mes Historiques
+                </a>
+                <a href="adminUser.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-users mr-3"></i>
+                    Utilisateurs
+                </a>
+                <a href="adminVip.html" class="flex items-center px-6 py-3 text-blue-600 bg-blue-50 border-r-3 border-blue-600">
+                    <i class="fas fa-crown mr-3"></i>
+                    Utilisateurs VIP
+                </a>
+                <a href="adminTransaction.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-credit-card mr-3"></i>
+                    Transactions
+                </a>
+                <a href="adminBonus.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-gift mr-3"></i>
+                    Bonus
+                </a>
+                <button id="btnDeco" class="w-full flex items-center px-6 py-3 text-red-600 hover:bg-red-50 transition-colors mt-8">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Déconnexion
+                </button>
+            </nav>
+        </aside>
+
+        <div class="flex-1 lg:ml-64">
+            <header class="bg-white shadow-sm border-b">
+                <div class="flex items-center justify-between px-4 lg:px-6 py-4">
+                    <div class="flex items-center">
+                        <button id="btnOuvrir" class="lg:hidden text-gray-600 mr-4">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <h1 class="text-xl lg:text-2xl font-semibold text-gray-800">Utilisateurs VIP</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <i class="fas fa-bell text-gray-600 text-lg lg:text-xl"></i>
+                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                        </div>
+                        <img src="https://img.freepik.com/vecteurs-premium/icone-profil-avatar-par-defaut-image-utilisateur-medias-sociaux-icone-avatar-gris-silhouette-profil-vide-illustration-vectorielle_561158-3383.jpg?uid=R99967860&semt=ais_hybrid&w=740" alt="Avatar" class="w-8 h-8 rounded-full">
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-4 lg:p-6 space-y-6">
+                <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                        <div class="mb-4 lg:mb-0">
+                            <h2 class="text-2xl lg:text-3xl font-bold">Gestion VIP</h2>
+                            <p class="text-blue-100 mt-2">Gérez vos utilisateurs premium</p>
+                        </div>
+                        <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-crown text-yellow-300 text-2xl mr-3"></i>
+                                <div>
+                                    <p class="text-sm text-blue-100">Total VIP</p>
+                                    <p class="text-2xl font-bold" id="totalVip">89</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                            <h3 class="text-xl font-semibold text-gray-800">Liste des Utilisateurs VIP</h3>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <div class="relative">
+                                    <input type="text" id="inputRecherche" placeholder="Rechercher..." 
+                                           class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full sm:w-64">
+                                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                </div>
+                                <select id="filtreStatut" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Tous</option>
+                                    <option value="actif">Actif</option>
+                                    <option value="expire">Expiré</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilisateur</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Infos</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Inscription</th>
+                                    <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyVip" class="bg-white divide-y divide-gray-200">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <p class="text-sm text-gray-700">
+                                Affichage de <span id="debutPage">1</span> à <span id="finPage">10</span> sur <span id="totalItems">89</span> résultats
+                            </p>
+                            <div class="flex items-center gap-2">
+                                <button id="btnPrecedent" class="px-4 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <i class="fas fa-chevron-left mr-1"></i>
+                                    Précédent
+                                </button>
+                                <span id="numPage" class="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg font-medium">1</span>
+                                <button id="btnSuivant" class="px-4 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                    Suivant
+                                    <i class="fas fa-chevron-right ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden lg:hidden"></div>
+
+    <script>
+const btnOuvrir = document.getElementById('btnOuvrir');
+const btnFermer = document.getElementById('btnFermer');
+const menu = document.getElementById('menu');
+const overlay = document.getElementById('overlay');
+const tbodyVip = document.getElementById('tbodyVip');
+const inputRecherche = document.getElementById('inputRecherche');
+const filtreStatut = document.getElementById('filtreStatut');
+
+const usersVip = [
+    {
+        nom: 'Jean Dupont',
+        email: 'jean.dupont@email.com',
+        tel: '0123456789',
+        ville: 'Paris',
+        naissance: '15/03/1985',
+        inscription: '12/01/2024',
+        statut: 'actif'
+    },
+    {
+        nom: 'Thomas Moreau',
+        email: 'thomas.moreau@email.com',
+        tel: '0567890123',
+        ville: 'Nice',
+        naissance: '18/09/1987',
+        inscription: '22/01/2024',
+        statut: 'actif'
+    },
+    {
+        nom: 'Emma Petit',
+        email: 'emma.petit@email.com',
+        tel: '0678901234',
+        ville: 'Nantes',
+        naissance: '03/11/1991',
+        inscription: '08/04/2024',
+        statut: 'actif'
+    },
+    {
+        nom: 'Julien Roux',
+        email: 'julien.roux@email.com',
+        tel: '0789012345',
+        ville: 'Bordeaux',
+        naissance: '25/06/1989',
+        inscription: '17/02/2024',
+        statut: 'expire'
+    },
+    {
+        nom: 'Camille Blanc',
+        email: 'camille.blanc@email.com',
+        tel: '0890123456',
+        ville: 'Strasbourg',
+        naissance: '12/01/1993',
+        inscription: '30/03/2024',
+        statut: 'actif'
+    }
+];
+
+function afficherUsers(users = usersVip) {
+    tbodyVip.innerHTML = '';
+    
+    users.forEach((user, index) => {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-gray-50 transition-colors';
+        
+        const statutColor = user.statut === 'actif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+        const statutIcon = user.statut === 'actif' ? 'fas fa-check-circle' : 'fas fa-times-circle';
+        const statutText = user.statut === 'actif' ? 'Actif' : 'Expiré';
+        
+        row.innerHTML = `
+            <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mr-4 shadow-sm">
+                        <i class="fas fa-crown text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="text-sm font-semibold text-gray-900">${user.nom}</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide">Premium</div>
+                    </div>
+                </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">${user.email}</div>
+                <div class="text-sm text-gray-500">${user.tel}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-sm text-gray-900">${user.ville}</div>
+                <div class="text-sm text-gray-500">${user.naissance}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.inscription}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${statutColor}">
+                        <i class="${statutIcon} mr-1"></i>
+                        ${statutText}
+                    </span>
+                    <select onchange="changerStatut(${index}, this.value)" class="text-xs border border-gray-300 rounded px-2 py-1 focus:ring-1 focus:ring-blue-500">
+                        <option value="actif" ${user.statut === 'actif' ? 'selected' : ''}>Actif</option>
+                        <option value="expire" ${user.statut === 'expire' ? 'selected' : ''}>Expiré</option>
+                    </select>
+                </div>
+            </td>
+        `;
+        
+        tbodyVip.appendChild(row);
+    });
+}
+
+function changerStatut(index, nouveauStatut) {
+    usersVip[index].statut = nouveauStatut;
+    afficherUsers(filtrerUsers());
+}
+
+function filtrerUsers() {
+    const recherche = inputRecherche.value.toLowerCase();
+    const statut = filtreStatut.value;
+    
+    return usersVip.filter(user => {
+        const matchRecherche = user.nom.toLowerCase().includes(recherche) || 
+                              user.email.toLowerCase().includes(recherche) ||
+                              user.ville.toLowerCase().includes(recherche);
+        const matchStatut = !statut || user.statut === statut;
+        
+        return matchRecherche && matchStatut;
+    });
+}
+
+btnOuvrir.addEventListener('click', () => {
+    menu.classList.remove('-translate-x-full');
+    overlay.classList.remove('hidden');
+});
+
+btnFermer.addEventListener('click', () => {
+    menu.classList.add('-translate-x-full');
+    overlay.classList.add('hidden');
+});
+
+overlay.addEventListener('click', () => {
+    menu.classList.add('-translate-x-full');
+    overlay.classList.add('hidden');
+});
+
+inputRecherche.addEventListener('input', () => {
+    afficherUsers(filtrerUsers());
+});
+
+filtreStatut.addEventListener('change', () => {
+    afficherUsers(filtrerUsers());
+});
+
+const btnDeco = document.getElementById('btnDeco');
+btnDeco.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+        window.location.href = '/auth/login.html';
+    }
+});
+
+afficherUsers();
+    </script>
+</body>
+</html>

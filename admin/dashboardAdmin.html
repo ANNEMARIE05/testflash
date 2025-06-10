@@ -11,15 +11,15 @@
 <body class="bg-gray-50 font-sans">
     <div class="flex h-screen">
         <aside id="menu" class="bg-white shadow-lg w-64 fixed h-full z-30 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
-            <div class="p-6 bg-bleu flex justify-between items-center">
+            <div class="p-6 bg-blue-600 flex justify-between items-center">
                 <h2 class="text-white text-xl font-bold">Admin Panel</h2>
-                <button id="fermer" class="lg:hidden text-white hover:text-gray-200">
+                <button id="btnFermer" class="lg:hidden text-white hover:text-gray-200">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             
             <nav class="mt-8">
-                <a href="dashboardAdmin.html" class="flex items-center px-6 py-3 text-bleu bg-blue-50 border-r-3 border-bleu">
+                <a href="#" class="flex items-center px-6 py-3 text-blue-600 bg-blue-50 border-r-3 border-blue-600">
                     <i class="fas fa-tachometer-alt mr-3"></i>
                     Dashboard
                 </a>
@@ -55,7 +55,11 @@
                     <i class="fas fa-gift mr-3"></i>
                     Bonus
                 </a>
-                <button id="deco" class="w-full flex items-center px-6 py-3 text-red-600 hover:bg-red-50 transition-colors mt-8">
+                <a href="adminVip.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-crown mr-3"></i>
+                    Utilisateurs VIP
+                </a>
+                <button id="btnDeco" class="w-full flex items-center px-6 py-3 text-red-600 hover:bg-red-50 transition-colors mt-8">
                     <i class="fas fa-sign-out-alt mr-3"></i>
                     Déconnexion
                 </button>
@@ -66,7 +70,7 @@
             <header class="bg-white shadow-sm border-b">
                 <div class="flex items-center justify-between px-4 lg:px-6 py-4">
                     <div class="flex items-center">
-                        <button id="ouvrir" class="lg:hidden text-gray-600 mr-4">
+                        <button id="btnOuvrir" class="lg:hidden text-gray-600 mr-4">
                             <i class="fas fa-bars text-xl"></i>
                         </button>
                         <h1 class="text-xl lg:text-2xl font-semibold text-gray-800">Dashboard</h1>
@@ -82,137 +86,128 @@
             </header>
 
             <main class="p-4 lg:p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
-                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
-                        <div class="flex items-center justify-between">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+                    
+                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="window.location.href='adminUser.html'">
+                        <div class="flex items-center justify-between mb-4">
                             <div>
                                 <p class="text-gray-500 text-sm">Visiteurs Aujourd'hui</p>
-                                <p class="text-2xl lg:text-3xl font-bold text-bleu" id="visites">1,247</p>
-                            </div>
-                            <div class="bg-jaune-clair p-3 rounded-full">
-                                <i class="fas fa-users text-jaune text-lg lg:text-xl"></i>
-                            </div>
-                        </div>
-                        <button onclick="location.href='adminUser.html'" class="mt-4 bg-bleu text-white px-4 py-2 rounded-lg hover:bg-bleu-fonce transition-colors text-sm w-full lg:w-auto">
-                            Voir détails
-                        </button>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-500 text-sm">Transactions en attente</p>
-                                <p class="text-2xl lg:text-3xl font-bold text-jaune" id="nbTrans">12</p>
-                            </div>
-                            <div class="bg-orange-100 p-3 rounded-full">
-                                <i class="fas fa-clock text-orange-500 text-lg lg:text-xl"></i>
-                            </div>
-                        </div>
-                        <button onclick="location.href='adminTransaction.html'" class="mt-4 bg-jaune text-white px-4 py-2 rounded-lg hover:bg-yellow-500 transition-colors text-sm w-full lg:w-auto">
-                            Gérer
-                        </button>
-                    </div>
-
-                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-gray-500 text-sm">Total Utilisateurs</p>
-                                <p class="text-2xl lg:text-3xl font-bold text-bleu" id="users">3,456</p>
+                                <p class="text-2xl lg:text-3xl font-bold text-blue-600" id="visJour">1,247</p>
                             </div>
                             <div class="bg-blue-100 p-3 rounded-full">
-                                <i class="fas fa-user-friends text-bleu text-lg lg:text-xl"></i>
+                                <i class="fas fa-users text-blue-600 text-lg lg:text-xl"></i>
                             </div>
+                        </div>
+                        <div class="text-xs text-gray-400">
+                            <i class="fas fa-arrow-up text-green-500"></i> +12% par rapport à hier
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
-                        <div class="flex items-center justify-between">
+                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="window.location.href='adminUser.html'">
+                        <div class="flex items-center justify-between mb-4">
                             <div>
-                                <p class="text-gray-500 text-sm">Requêtes en attente</p>
-                                <p class="text-2xl lg:text-3xl font-bold text-red-600" id="nbRequetes">8</p>
+                                <p class="text-gray-500 text-sm">Personnes en Ligne</p>
+                                <p class="text-2xl lg:text-3xl font-bold text-green-600" id="enLigne">184</p>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-full">
+                                <i class="fas fa-wifi text-green-600 text-lg lg:text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-400">
+                            <span class="w-2 h-2 bg-green-500 rounded-full inline-block animate-pulse"></span> Temps réel
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="window.location.href='adminUser.html'">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Utilisateurs</p>
+                                <p class="text-2xl lg:text-3xl font-bold text-purple-600" id="totUsers">3,456</p>
+                            </div>
+                            <div class="bg-purple-100 p-3 rounded-full">
+                                <i class="fas fa-user-friends text-purple-600 text-lg lg:text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-400">
+                            Tous les comptes créés
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="window.location.href='adminVip.html'">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">Utilisateurs VIP</p>
+                                <p class="text-2xl lg:text-3xl font-bold text-yellow-600" id="usersVip">89</p>
+                            </div>
+                            <div class="bg-yellow-100 p-3 rounded-full">
+                                <i class="fas fa-crown text-yellow-600 text-lg lg:text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-400">
+                            Comptes premium actifs
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="window.location.href='adminTransaction.html'">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">Transactions Attente</p>
+                                <p class="text-2xl lg:text-3xl font-bold text-orange-600" id="transAttente">12</p>
+                            </div>
+                            <div class="bg-orange-100 p-3 rounded-full">
+                                <i class="fas fa-clock text-orange-600 text-lg lg:text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-400">
+                            En attente de validation
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="window.location.href='adminBonus.html'">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">Bonus Distribués</p>
+                                <p class="text-2xl lg:text-3xl font-bold text-indigo-600" id="bonusDist">247</p>
+                            </div>
+                            <div class="bg-indigo-100 p-3 rounded-full">
+                                <i class="fas fa-gift text-indigo-600 text-lg lg:text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-400">
+                            Ce mois-ci
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="window.location.href='adminPronostic.html'">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">Nouveau Pronostic</p>
+                                <p class="text-lg lg:text-xl font-semibold text-blue-600">Ajouter Match</p>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-full">
+                                <i class="fas fa-plus-circle text-blue-600 text-lg lg:text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-400">
+                            Créer un nouveau pronostic
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6 cursor-pointer hover:shadow-lg transition-shadow" onclick="window.location.href='adminVideo.html'">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-500 text-sm">Nouvelle Vidéo</p>
+                                <p class="text-lg lg:text-xl font-semibold text-red-600">Upload</p>
                             </div>
                             <div class="bg-red-100 p-3 rounded-full">
-                                <i class="fas fa-envelope text-red-600 text-lg lg:text-xl"></i>
+                                <i class="fas fa-video text-red-600 text-lg lg:text-xl"></i>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="grid lg:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-white rounded-lg shadow-md">
-                        <div class="px-4 lg:px-6 py-4 border-b">
-                            <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Demandes de Transaction</h2>
-                        </div>
-
-                        <div class="hidden md:block overflow-x-auto">
-                            <table class="w-full">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Utilisateur</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Montant</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabTrans" class="divide-y divide-gray-200">
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="md:hidden" id="transMobile">
+                        <div class="text-xs text-gray-400">
+                            Ajouter une nouvelle vidéo
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow-md">
-                        <div class="px-4 lg:px-6 py-4 border-b">
-                            <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Requêtes Utilisateurs</h2>
-                        </div>
-
-                        <div class="hidden md:block overflow-x-auto">
-                            <table class="w-full">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Utilisateur</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Montant</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Plateforme</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabRequetes" class="divide-y divide-gray-200">
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="md:hidden" id="requetesMobile">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Statistiques Pronostics</h2>
-                        <div class="bg-green-100 px-3 py-1 rounded-full">
-                            <span class="text-green-800 font-semibold">92% de réussite</span>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-green-600">45</div>
-                            <div class="text-sm text-gray-500">Gagnés</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-red-600">4</div>
-                            <div class="text-sm text-gray-500">Perdus</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-blue-600">8</div>
-                            <div class="text-sm text-gray-500">En cours</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-gray-600">57</div>
-                            <div class="text-sm text-gray-500">Total</div>
-                        </div>
-                    </div>
                 </div>
             </main>
         </div>
@@ -220,6 +215,53 @@
 
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden lg:hidden"></div>
 
-    <script src="/script/dashboardAdmin.js"></script>
+    <script>
+const btnOuvrir = document.getElementById('btnOuvrir');
+const btnFermer = document.getElementById('btnFermer');
+const menu = document.getElementById('menu');
+const overlay = document.getElementById('overlay');
+
+btnOuvrir.addEventListener('click', () => {
+    menu.classList.remove('-translate-x-full');
+    overlay.classList.remove('hidden');
+});
+
+btnFermer.addEventListener('click', () => {
+    menu.classList.add('-translate-x-full');
+    overlay.classList.add('hidden');
+});
+
+overlay.addEventListener('click', () => {
+    menu.classList.add('-translate-x-full');
+    overlay.classList.add('hidden');
+});
+
+function majNombres() {
+    const visJour = Math.floor(Math.random() * 500) + 1000;
+    const enLigne = Math.floor(Math.random() * 200) + 150;
+    const totUsers = Math.floor(Math.random() * 1000) + 3000;
+    const usersVip = Math.floor(Math.random() * 50) + 70;
+    const transAttente = Math.floor(Math.random() * 20) + 5;
+    const bonusDist = Math.floor(Math.random() * 100) + 200;
+    
+    document.getElementById('visJour').textContent = visJour.toLocaleString();
+    document.getElementById('enLigne').textContent = enLigne.toLocaleString();
+    document.getElementById('totUsers').textContent = totUsers.toLocaleString();
+    document.getElementById('usersVip').textContent = usersVip.toLocaleString();
+    document.getElementById('transAttente').textContent = transAttente.toString();
+    document.getElementById('bonusDist').textContent = bonusDist.toLocaleString();
+}
+
+const btnDeco = document.getElementById('btnDeco');
+btnDeco.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+        window.location.href = '/auth/login.html';
+    }
+});
+
+majNombres();
+setInterval(majNombres, 30000);
+    </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flash Service - Bonus</title>
+    <title>Flash Service - Dashboard</title>
     <link rel="shortcut icon" href="/assets/img/log.jpeg" type="image/jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,69 +26,25 @@
             50% { transform: scale(1.05); }
         }
         
-        .cardStat {
-            animation: glisHaut 0.8s ease-out forwards;
-        }
-        
-        .btnAnim {
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btnAnim::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.6s ease;
-        }
-        
+        .cardStat { animation: glisHaut 0.8s ease-out forwards; }
+        .btnAnim { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }
+        .btnAnim::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: left 0.6s ease; }
         .btnAnim:hover::before { left: 100%; }
         .btnAnim:hover { transform: translateY(-2px); }
+        .iconeFlottante { animation: flottement 3s ease-in-out infinite; }
+        .btnPulse { animation: pulse 2s infinite; }
+        .progressBar { background: linear-gradient(90deg, #10b981 0%, #059669 100%); transition: width 0.5s ease; }
+        .quizHidden { display: none; }
+        .quizVisible { display: block; }
         
-        .masqSide {
-            display: none;
-        }
-
-        .masqSide.actif {
-            display: block;
-        }
-        
-        .barreNav {
-            transform: translateX(-100%);
-        }
-        
-        .barreNav.ouvert {
-            transform: translateX(0);
-        }
-        
-        .progressBar {
-            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
-            transition: width 0.5s ease;
-        }
-        
-        .quizHidden {
-            display: none;
-        }
-        
-        .quizVisible {
-            display: block;
-        }
-        
-        .iconeFlottante {
-            animation: flottement 3s ease-in-out infinite;
-        }
-        
-        .btnPulse {
-            animation: pulse 2s infinite;
-        }
+        .barreNav { transform: translateX(-100%); }
+        .barreNav.ouvert { transform: translateX(0); }
+        .fondObscur { opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .fondObscur.actif { opacity: 1; visibility: visible; }
         
         @media (min-width: 1024px) {
             .barreNav { transform: translateX(0); }
+            .fondObscur { display: none; }
         }
     </style>
     <script>
@@ -97,41 +53,44 @@
                 extend: {
                     colors: {
                         'bleuPrinc': '#1e40af',
-                        'bleuFc': '#1e3a8a',
+                        'bleuFonce': '#1e3a8a',
                         'bleuDash': '#3b82f6',
+                        'bleuClair': '#dbeafe',
                         'jauneAcc': '#fbbf24',
-                        'vertPar': '#059669'
+                        'jauneClair': '#fef3c7',
+                        'vertPar': '#059669',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-gray-900 font-sans min-h-screen overflow-x-hidden">
-    <div id="masqSide" class="masqSide fixed inset-0 bg-black/50 z-40"></div>
-    
-    <div class="flex h-screen">
-        <aside id="barreNavLat" class="barreNav bg-gray-800 text-white w-64 fixed lg:relative h-full transition-transform duration-300 z-50">
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="flex">
+        <div id="fondMenu" class="fixed inset-0 bg-black bg-opacity-50 z-40 fondObscur lg:hidden"></div>
+        
+        <div id="menu" class="w-64 bg-gray-800 min-h-screen fixed left-0 top-0 z-50 barreNav">
+            <button id="btnFermer" class="lg:hidden absolute top-4 right-4 text-white text-xl p-2 hover:bg-gray-700 rounded-lg transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+
             <div class="p-4 lg:p-6 border-b border-bleuPrinc">
-                <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-between mb-3 lg:mb-4">
                     <div class="flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-r from-jauneAcc to-yellow-300 rounded-full flex items-center justify-center mr-3 iconeFlottante">
-                            <i class="fas fa-user text-bleuFc text-xl"></i>
+                        <div class="w-12 h-12 bg-gradient-to-r from-jauneAcc to-yellow-300 rounded-full flex items-center justify-center mr-3 icone iconeFlottante">
+                            <i class="fas fa-user text-bleuFonce text-xl"></i>
                         </div>
                         <div>
-                            <h3 class="font-semibold text-sm lg:text-base">Hello Yao</h3>
+                            <h3 class="font-semibold text-base">Hello Yao</h3>
                             <p class="text-sm text-gray-300">Solde: 45,000 XOF</p>
                         </div>
                     </div>
-                    <button id="btnFermBarLat" class="lg:hidden text-white hover:text-gray-300 text-xl">
-                        <i class="fas fa-times"></i>
-                    </button>
                 </div>
                 <div class="flex gap-2">
-                    <button onclick="allerPage('dashboardRetrait.html')" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-3 py-1 rounded text-sm flex-1 btnInteractif">
+                    <button onclick="aller('dashboardRetrait.html')" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-3 py-1 rounded text-sm flex-1 transition-all duration-300 transform hover:scale-105">
                         <i class="fas fa-money-bill-wave mr-1"></i> Retrait
                     </button>
-                    <button onclick="allerPage('dashboardDepot.html')" class="bg-gradient-to-r from-vertPar to-green-700 hover:from-green-700 hover:to-green-800 px-3 py-1 rounded text-sm flex-1 btnInteractif">
+                    <button onclick="aller('dashboardDepot.html')" class="bg-gradient-to-r from-vertPar to-green-700 hover:from-green-700 hover:to-green-800 px-3 py-1 rounded text-sm flex-1 transition-all duration-300 transform hover:scale-105">
                         <i class="fas fa-dollar-sign mr-1"></i> Dépôt
                     </button>
                 </div>
@@ -143,16 +102,16 @@
                         <i class="fas fa-home mr-3"></i> Dashboard
                     </a></li>
                     <li><a href="dashboardDepot.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-plus-circle mr-3"></i> Dépôt
+                        <i class="fas fa-arrow-down mr-3"></i> Dépôt
                     </a></li>
                     <li><a href="dashboardRetrait.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-minus-circle mr-3"></i> Retrait
+                        <i class="fas fa-arrow-up mr-3"></i> Retrait
                     </a></li>
                     <li><a href="dashboardTransaction.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-list-alt mr-3"></i> Mes Transactions
+                        <i class="fas fa-exchange-alt mr-3"></i> Mes Transactions
                     </a></li>
                     <li><a href="dashboardPronostic.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
-                        <i class="fas fa-futbol mr-3"></i> Pronostics
+                        <i class="fas fa-chart-line mr-3"></i> Pronostics
                     </a></li>
                     <li><a href="dashboardVideo.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
                         <i class="fas fa-video mr-3"></i> Vidéo
@@ -163,17 +122,17 @@
                     <li><a href="dashboardProfile.html" class="flex items-center p-3 rounded hover:bg-gray-700 text-gray-300 hover:text-white transition-all text-base">
                         <i class="fas fa-user-cog mr-3"></i> Profil
                     </a></li>
-                    <li><a href="#" id="btnDeconnexion" class="flex items-center p-3 rounded hover:bg-red-600 transition-colors mt-6 lg:mt-8 text-base">
+                    <li><a href="#" id="btnDeco" class="flex items-center p-3 rounded hover:bg-red-600 transition-colors mt-6 lg:mt-8 text-base">
                         <i class="fas fa-user mr-3"></i> Déconnexion
                     </a></li>
                 </ul>
             </nav>
-        </aside>
+        </div>
 
-        <div class="flex-1 flex flex-col w-full lg:w-auto">
+        <div class="flex-1 lg:ml-64">
             <header class="bg-gradient-to-r from-gray-900 to-gray-800 shadow-2xl border-b border-white/10 px-3 sm:px-4 lg:px-6 py-3 lg:py-4 flex items-center justify-between backdrop-blur-sm">
                 <div class="flex items-center">
-                    <button id="btnOuvrMenuMob" class="lg:hidden mr-3 text-white hover:text-jauneAcc transition-colors">
+                    <button id="btnOuvrir" class="lg:hidden mr-3 text-white hover:text-jauneAcc transition-colors">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                     <h1 class="text-base sm:text-lg lg:text-2xl font-bold text-white">Bonus & Récompenses</h1>
@@ -185,46 +144,10 @@
                 </div>
             </header>
 
-            <main class="flex-1 overflow-y-auto p-3 sm:p-4 lg:p-6">
+            <div class="p-4 lg:p-6">
                 <div class="max-w-7xl mx-auto space-y-4 lg:space-y-6">
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6">
-                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
-                            <div class="relative flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Bonus Dispo</p>
-                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-jauneAcc">2,450.00 XOF</p>
-                                </div>
-                                <div class="iconeFlottante">
-                                    <i class="fas fa-coins text-jauneAcc text-xl lg:text-3xl"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
-                            <div class="relative flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Bonus Réclamés</p>
-                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-green-400">15,750.00 XOF</p>
-                                </div>
-                                <div class="iconeFlottante">
-                                    <i class="fas fa-trophy text-green-400 text-xl lg:text-3xl"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden sm:col-span-2 lg:col-span-1 bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
-                            <div class="relative flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-400 text-xs lg:text-sm font-medium">Niveau VIP</p>
-                                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-purple-400">Bronze</p>
-                                </div>
-                                <div class="iconeFlottante">
-                                    <i class="fas fa-crown text-purple-400 text-xl lg:text-3xl"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="statsCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6"></div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                         <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
@@ -303,135 +226,18 @@
                                 </span>
                             </div>
 
-                            <div class="space-y-4">
-                                <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-4 border border-green-500/30">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <div class="flex items-center">
-                                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
-                                                <i class="fas fa-check text-white text-sm"></i>
-                                            </div>
-                                            <div>
-                                                <p class="text-white font-medium text-sm">Inscription 1xBet/MelBet</p>
-                                                <p class="text-gray-400 text-xs">Code: GRATIS9</p>
-                                            </div>
-                                        </div>
-                                        <span class="text-green-400 text-sm font-bold">1/1 ✅</span>
-                                    </div>
-                                    <div class="sm:flex items-center">
-                                        <input type="text" id="idBookmaker" placeholder="Votre ID Bookmaker" class="w-full bg-gray-700 text-white px-3 py-2 mb-2 sm:mb-0 rounded-lg flex-1 text-sm sm:mr-2">
-                                        <button id="btnVerifId" class="w-full sm:w-10 bg-green-500 text-white px-3 py-2 rounded-lg text-sm btnAnim">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div id="etapeDepot" class="bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-xl p-4 border border-blue-500/30">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <div class="flex items-center">
-                                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
-                                                <i class="fas fa-check text-white text-sm"></i>
-                                            </div>
-                                            <div>
-                                                <p class="text-white font-medium text-sm">Transactions Flash</p>
-                                                <p class="text-gray-400 text-xs">3 dépôts min/semaine</p>
-                                            </div>
-                                        </div>
-                                        <span class="text-blue-400 text-sm font-bold">✅</span>
-                                    </div>
-                                    <div class="bg-blue-500/20 rounded-lg p-2">
-                                        <p class="text-blue-400 text-xs">7 dépôts cette semaine</p>
-                                    </div>
-                                </div>
-
-                                <div id="etapeParrain" class="bg-gradient-to-r from-orange-500/20 to-orange-600/20 rounded-xl p-4 border border-orange-500/30">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <div class="flex items-center">
-                                            <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center mr-3">
-                                                <i class="fas fa-users text-white text-sm"></i>
-                                            </div>
-                                            <div>
-                                                <p class="text-white font-medium text-sm">Parrainage</p>
-                                                <p class="text-gray-400 text-xs">Code: XBEJEU</p>
-                                            </div>
-                                        </div>
-                                        <span class="text-orange-400 text-sm font-bold">4/10</span>
-                                    </div>
-                                    <div class="mb-3">
-                                        <div class="w-full bg-gray-700 rounded-full h-2">
-                                            <div class="bg-orange-500 h-2 rounded-full" style="width: 40%"></div>
-                                        </div>
-                                    </div>
-                                    <button id="btnPartager" class="bg-orange-500 text-white px-4 py-2 rounded-lg text-sm btnAnim w-full">
-                                        <i class="fas fa-share mr-2"></i>Partager Code
-                                    </button>
-                                </div>
-                            </div>
+                            <div id="vipTasks" class="space-y-4"></div>
                         </div>
                     </div>
 
-                    <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
+                    <div id="partenaires" class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
                         <div class="flex items-center justify-between mb-4 lg:mb-6">
                             <h3 class="text-sm sm:text-base lg:text-xl font-bold text-white flex items-center">
                                 <i class="fas fa-bullseye text-red-500 mr-2 lg:mr-3"></i>
                                 Bookmakers Partenaires
                             </h3>
                         </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-gradient-to-r from-red-500/20 to-red-600/20 rounded-xl p-4 lg:p-6 border border-red-500/30">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="flex items-center">
-                                        <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mr-3">
-                                            <i class="fas fa-dice text-white text-xl"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-white font-bold text-lg">1xBet</h4>
-                                            <p class="text-gray-400 text-sm">Bonus de bienvenue</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-red-400 font-bold text-xl">100%</span>
-                                </div>
-                                <div class="bg-red-500/20 rounded-lg p-3 mb-4">
-                                    <p class="text-red-400 text-sm font-medium">Code Promo: GRATIS9</p>
-                                    <p class="text-gray-400 text-xs">Jusqu'à 130,000 XOF</p>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button class="bg-red-500 text-white px-4 py-2 rounded-lg text-sm btnAnim flex-1">
-                                        <i class="fas fa-external-link-alt mr-2"></i>S'inscrire
-                                    </button>
-                                    <button id="btnCopy1xbet" class="bg-gray-600 text-white px-3 py-2 rounded-lg text-sm btnAnim">
-                                        <i class="fas fa-copy"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-xl p-4 lg:p-6 border border-blue-500/30">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="flex items-center">
-                                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-3">
-                                            <i class="fas fa-bolt text-white text-xl"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-white font-bold text-lg">MelBet</h4>
-                                            <p class="text-gray-400 text-sm">Bonus de bienvenue</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-blue-400 font-bold text-xl">150%</span>
-                                </div>
-                                <div class="bg-blue-500/20 rounded-lg p-3 mb-4">
-                                    <p class="text-blue-400 text-sm font-medium">Code Promo: GRATIS9</p>
-                                    <p class="text-gray-400 text-xs">Jusqu'à 180,000 XOF</p>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm btnAnim flex-1">
-                                        <i class="fas fa-external-link-alt mr-2"></i>S'inscrire
-                                    </button>
-                                    <button id="btnCopyMelbet" class="bg-gray-600 text-white px-3 py-2 rounded-lg text-sm btnAnim">
-                                        <i class="fas fa-copy"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <div id="bookmakers" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </div>
 
                     <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
@@ -441,67 +247,7 @@
                                 Bonus Quotidiens
                             </h3>
                         </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <div class="bg-gradient-to-r from-jauneAcc/20 to-yellow-500/20 rounded-xl p-4 border border-jauneAcc/30">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center">
-                                        <div class="w-10 h-10 bg-jauneAcc rounded-full flex items-center justify-center mr-3">
-                                            <i class="fas fa-calendar-check text-gray-900 text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-white font-medium text-sm">Connexion Quotidienne</p>
-                                            <p class="text-gray-400 text-xs">Connectez-vous chaque jour</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-jauneAcc font-bold text-lg mb-2">5 XOF</p>
-                                    <button class="btnBonusQuot bg-jauneAcc text-gray-900 px-4 py-2 rounded-lg text-sm btnAnim w-full">
-                                        <i class="fas fa-gift mr-2"></i>Réclamer
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-4 border border-green-500/30">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center">
-                                        <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mr-3">
-                                            <i class="fas fa-video text-white text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-white font-medium text-sm">Regarder Vidéo</p>
-                                            <p class="text-gray-400 text-xs">1 vidéo par jour</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-green-400 font-bold text-lg mb-2">10 XOF</p>
-                                    <button class="btnBonusQuot bg-green-500 text-white px-4 py-2 rounded-lg text-sm btnAnim w-full">
-                                        <i class="fas fa-play mr-2"></i>Regarder
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="bg-gradient-to-r from-purple-500/20 to-purple-600/20 rounded-xl p-4 border border-purple-500/30">
-                                <div class="flex items-center justify-between mb-3">
-                                    <div class="flex items-center">
-                                        <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center mr-3">
-                                            <i class="fas fa-calendar-week text-white text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <p class="text-white font-medium text-sm">Mardi Bonus</p>
-                                            <p class="text-gray-400 text-xs">Pour les meilleurs dépôts de la semaine</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <p class="text-purple-400 font-bold text-lg mb-2">5,000 XOF</p>
-                                    <button class="btnBonusQuot bg-purple-500 text-white px-4 py-2 rounded-lg text-sm btnAnim w-full">
-                                        <i class="fas fa-trophy mr-2"></i>Réclamer
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <div id="bonusQuot" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                     </div>
 
                     <div class="bg-gray-800 rounded-xl lg:rounded-2xl p-4 lg:p-6 backdrop-blur-xl border border-white/10">
@@ -511,362 +257,473 @@
                                 Historique des Bonus
                             </h3>
                         </div>
-
-                        <div class="space-y-3">
-                            <div class="bg-gray-700 rounded-lg p-4 flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mr-3">
-                                        <i class="fas fa-question-circle text-white text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-white font-medium text-sm">Quiz Bonus</p>
-                                        <p class="text-gray-400 text-xs">Aujourd'hui 14:30</p>
-                                    </div>
-                                </div>
-                                <span class="text-green-400 font-bold">+5,000 XOF</span>
-                            </div>
-
-                            <div class="bg-gray-700 rounded-lg p-4 flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-jauneAcc rounded-full flex items-center justify-center mr-3">
-                                        <i class="fas fa-calendar-check text-gray-900 text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-white font-medium text-sm">Connexion Quotidienne</p>
-                                        <p class="text-gray-400 text-xs">Hier 09:15</p>
-                                    </div>
-                                </div>
-                                <span class="text-green-400 font-bold">+5 XOF</span>
-                            </div>
-
-                            <div class="bg-gray-700 rounded-lg p-4 flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center mr-3">
-                                        <i class="fas fa-calendar-week text-white text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-white font-medium text-sm">Mardi Bonus</p>
-                                        <p class="text-gray-400 text-xs">Mardi 12:00</p>
-                                    </div>
-                                </div>
-                                <span class="text-green-400 font-bold">+5,000 XOF</span>
-                            </div>
-                        </div>
+                        <div id="histBonus" class="space-y-3"></div>
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
-        <div class="fixed bottom-6 right-6 z-40">
-            <a href="https://wa.me/+2250777169313" class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-400 transition-all transform hover:scale-110 animate-bounce">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-        </div>
+    </div>
+    
+    <div class="fixed bottom-6 right-6 z-40">
+        <a href="https://wa.me/+2250777169313" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl shadow-2xl hover:bg-green-400 transition-all transform hover:scale-110 animate-bounce">
+            <i class="fab fa-whatsapp"></i>
+        </a>
     </div>
 
     <div id="modalNotif" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-gray-800 rounded-2xl p-6 max-w-sm w-full border border-white/10">
             <div class="text-center">
-                <div id="iconNotif" class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center">
-                </div>
+                <div id="iconNotif" class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"></div>
                 <h4 id="titreNotif" class="text-white font-bold text-lg mb-2"></h4>
                 <p id="msgNotif" class="text-gray-400 text-sm mb-4"></p>
-                <button id="btnFermNotif" class="bg-bleuDash text-white px-6 py-2 rounded-lg btnAnim">
-                    OK
-                </button>
+                <button id="btnFermNotif" class="bg-bleuDash text-white px-6 py-2 rounded-lg btnAnim">OK</button>
             </div>
         </div>
     </div>
 
-    <script>
-        const questionsQuiz = [
-            {
-                question: "Quel est le code promo Flash Service pour 1xBet?",
-                reponses: ["FLASH123", "GRATIS9", "BONUS100", "PROMO1X"],
-                correct: 1
-            },
-            {
-                question: "Combien de personnes faut-il parrainer pour devenir VIP?",
-                reponses: ["5 personnes", "8 personnes", "10 personnes", "15 personnes"],
-                correct: 2
-            },
-            {
-                question: "Quel est le bonus maximum chez MelBet?",
-                reponses: ["100,000 XOF", "130,000 XOF", "150,000 XOF", "200,000 XOF"],
-                correct: 1
-            },
-            {
-                question: "Combien de dépôts minimum par semaine pour le statut VIP?",
-                reponses: ["2 dépôts", "3 dépôts", "4 dépôts", "5 dépôts"],
-                correct: 1
-            },
-            {
-                question: "Quel jour a lieu le Mardi Bonus?",
-                reponses: ["Lundi", "Mardi", "Mercredi", "Jeudi"],
-                correct: 1
-            },
-            {
-                question: "Combien rapporte le Quiz Bonus?",
-                reponses: ["1,000 XOF", "3,000 XOF", "5,000 XOF", "10,000 XOF"],
-                correct: 2
-            },
-            {
-                question: "Quel est le code de parrainage Flash Service?",
-                reponses: ["XBEJEU", "FLASH99", "BONUS2024", "PARRAIN10"],
-                correct: 0
-            },
-            {
-                question: "Quel bookmaker offre 200% de bonus?",
-                reponses: ["MelBet", "1xBet", "Betwinner", "Sportybets"],
-                correct: 1
-            },
-            {
-                question: "Combien rapporte la connexion quotidienne?",
-                reponses: ["5 XOF", "10 XOF", "15 XOF", "20 XOF"],
-                correct: 0
-            },
-            {
-                question: "Quel est le montant du Mardi Bonus?",
-                reponses: ["2,000 XOF", "3,000 XOF", "5,000 XOF", "8,000 XOF"],
-                correct: 2
-            }
-        ];
+<script>
+const donnes = {
+    stats: [
+        { nom: "Bonus Dispo", val: "2,450.00 XOF", icone: "fas fa-coins", couleur: "jauneAcc" },
+        { nom: "Bonus Réclamés", val: "15,750.00 XOF", icone: "fas fa-trophy", couleur: "green-400" },
+        { nom: "Niveau VIP", val: "Bronze", icone: "fas fa-crown", couleur: "purple-400" }
+    ],
+    tachesVip: [
+        { nom: "Inscription 1xBet/MelBet", desc: "Code: GRATIS9", statut: "complete", prog: "1/1", couleur: "green" },
+        { nom: "Transactions Flash", desc: "3 dépôts min/semaine", statut: "complete", prog: "7 dépôts cette semaine", couleur: "blue" },
+        { nom: "Parrainage", desc: "Code: XBEJEU", statut: "progress", prog: "4/10", couleur: "orange", btnText: "Partager Code" }
+    ],
+    bookmakers: [
+        { nom: "1xBet", desc: "Bonus de bienvenue", bonus: "100%", code: "GRATIS9", max: "130,000 XOF", couleur: "red", icone: "fas fa-dice" },
+        { nom: "MelBet", desc: "Bonus de bienvenue", bonus: "150%", code: "GRATIS9", max: "180,000 XOF", couleur: "blue", icone: "fas fa-bolt" }
+    ],
+    bonusQuot: [
+        { nom: "Connexion Quotidienne", desc: "Connectez-vous chaque jour", montant: "5 XOF", icone: "fas fa-calendar-check", couleur: "jauneAcc", btnText: "Réclamer" },
+        { nom: "Regarder Vidéo", desc: "1 vidéo par jour", montant: "10 XOF", icone: "fas fa-video", couleur: "green", btnText: "Regarder" },
+        { nom: "Mardi Bonus", desc: "Pour les meilleurs dépôts de la semaine", montant: "5,000 XOF", icone: "fas fa-calendar-week", couleur: "purple", btnText: "Réclamer" }
+    ],
+    histBonus: [
+        { nom: "Quiz Bonus", temps: "Aujourd'hui 14:30", montant: "+5,000 XOF", icone: "fas fa-question-circle", couleur: "green" },
+        { nom: "Connexion Quotidienne", temps: "Hier 09:15", montant: "+5 XOF", icone: "fas fa-calendar-check", couleur: "jauneAcc" },
+        { nom: "Mardi Bonus", temps: "Mardi 12:00", montant: "+5,000 XOF", icone: "fas fa-calendar-week", couleur: "purple" }
+    ],
+    quiz: [
+        { q: "Quel est le code promo Flash Service pour 1xBet?", r: ["FLASH123", "GRATIS9", "BONUS100", "PROMO1X"], c: 1 },
+        { q: "Combien de personnes faut-il parrainer pour devenir VIP?", r: ["5 personnes", "8 personnes", "10 personnes", "15 personnes"], c: 2 },
+        { q: "Quel est le bonus maximum chez MelBet?", r: ["100,000 XOF", "130,000 XOF", "150,000 XOF", "200,000 XOF"], c: 1 },
+        { q: "Combien de dépôts minimum par semaine pour le statut VIP?", r: ["2 dépôts", "3 dépôts", "4 dépôts", "5 dépôts"], c: 1 },
+        { q: "Quel jour a lieu le Mardi Bonus?", r: ["Lundi", "Mardi", "Mercredi", "Jeudi"], c: 1 },
+        { q: "Combien rapporte le Quiz Bonus?", r: ["1,000 XOF", "3,000 XOF", "5,000 XOF", "10,000 XOF"], c: 2 },
+        { q: "Quel est le code de parrainage Flash Service?", r: ["XBEJEU", "FLASH99", "BONUS2024", "PARRAIN10"], c: 0 },
+        { q: "Quel bookmaker offre 200% de bonus?", r: ["MelBet", "1xBet", "Betwinner", "Sportybets"], c: 1 },
+        { q: "Combien rapporte la connexion quotidienne?", r: ["5 XOF", "10 XOF", "15 XOF", "20 XOF"], c: 0 },
+        { q: "Quel est le montant du Mardi Bonus?", r: ["2,000 XOF", "3,000 XOF", "5,000 XOF", "8,000 XOF"], c: 2 }
+    ]
+};
 
-        let questActuelle = 0;
-        let scoreQuiz = 0;
-        let reponsesUser = [];
+let questActu = 0, scoreQuiz = 0, repUser = [];
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const btnOuvrMenu = document.getElementById('btnOuvrMenuMob');
-            const btnFermBar = document.getElementById('btnFermBarLat');
-            const barreNav = document.getElementById('barreNavLat');
-            const masqSide = document.getElementById('masqSide');
-            
-            btnOuvrMenu?.addEventListener('click', () => {
-                barreNav.classList.add('ouvert');
-                masqSide.classList.add('actif');
-            });
+function renduStats() {
+    const cont = document.getElementById('statsCards');
+    cont.innerHTML = donnes.stats.map(stat => `
+        <div class="cardStat rounded-xl lg:rounded-2xl p-4 lg:p-6 relative overflow-hidden bg-gray-800 backdrop-filter backdrop-blur-xl border border-white/10">
+            <div class="relative flex items-center justify-between">
+                <div>
+                    <p class="text-gray-400 text-xs lg:text-sm font-medium">${stat.nom}</p>
+                    <p class="text-lg sm:text-xl lg:text-3xl font-bold text-${stat.couleur}">${stat.val}</p>
+                </div>
+                <div class="iconeFlottante">
+                    <i class="${stat.icone} text-${stat.couleur} text-xl lg:text-3xl"></i>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
 
-            btnFermBar?.addEventListener('click', () => {
-                barreNav.classList.remove('ouvert');
-                masqSide.classList.remove('actif');
-            });
+function renduVip() {
+    const cont = document.getElementById('vipTasks');
+    cont.innerHTML = donnes.tachesVip.map((tache, i) => `
+        <div class="bg-gradient-to-r from-${tache.couleur}-500/20 to-${tache.couleur}-600/20 rounded-xl p-4 border border-${tache.couleur}-500/30">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-${tache.couleur}-500 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas ${tache.statut === 'complete' ? 'fa-check' : 'fa-users'} text-white text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="text-white font-medium text-sm">${tache.nom}</p>
+                        <p class="text-gray-400 text-xs">${tache.desc}</p>
+                    </div>
+                </div>
+                <span class="text-${tache.couleur}-400 text-sm font-bold">${tache.prog} ${tache.statut === 'complete' ? '✅' : ''}</span>
+            </div>
+            ${i === 0 ? `
+                <div class="sm:flex items-center">
+                    <input type="text" id="idBookmaker" placeholder="Votre ID Bookmaker" class="w-full bg-gray-700 text-white px-3 py-2 mb-2 sm:mb-0 rounded-lg flex-1 text-sm sm:mr-2">
+                    <button id="btnVerifId" class="w-full sm:w-10 bg-${tache.couleur}-500 text-white px-3 py-2 rounded-lg text-sm btnAnim">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            ` : i === 1 ? `
+                <div class="bg-${tache.couleur}-500/20 rounded-lg p-2">
+                    <p class="text-${tache.couleur}-400 text-xs">${tache.prog}</p>
+                </div>
+            ` : `
+                <div class="mb-3">
+                    <div class="w-full bg-gray-700 rounded-full h-2">
+                        <div class="bg-${tache.couleur}-500 h-2 rounded-full" style="width: 40%"></div>
+                    </div>
+                </div>
+                <button id="btnPartager" class="bg-${tache.couleur}-500 text-white px-4 py-2 rounded-lg text-sm btnAnim w-full">
+                    <i class="fas fa-share mr-2"></i>${tache.btnText}
+                </button>
+            `}
+        </div>
+    `).join('');
+}
 
-            masqSide?.addEventListener('click', () => {
-                barreNav.classList.remove('ouvert');
-                masqSide.classList.remove('actif');
-            });
+function renduBookmakers() {
+    const cont = document.getElementById('bookmakers');
+    cont.innerHTML = donnes.bookmakers.map(book => `
+        <div class="bg-gradient-to-r from-${book.couleur}-500/20 to-${book.couleur}-600/20 rounded-xl p-4 lg:p-6 border border-${book.couleur}-500/30">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-${book.couleur}-500 rounded-full flex items-center justify-center mr-3">
+                        <i class="${book.icone} text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-lg">${book.nom}</h4>
+                        <p class="text-gray-400 text-sm">${book.desc}</p>
+                    </div>
+                </div>
+                <span class="text-${book.couleur}-400 font-bold text-xl">${book.bonus}</span>
+            </div>
+            <div class="bg-${book.couleur}-500/20 rounded-lg p-3 mb-4">
+                <p class="text-${book.couleur}-400 text-sm font-medium">Code Promo: ${book.code}</p>
+                <p class="text-gray-400 text-xs">Jusqu'à ${book.max}</p>
+            </div>
+            <div class="flex gap-2">
+                <button class="bg-${book.couleur}-500 text-white px-4 py-2 rounded-lg text-sm btnAnim flex-1">
+                    <i class="fas fa-external-link-alt mr-2"></i>S'inscrire
+                </button>
+                <button class="btnCopyCode bg-gray-600 text-white px-3 py-2 rounded-lg text-sm btnAnim" data-code="${book.code}">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
 
-            document.getElementById('btnCommencerQuiz')?.addEventListener('click', commencerQuiz);
-            document.getElementById('btnNextQuest')?.addEventListener('click', questionSuiv);
-            document.getElementById('btnPrevQuest')?.addEventListener('click', questionPrec);
-            document.getElementById('btnRecommencer')?.addEventListener('click', reinitQuiz);
-            document.getElementById('btnVerifId')?.addEventListener('click', verifIdBookmaker);
-            document.getElementById('btnPartager')?.addEventListener('click', partagerCode);
-            document.getElementById('btnCopy1xbet')?.addEventListener('click', () => copierCode('GRATIS9'));
-            document.getElementById('btnCopyMelbet')?.addEventListener('click', () => copierCode('GRATIS9'));
-            document.getElementById('btnFermNotif')?.addEventListener('click', fermerNotif);
+function renduBonusQuot() {
+    const cont = document.getElementById('bonusQuot');
+    cont.innerHTML = donnes.bonusQuot.map((bonus, i) => `
+        <div class="bg-gradient-to-r from-${bonus.couleur}/20 to-${bonus.couleur === 'jauneAcc' ? 'yellow-500' : bonus.couleur + '-500'}/20 rounded-xl p-4 border border-${bonus.couleur === 'jauneAcc' ? 'yellow-500' : bonus.couleur + '-500'}/30">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-${bonus.couleur === 'jauneAcc' ? 'yellow-500' : bonus.couleur + '-500'} rounded-full flex items-center justify-center mr-3">
+                        <i class="${bonus.icone} ${bonus.couleur === 'jauneAcc' ? 'text-gray-900' : 'text-white'} text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="text-white font-medium text-sm">${bonus.nom}</p>
+                        <p class="text-gray-400 text-xs">${bonus.desc}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <p class="text-${bonus.couleur === 'jauneAcc' ? 'yellow-500' : bonus.couleur + '-400'} font-bold text-lg mb-2">${bonus.montant}</p>
+                <button class="btnBonusQuot bg-${bonus.couleur === 'jauneAcc' ? 'yellow-500' : bonus.couleur + '-500'} ${bonus.couleur === 'jauneAcc' ? 'text-gray-900' : 'text-white'} px-4 py-2 rounded-lg text-sm btnAnim w-full" data-bonus="${bonus.nom}" data-montant="${bonus.montant}">
+                    <i class="fas ${i === 1 ? 'fa-play' : i === 2 ? 'fa-trophy' : 'fa-gift'} mr-2"></i>${bonus.btnText}
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
 
-            document.querySelectorAll('.btnBonusQuot').forEach(btn => {
-                btn.addEventListener('click', reclamerBonus);
-            });
+function renduHistBonus() {
+    const cont = document.getElementById('histBonus');
+    cont.innerHTML = donnes.histBonus.map(hist => `
+        <div class="bg-gray-700 rounded-lg p-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-${hist.couleur === 'jauneAcc' ? 'yellow-500' : hist.couleur + '-500'} rounded-full flex items-center justify-center mr-3">
+                    <i class="${hist.icone} ${hist.couleur === 'jauneAcc' ? 'text-gray-900' : 'text-white'} text-sm"></i>
+                </div>
+                <div>
+                    <p class="text-white font-medium text-sm">${hist.nom}</p>
+                    <p class="text-gray-400 text-xs">${hist.temps}</p>
+                </div>
+            </div>
+            <span class="text-green-400 font-bold">${hist.montant}</span>
+        </div>
+    `).join('');
+}
+
+function afficherQuiz() {
+    document.getElementById('quizAccueil').className = 'quizHidden';
+    document.getElementById('quizJeu').className = 'quizVisible';
+    chargerQuestion();
+}
+
+function chargerQuestion() {
+    const quest = donnes.quiz[questActu];
+    document.getElementById('numQuest').textContent = questActu + 1;
+    document.getElementById('questionText').textContent = quest.q;
+    document.getElementById('progressQuiz').style.width = `${((questActu + 1) / 10) * 100}%`;
+    
+    const contRep = document.getElementById('reponses');
+    contRep.innerHTML = quest.r.map((rep, i) => `
+        <button class="btnReponse w-full text-left p-3 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-all" data-index="${i}">
+            ${String.fromCharCode(65 + i)}. ${rep}
+        </button>
+    `).join('');
+    
+    document.getElementById('btnPrevQuest').disabled = questActu === 0;
+    document.getElementById('btnNextQuest').disabled = true;
+}
+
+function selectionnerReponse(index) {
+    repUser[questActu] = index;
+    document.querySelectorAll('.btnReponse').forEach((btn, i) => {
+        btn.className = i === index 
+            ? 'btnReponse w-full text-left p-3 rounded-lg bg-bleuDash text-white transition-all'
+            : 'btnReponse w-full text-left p-3 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-all';
+    });
+    document.getElementById('btnNextQuest').disabled = false;
+}
+
+function questionSuivante() {
+    if (questActu < 9) {
+        questActu++;
+        chargerQuestion();
+    } else {
+        terminerQuiz();
+    }
+}
+
+function questionPrecedente() {
+    if (questActu > 0) {
+        questActu--;
+        chargerQuestion();
+        if (repUser[questActu] !== undefined) {
+            selectionnerReponse(repUser[questActu]);
+        }
+    }
+}
+
+function terminerQuiz() {
+    scoreQuiz = 0;
+    repUser.forEach((rep, i) => {
+        if (rep === donnes.quiz[i].c) scoreQuiz++;
+    });
+    
+    document.getElementById('quizJeu').className = 'quizHidden';
+    document.getElementById('quizResultat').className = 'quizVisible';
+    
+    const pourcentage = (scoreQuiz / 10) * 100;
+    const bonusGagne = scoreQuiz >= 7 ? 5000 : scoreQuiz >= 5 ? 3000 : scoreQuiz >= 3 ? 1000 : 0;
+    
+    const iconResult = document.getElementById('iconResultat');
+    const titreResult = document.getElementById('titreResultat');
+    const msgResult = document.getElementById('msgResultat');
+    
+    if (pourcentage >= 70) {
+        iconResult.className = 'w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 iconeFlottante';
+        iconResult.innerHTML = '<i class="fas fa-trophy text-3xl text-white"></i>';
+        titreResult.textContent = 'Excellent !';
+        titreResult.className = 'text-xl font-bold mb-2 text-green-400';
+        msgResult.textContent = `Vous avez obtenu ${scoreQuiz}/10 bonnes réponses !`;
+    } else if (pourcentage >= 50) {
+        iconResult.className = 'w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 iconeFlottante';
+        iconResult.innerHTML = '<i class="fas fa-medal text-3xl text-gray-900"></i>';
+        titreResult.textContent = 'Bien joué !';
+        titreResult.className = 'text-xl font-bold mb-2 text-yellow-400';
+        msgResult.textContent = `Vous avez obtenu ${scoreQuiz}/10 bonnes réponses.`;
+    } else {
+        iconResult.className = 'w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4 iconeFlottante';
+        iconResult.innerHTML = '<i class="fas fa-times text-3xl text-white"></i>';
+        titreResult.textContent = 'Dommage !';
+        titreResult.className = 'text-xl font-bold mb-2 text-red-400';
+        msgResult.textContent = `Vous avez obtenu ${scoreQuiz}/10 bonnes réponses.`;
+    }
+    
+    document.getElementById('montantBonus').textContent = bonusGagne.toLocaleString();
+    
+    if (bonusGagne > 0) {
+        setTimeout(() => {
+            afficherNotification('Bonus Reçu !', `Vous avez gagné ${bonusGagne.toLocaleString()} XOF !`, 'success');
+        }, 1000);
+    }
+}
+
+function recommencerQuiz() {
+    questActu = 0;
+    scoreQuiz = 0;
+    repUser = [];
+    document.getElementById('quizResultat').className = 'quizHidden';
+    document.getElementById('quizAccueil').className = 'quizVisible';
+}
+
+function afficherNotification(titre, message, type) {
+    const modal = document.getElementById('modalNotif');
+    const icon = document.getElementById('iconNotif');
+    const titreEl = document.getElementById('titreNotif');
+    const msgEl = document.getElementById('msgNotif');
+    
+    titreEl.textContent = titre;
+    msgEl.textContent = message;
+    
+    if (type === 'success') {
+        icon.className = 'w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center bg-green-500';
+        icon.innerHTML = '<i class="fas fa-check text-white text-2xl"></i>';
+    } else if (type === 'error') {
+        icon.className = 'w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center bg-red-500';
+        icon.innerHTML = '<i class="fas fa-times text-white text-2xl"></i>';
+    } else {
+        icon.className = 'w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center bg-blue-500';
+        icon.innerHTML = '<i class="fas fa-info text-white text-2xl"></i>';
+    }
+    
+    modal.classList.remove('hidden');
+}
+
+function fermerNotification() {
+    document.getElementById('modalNotif').classList.add('hidden');
+}
+
+function copierCode(code) {
+    navigator.clipboard.writeText(code).then(() => {
+        afficherNotification('Code Copié !', `Le code ${code} a été copié dans le presse-papier.`, 'success');
+    }).catch(() => {
+        afficherNotification('Erreur', 'Impossible de copier le code.', 'error');
+    });
+}
+
+function reclamerBonus(nom, montant) {
+    afficherNotification('Bonus Réclamé !', `Vous avez réclamé le bonus ${nom} de ${montant} !`, 'success');
+}
+
+function partagerCode() {
+    const code = 'XBEJEU';
+    const message = `🎉 Rejoignez Flash Service avec mon code de parrainage: ${code}\n\n💰 Gagnez des bonus incroyables !\n🎯 Pronostics VIP\n📱 https://flashservice.ci`;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'Flash Service - Code Parrainage',
+            text: message
         });
+    } else {
+        navigator.clipboard.writeText(message).then(() => {
+            afficherNotification('Code Partagé !', 'Le message de parrainage a été copié !', 'success');
+        });
+    }
+}
 
-        function commencerQuiz() {
-            document.getElementById('quizAccueil').className = 'quizHidden';
-            document.getElementById('quizJeu').className = 'quizVisible';
-            questActuelle = 0;
-            scoreQuiz = 0;
-            reponsesUser = [];
-            afficherQuestion();
+function verifierIdBookmaker() {
+    const id = document.getElementById('idBookmaker').value.trim();
+    if (id) {
+        afficherNotification('ID Vérifié !', `Votre ID ${id} a été vérifié avec succès !`, 'success');
+    } else {
+        afficherNotification('Erreur', 'Veuillez saisir votre ID Bookmaker.', 'error');
+    }
+}
+
+function aller(url) {
+    window.location.href = url;
+}
+
+function toggleMenu() {
+    const menu = document.getElementById('menu');
+    const fond = document.getElementById('fondMenu');
+    
+    menu.classList.toggle('ouvert');
+    fond.classList.toggle('actif');
+}
+
+// Événements
+document.addEventListener('DOMContentLoaded', function() {
+    // Rendu initial
+    renduStats();
+    renduVip();
+    renduBookmakers();
+    renduBonusQuot();
+    renduHistBonus();
+    
+    // Menu mobile
+    document.getElementById('btnOuvrir').addEventListener('click', toggleMenu);
+    document.getElementById('btnFermer').addEventListener('click', toggleMenu);
+    document.getElementById('fondMenu').addEventListener('click', toggleMenu);
+    
+    // Quiz
+    document.getElementById('btnCommencerQuiz').addEventListener('click', afficherQuiz);
+    document.getElementById('btnNextQuest').addEventListener('click', questionSuivante);
+    document.getElementById('btnPrevQuest').addEventListener('click', questionPrecedente);
+    document.getElementById('btnRecommencer').addEventListener('click', recommencerQuiz);
+    
+    // Délégation d'événements pour les réponses du quiz
+    document.getElementById('reponses').addEventListener('click', function(e) {
+        if (e.target.classList.contains('btnReponse')) {
+            const index = parseInt(e.target.dataset.index);
+            selectionnerReponse(index);
         }
-
-        function afficherQuestion() {
-            const quest = questionsQuiz[questActuelle];
-            document.getElementById('numQuest').textContent = questActuelle + 1;
-            document.getElementById('scoreQuiz').textContent = `Score: ${scoreQuiz}`;
-            document.getElementById('questionText').textContent = quest.question;
-            document.getElementById('progressQuiz').style.width = `${((questActuelle + 1) / 10) * 100}%`;
-
-            const containerRep = document.getElementById('reponses');
-            containerRep.innerHTML = '';
-
-            quest.reponses.forEach((rep, index) => {
-                const btnRep = document.createElement('button');
-                btnRep.className = 'w-full text-left p-3 rounded-lg bg-gray-700 hover:bg-gray-600 text-white transition-colors btnReponse';
-                btnRep.textContent = rep;
-                btnRep.addEventListener('click', () => selectionnerRep(index, btnRep));
-                containerRep.appendChild(btnRep);
-            });
-
-            document.getElementById('btnPrevQuest').disabled = questActuelle === 0;
-            document.getElementById('btnNextQuest').disabled = true;
+    });
+    
+    // Bonus quotidiens
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('btnBonusQuot') || e.target.closest('.btnBonusQuot')) {
+            const btn = e.target.classList.contains('btnBonusQuot') ? e.target : e.target.closest('.btnBonusQuot');
+            const bonus = btn.dataset.bonus;
+            const montant = btn.dataset.montant;
+            reclamerBonus(bonus, montant);
         }
-
-        function selectionnerRep(index, btnElement) {
-            document.querySelectorAll('.btnReponse').forEach(btn => {
-                btn.classList.remove('bg-bleuDash', 'bg-green-500', 'bg-red-500');
-                btn.classList.add('bg-gray-700');
-            });
-
-            btnElement.classList.remove('bg-gray-700');
-            btnElement.classList.add('bg-bleuDash');
-
-            reponsesUser[questActuelle] = index;
-            document.getElementById('btnNextQuest').disabled = false;
+    });
+    
+    // Copie des codes promo
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('btnCopyCode') || e.target.closest('.btnCopyCode')) {
+            const btn = e.target.classList.contains('btnCopyCode') ? e.target : e.target.closest('.btnCopyCode');
+            const code = btn.dataset.code;
+            copierCode(code);
         }
-
-        function questionSuiv() {
-            if (reponsesUser[questActuelle] === questionsQuiz[questActuelle].correct) {
-                scoreQuiz++;
-            }
-
-            questActuelle++;
-            if (questActuelle < questionsQuiz.length) {
-                afficherQuestion();
-            } else {
-                finirQuiz();
-            }
+    });
+    
+    // Autres boutons
+    document.getElementById('btnPartager')?.addEventListener('click', partagerCode);
+    document.getElementById('btnVerifId')?.addEventListener('click', verifierIdBookmaker);
+    
+    // Modal notification
+    document.getElementById('btnFermNotif').addEventListener('click', fermerNotification);
+    
+    // Déconnexion
+    document.getElementById('btnDeco').addEventListener('click', function(e) {
+        e.preventDefault();
+        if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+            window.location.href = 'index.html';
         }
-
-        function questionPrec() {
-            if (questActuelle > 0) {
-                questActuelle--;
-                afficherQuestion();
-                if (reponsesUser[questActuelle] !== undefined) {
-                    const btnReps = document.querySelectorAll('.btnReponse');
-                    btnReps[reponsesUser[questActuelle]].click();
-                }
-            }
-        }
-
-        function finirQuiz() {
-            document.getElementById('quizJeu').className = 'quizHidden';
-            document.getElementById('quizResultat').className = 'quizVisible';
-
-            const pourcentage = (scoreQuiz / questionsQuiz.length) * 100;
-            const bonusGagne = scoreQuiz >= 7 ? 5000 : scoreQuiz >= 5 ? 2500 : scoreQuiz >= 3 ? 1000 : 0;
-
-            const iconRes = document.getElementById('iconResultat');
-            const titreRes = document.getElementById('titreResultat');
-            const msgRes = document.getElementById('msgResultat');
-
-            if (pourcentage >= 70) {
-                iconRes.className = 'w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 iconeFlottante';
-                iconRes.innerHTML = '<i class="fas fa-trophy text-white text-3xl"></i>';
-                titreRes.textContent = 'Excellent!';
-                titreRes.className = 'text-xl font-bold mb-2 text-green-400';
-                msgRes.textContent = `Bravo! Vous avez obtenu ${scoreQuiz}/10 bonnes réponses.`;
-            } else if (pourcentage >= 50) {
-                iconRes.className = 'w-20 h-20 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4 iconeFlottante';
-                iconRes.innerHTML = '<i class="fas fa-star text-white text-3xl"></i>';
-                titreRes.textContent = 'Bien joué!';
-                titreRes.className = 'text-xl font-bold mb-2 text-yellow-400';
-                msgRes.textContent = `Pas mal! Vous avez obtenu ${scoreQuiz}/10 bonnes réponses.`;
-            } else {
-                iconRes.className = 'w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4 iconeFlottante';
-                iconRes.innerHTML = '<i class="fas fa-times text-white text-3xl"></i>';
-                titreRes.textContent = 'Dommage!';
-                titreRes.className = 'text-xl font-bold mb-2 text-red-400';
-                msgRes.textContent = `Vous avez obtenu ${scoreQuiz}/10. Réessayez demain!`;
-            }
-
-            document.getElementById('montantBonus').textContent = bonusGagne;
-        }
-
-        function reinitQuiz() {
-            document.getElementById('quizResultat').className = 'quizHidden';
-            document.getElementById('quizAccueil').className = 'quizVisible';
-        }
-
-        function verifIdBookmaker() {
-            const idInput = document.getElementById('idBookmaker');
-            const idValue = idInput.value.trim();
-            
-            if (idValue) {
-                afficherNotif('success', 'Vérification réussie', 'Votre ID bookmaker a été vérifié avec succès!');
-                idInput.disabled = true;
-                document.getElementById('btnVerifId').innerHTML = '<i class="fas fa-check"></i>';
-                document.getElementById('btnVerifId').disabled = true;
-            } else {
-                afficherNotif('error', 'Erreur', 'Veuillez saisir votre ID bookmaker');
-            }
-        }
-
-        function partagerCode() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Code de parrainage Flash Service',
-                    text: 'Rejoignez Flash Service avec mon code: XBEJEU',
-                    url: window.location.href
-                });
-            } else {
-                copierCode('XBEJEU');
-            }
-        }
-
-        function copierCode(code) {
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(code).then(() => {
-                    afficherNotif('success', 'Code copié', `Le code ${code} a été copié dans le presse-papiers`);
-                });
-            } else {
-                const textArea = document.createElement('textarea');
-                textArea.value = code;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                afficherNotif('success', 'Code copié', `Le code ${code} a été copié`);
-            }
-        }
-
-        function reclamerBonus(event) {
-            const btnElement = event.target.closest('button');
-            const bonusText = btnElement.closest('.bg-gradient-to-r').querySelector('.font-bold');
-            const montant = bonusText.textContent;
-            
-            btnElement.disabled = true;
-            btnElement.innerHTML = '<i class="fas fa-check mr-2"></i>Réclamé';
-            btnElement.classList.remove('bg-jauneAcc', 'bg-green-500', 'bg-purple-500');
-            btnElement.classList.add('bg-gray-600');
-            
-            afficherNotif('success', 'Bonus réclamé', `Vous avez reçu ${montant}!`);
-        }
-
-        function afficherNotif(type, titre, message) {
-            const modal = document.getElementById('modalNotif');
-            const icon = document.getElementById('iconNotif');
-            const titreEl = document.getElementById('titreNotif');
-            const msgEl = document.getElementById('msgNotif');
-
-            if (type === 'success') {
-                icon.className = 'w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center bg-green-500';
-                icon.innerHTML = '<i class="fas fa-check text-white text-2xl"></i>';
-            } else {
-                icon.className = 'w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center bg-red-500';
-                icon.innerHTML = '<i class="fas fa-times text-white text-2xl"></i>';
-            }
-
-            titreEl.textContent = titre;
-            msgEl.textContent = message;
-            modal.classList.remove('hidden');
-        }
-
-        function fermerNotif() {
-            document.getElementById('modalNotif').classList.add('hidden');
-        }
-
-        function allerPage(url) {
-            window.location.href = url;
-        }
-
-        const btnDeconnexion = document.getElementById('btnDeconnexion');
-        btnDeconnexion.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-                window.location.href = '/auth/login.html';
+    });
+    
+    // Animation des cartes au scroll
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.animationDelay = Math.random() * 0.3 + 's';
+                entry.target.classList.add('cardStat');
             }
         });
-    </script>
+    });
+    
+    document.querySelectorAll('.bg-gray-800').forEach(card => {
+        observer.observe(card);
+    });
+});
+
+// Mise à jour du score en temps réel
+setInterval(() => {
+    if (document.getElementById('quizJeu').classList.contains('quizVisible')) {
+        document.getElementById('scoreQuiz').textContent = `Score: ${scoreQuiz}`;
+    }
+}, 100);
+
+document.querySelectorAll('.iconeFlottante').forEach(icone => {
+    icone.style.animation = 'flottement 3s ease-in-out infinite';
+});
+</script>
 </body>
 </html>

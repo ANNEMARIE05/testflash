@@ -11,52 +11,56 @@
 <body class="bg-gray-50 font-sans">
     <div class="flex h-screen">
         <aside id="menu" class="bg-white shadow-lg w-64 fixed h-full z-30 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
-            <div class="p-6 bg-bleu flex justify-between items-center">
-                <h2 class="text-white text-xl font-bold">Admin Panel</h2>
-                <button id="fermer" class="lg:hidden text-white hover:text-gray-200">
-                    <i class="fas fa-times text-xl"></i>
+            <div class="p-4 lg:p-6 bg-bleu flex justify-between items-center">
+                <h2 class="text-white text-lg lg:text-xl font-bold">Admin Panel</h2>
+                <button id="btnFermer" class="lg:hidden text-white hover:text-gray-200">
+                    <i class="fas fa-times text-lg lg:text-xl"></i>
                 </button>
             </div>
             
-            <nav class="mt-8">
-                <a href="dashboardAdmin.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
-                    <i class="fas fa-tachometer-alt mr-3"></i>
+            <nav class="mt-6 lg:mt-8">
+                <a href="dashboardAdmin.html" class="flex items-center px-4 lg:px-6 py-2 lg:py-3 text-gray-700 hover:bg-gray-100 transition-colors text-sm lg:text-base">
+                    <i class="fas fa-tachometer-alt mr-2 lg:mr-3 text-sm lg:text-base"></i>
                     Dashboard
                 </a>
-                <a href="adminPronostic.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
-                    <i class="fas fa-plus-circle mr-3"></i>
+                <a href="adminPronostic.html" class="flex items-center px-4 lg:px-6 py-2 lg:py-3 text-gray-700 hover:bg-gray-100 transition-colors text-sm lg:text-base">
+                    <i class="fas fa-plus-circle mr-2 lg:mr-3 text-sm lg:text-base"></i>
                     Nouveau Pronostic
                 </a>
-                <a href="adminMesProno.html" class="flex items-center px-6 py-3 text-bleu bg-blue-50 border-r-3 border-bleu">
-                    <i class="fas fa-futbol mr-3"></i>
+                <a href="#" class="flex items-center px-4 lg:px-6 py-2 lg:py-3 text-bleu bg-blue-50 border-r-3 border-bleu text-sm lg:text-base">
+                    <i class="fas fa-futbol mr-2 lg:mr-3 text-sm lg:text-base"></i>
                     Mes Pronostiques
                 </a>
-                <a href="adminCoordonnee.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
-                    <i class="fas fa-bell mr-3"></i>
+                <a href="adminCoordonnee.html" class="flex items-center px-4 lg:px-6 py-2 lg:py-3 text-gray-700 hover:bg-gray-100 transition-colors text-sm lg:text-base">
+                    <i class="fas fa-bell mr-2 lg:mr-3 text-sm lg:text-base"></i>
                     Coordonnées
                 </a>
-                <a href="adminVideo.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
-                    <i class="fas fa-video mr-3"></i>
+                <a href="adminVideo.html" class="flex items-center px-4 lg:px-6 py-2 lg:py-3 text-gray-700 hover:bg-gray-100 transition-colors text-sm lg:text-base">
+                    <i class="fas fa-video mr-2 lg:mr-3 text-sm lg:text-base"></i>
                     Nouvelle Vidéo
                 </a>
-                <a href="adminHistorique.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
-                    <i class="fas fa-history mr-3"></i>
+                <a href="adminHistorique.html" class="flex items-center px-4 lg:px-6 py-2 lg:py-3 text-gray-700 hover:bg-gray-100 transition-colors text-sm lg:text-base">
+                    <i class="fas fa-history mr-2 lg:mr-3 text-sm lg:text-base"></i>
                     Mes Historiques
                 </a>
-                <a href="adminUser.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
-                    <i class="fas fa-users mr-3"></i>
+                <a href="adminUser.html" class="flex items-center px-4 lg:px-6 py-2 lg:py-3 text-gray-700 hover:bg-gray-100 transition-colors text-sm lg:text-base">
+                    <i class="fas fa-users mr-2 lg:mr-3 text-sm lg:text-base"></i>
                     Utilisateurs
                 </a>
-                <a href="adminTransaction.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
-                    <i class="fas fa-credit-card mr-3"></i>
+                <a href="adminTransaction.html" class="flex items-center px-4 lg:px-6 py-2 lg:py-3 text-gray-700 hover:bg-gray-100 transition-colors text-sm lg:text-base">
+                    <i class="fas fa-credit-card mr-2 lg:mr-3 text-sm lg:text-base"></i>
                     Transactions
                 </a>
-                <a href="adminBonus.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
-                    <i class="fas fa-gift mr-3"></i>
+                <a href="adminBonus.html" class="flex items-center px-4 lg:px-6 py-2 lg:py-3 text-gray-700 hover:bg-gray-100 transition-colors text-sm lg:text-base">
+                    <i class="fas fa-gift mr-2 lg:mr-3 text-sm lg:text-base"></i>
                     Bonus
                 </a>
-                <button id="deco" class="w-full flex items-center px-6 py-3 text-red-600 hover:bg-red-50 transition-colors mt-8">
-                    <i class="fas fa-sign-out-alt mr-3"></i>
+                <a href="adminVip.html" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-crown mr-3"></i>
+                    Utilisateurs VIP
+                </a>
+                <button id="btnDeco" class="w-full flex items-center px-4 lg:px-6 py-2 lg:py-3 text-red-600 hover:bg-red-50 transition-colors mt-6 lg:mt-8 text-sm lg:text-base">
+                    <i class="fas fa-sign-out-alt mr-2 lg:mr-3 text-sm lg:text-base"></i>
                     Déconnexion
                 </button>
             </nav>
@@ -64,72 +68,75 @@
 
         <div class="flex-1 lg:ml-64">
             <header class="bg-white shadow-sm border-b">
-                <div class="flex items-center justify-between px-4 lg:px-6 py-4">
+                <div class="flex items-center justify-between px-3 lg:px-6 py-3 lg:py-4">
                     <div class="flex items-center">
-                        <button id="ouvrir" class="lg:hidden text-gray-600 mr-4">
-                            <i class="fas fa-bars text-xl"></i>
+                        <button id="btnOuvrir" class="lg:hidden text-gray-600 mr-3">
+                            <i class="fas fa-bars text-lg"></i>
                         </button>
-                        <h1 class="text-xl lg:text-2xl font-semibold text-gray-800">Mes Pronostiques</h1>
+                        <h1 class="text-lg lg:text-2xl font-semibold text-gray-800">Mes Pronostiques</h1>
                     </div>
-                    <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-3 lg:space-x-4">
                         <div class="relative">
-                            <i class="fas fa-bell text-gray-600 text-lg lg:text-xl"></i>
-                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                            <i class="fas fa-bell text-gray-600 text-base lg:text-xl"></i>
+                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-3 w-3 lg:h-4 lg:w-4 flex items-center justify-center text-xs">3</span>
                         </div>
-                        <img src="https://img.freepik.com/vecteurs-premium/icone-profil-avatar-par-defaut-image-utilisateur-medias-sociaux-icone-avatar-gris-silhouette-profil-vide-illustration-vectorielle_561158-3383.jpg?uid=R99967860&semt=ais_hybrid&w=740" alt="Avatar" class="w-8 h-8 rounded-full">
+                        <img src="https://img.freepik.com/vecteurs-premium/icone-profil-avatar-par-defaut-image-utilisateur-medias-sociaux-icone-avatar-gris-silhouette-profil-vide-illustration-vectorielle_561158-3383.jpg?uid=R99967860&semt=ais_hybrid&w=740" alt="Avatar" class="w-6 h-6 lg:w-8 lg:h-8 rounded-full">
                     </div>
                 </div>
             </header>
 
-            <main class="p-4 lg:p-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
-                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
+            <main class="p-3 lg:p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 lg:gap-6 mb-4 lg:mb-8">
+                    <div class="bg-white rounded-lg shadow-md p-3 lg:p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500 text-sm">Total Pronostics</p>
-                                <p class="text-2xl lg:text-3xl font-bold text-bleu" id="totProno">0</p>
+                                <p class="text-gray-500 text-xs lg:text-sm">Total Pronostics</p>
+                                <p class="text-xl lg:text-3xl font-bold text-bleu" id="totProno">0</p>
                             </div>
-                            <div class="bg-blue-100 p-3 rounded-full">
-                                <i class="fas fa-futbol text-bleu text-lg lg:text-xl"></i>
+                            <div class="bg-blue-100 p-2 lg:p-3 rounded-full">
+                                <i class="fas fa-futbol text-bleu text-base lg:text-xl"></i>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
+                    <div class="bg-white rounded-lg shadow-md p-3 lg:p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500 text-sm">Pronostics Gagnés</p>
-                                <p class="text-2xl lg:text-3xl font-bold text-green-600" id="pronoGagne">0</p>
+                                <p class="text-gray-500 text-xs lg:text-sm">Pronostics Gagnés</p>
+                                <p class="text-xl lg:text-3xl font-bold text-green-600" id="pronoGagne">0</p>
                             </div>
-                            <div class="bg-green-100 p-3 rounded-full">
-                                <i class="fas fa-check-circle text-green-600 text-lg lg:text-xl"></i>
+                            <div class="bg-green-100 p-2 lg:p-3 rounded-full">
+                                <i class="fas fa-check-circle text-green-600 text-base lg:text-xl"></i>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-lg shadow-md p-4 lg:p-6">
+                    <div class="bg-white rounded-lg shadow-md p-3 lg:p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500 text-sm">Pronostics Perdus</p>
-                                <p class="text-2xl lg:text-3xl font-bold text-red-600" id="pronoPerdu">0</p>
+                                <p class="text-gray-500 text-xs lg:text-sm">Pronostics Perdus</p>
+                                <p class="text-xl lg:text-3xl font-bold text-red-600" id="pronoPerdu">0</p>
                             </div>
-                            <div class="bg-red-100 p-3 rounded-full">
-                                <i class="fas fa-times-circle text-red-600 text-lg lg:text-xl"></i>
+                            <div class="bg-red-100 p-2 lg:p-3 rounded-full">
+                                <i class="fas fa-times-circle text-red-600 text-base lg:text-xl"></i>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-white rounded-lg shadow-md">
-                    <div class="px-4 lg:px-6 py-4 border-b flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
-                        <h2 class="text-lg lg:text-xl font-semibold text-gray-800">Liste des Pronostiques</h2>
+                    <div class="px-3 lg:px-6 py-3 lg:py-4 border-b flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-3 sm:space-y-0">
+                        <h2 class="text-base lg:text-xl font-semibold text-gray-800">Liste des Pronostiques</h2>
                         <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
-                            <select id="filtreStatut" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu text-sm">
+                            <select id="filtreStatut" class="px-2 lg:px-3 py-1 lg:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu text-xs lg:text-sm">
                                 <option value="tous">Tous les statuts</option>
-                                <option value="en_attente">En attente</option>
+                                <option value="en_cours">En cours</option>
                                 <option value="gagne">Gagné</option>
                                 <option value="perdu">Perdu</option>
                             </select>
+                            <button onclick="window.location.href='adminPronostic.html'" class="bg-bleu text-white px-3 lg:px-4 py-1 lg:py-2 rounded-lg hover:bg-bleu-fonce transition-colors text-xs lg:text-sm">
+                                <i class="fas fa-plus mr-1"></i>Nouveau
+                            </button>
                         </div>
                     </div>
 
@@ -137,12 +144,13 @@
                         <table class="w-full">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Match</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Prono</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cote</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Équipes</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Compétition</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Prono</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Cote</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Statut</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="tabProno" class="divide-y divide-gray-200">
@@ -159,29 +167,45 @@
 
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden lg:hidden"></div>
 
-    <div id="modalEdit" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg max-w-md w-full max-h-screen overflow-y-auto">
-            <div class="p-6">
+    <div id="modalEdit" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-3 lg:p-4">
+        <div class="bg-white rounded-lg max-w-md w-full max-h-screen overflow-y-auto mx-2">
+            <div class="p-4 lg:p-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-semibold text-gray-800" id="titreModal">Modifier Pronostic</h3>
+                    <h3 class="text-base lg:text-lg font-semibold text-gray-800" id="titreModal">Modifier Pronostic</h3>
                     <button onclick="fermerModal()" class="text-gray-500 hover:text-gray-700">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <form id="formProno">
                     <input type="hidden" id="pronoId">
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Équipe 1</label>
-                            <input type="text" id="eq1" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu" required>
+                    <div class="space-y-3 lg:space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs lg:text-sm font-medium text-gray-700 mb-1">Équipe 1</label>
+                                <input type="text" id="eq1" class="w-full px-2 lg:px-3 py-1 lg:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu text-xs lg:text-sm" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs lg:text-sm font-medium text-gray-700 mb-1">Logo Équipe 1</label>
+                                <input type="file" id="logoEq1" accept="image/*" class="w-full px-2 lg:px-3 py-1 lg:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu text-xs lg:text-sm">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs lg:text-sm font-medium text-gray-700 mb-1">Équipe 2</label>
+                                <input type="text" id="eq2" class="w-full px-2 lg:px-3 py-1 lg:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu text-xs lg:text-sm" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs lg:text-sm font-medium text-gray-700 mb-1">Logo Équipe 2</label>
+                                <input type="file" id="logoEq2" accept="image/*" class="w-full px-2 lg:px-3 py-1 lg:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu text-xs lg:text-sm">
+                            </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Équipe 2</label>
-                            <input type="text" id="eq2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu" required>
+                            <label class="block text-xs lg:text-sm font-medium text-gray-700 mb-1">Compétition</label>
+                            <input type="text" id="competition" class="w-full px-2 lg:px-3 py-1 lg:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu text-xs lg:text-sm" placeholder="Ex: Ligue 1, Champions League..." required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Pronostic</label>
-                            <select id="prono" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu" required>
+                            <label class="block text-xs lg:text-sm font-medium text-gray-700 mb-1">Pronostic</label>
+                            <select id="prono" class="w-full px-2 lg:px-3 py-1 lg:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu text-xs lg:text-sm" required>
                                 <option value="">Sélectionner</option>
                                 <option value="1">Victoire Équipe 1</option>
                                 <option value="X">Match Nul</option>
@@ -191,27 +215,27 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Cote</label>
-                            <input type="number" id="cote" step="0.01" min="1" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu" required>
+                            <label class="block text-xs lg:text-sm font-medium text-gray-700 mb-1">Cote</label>
+                            <input type="number" id="cote" step="0.01" min="1" class="w-full px-2 lg:px-3 py-1 lg:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu text-xs lg:text-sm" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Date du Match</label>
-                            <input type="date" id="dateMatch" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu" required>
+                            <label class="block text-xs lg:text-sm font-medium text-gray-700 mb-1">Date du Match</label>
+                            <input type="date" id="dateMatch" class="w-full px-2 lg:px-3 py-1 lg:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu text-xs lg:text-sm" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
-                            <select id="statut" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu" required>
-                                <option value="en_attente">En attente</option>
+                            <label class="block text-xs lg:text-sm font-medium text-gray-700 mb-1">Statut</label>
+                            <select id="statut" class="w-full px-2 lg:px-3 py-1 lg:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleu text-xs lg:text-sm" required>
+                                <option value="en_cours">En cours</option>
                                 <option value="gagne">Gagné</option>
                                 <option value="perdu">Perdu</option>
                             </select>
                         </div>
                     </div>
-                    <div class="flex space-x-3 mt-6">
-                        <button type="submit" class="flex-1 bg-bleu text-white py-2 px-4 rounded-lg hover:bg-bleu-fonce transition-colors">
+                    <div class="flex space-x-2 lg:space-x-3 mt-4 lg:mt-6">
+                        <button type="submit" class="flex-1 bg-bleu text-white py-1 lg:py-2 px-3 lg:px-4 rounded-lg hover:bg-bleu-fonce transition-colors text-xs lg:text-sm">
                             Sauvegarder
                         </button>
-                        <button type="button" onclick="fermerModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors">
+                        <button type="button" onclick="fermerModal()" class="flex-1 bg-gray-300 text-gray-700 py-1 lg:py-2 px-3 lg:px-4 rounded-lg hover:bg-gray-400 transition-colors text-xs lg:text-sm">
                             Annuler
                         </button>
                     </div>
@@ -220,6 +244,334 @@
         </div>
     </div>
 
-    <script src="/script/adminMesProno.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bleu': '#1e40af',
+                        'bleu-fonce': '#1e3a8a',
+                        'jaune': '#fbbf24',
+                        'jaune-clair': '#fef3c7'
+                    }
+                }
+            }
+        }
+
+        const btnOuvrir = document.getElementById('btnOuvrir');
+        const btnFermer = document.getElementById('btnFermer');
+        const menu = document.getElementById('menu');
+        const overlay = document.getElementById('overlay');
+
+        btnOuvrir.addEventListener('click', () => {
+            menu.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        });
+
+        btnFermer.addEventListener('click', () => {
+            menu.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        overlay.addEventListener('click', () => {
+            menu.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+
+        let pronostics = [
+            { 
+                id: 1, 
+                eq1: 'PSG', 
+                eq2: 'Lyon', 
+                logoEq1: 'https://logos-world.net/wp-content/uploads/2020/07/PSG-Logo.png',
+                logoEq2: 'https://logos-world.net/wp-content/uploads/2020/06/Real-Madrid-Logo-700x394.png',
+                competition: 'Ligue 1',
+                prono: '1', 
+                cote: 1.85, 
+                date: '2025-06-10', 
+                statut: 'en_cours' 
+            },
+            { 
+                id: 2, 
+                eq1: 'Marseille', 
+                eq2: 'Monaco', 
+                logoEq1: 'https://logos-world.net/wp-content/uploads/2020/07/PSG-Logo.png',
+                logoEq2: 'https://logos-world.net/wp-content/uploads/2020/06/Real-Madrid-Logo-700x394.png',
+                competition: 'Ligue 1',
+                prono: 'Plus de 2.5 buts', 
+                cote: 2.10, 
+                date: '2025-06-08', 
+                statut: 'gagne' 
+            },
+            { 
+                id: 3, 
+                eq1: 'Lille', 
+                eq2: 'Nice', 
+                logoEq1: 'https://logos-world.net/wp-content/uploads/2020/07/PSG-Logo.png',
+                logoEq2: 'https://logos-world.net/wp-content/uploads/2020/06/Real-Madrid-Logo-700x394.png',
+                competition: 'Ligue 1',
+                prono: 'X', 
+                cote: 3.20, 
+                date: '2025-06-07', 
+                statut: 'perdu' 
+            },
+            { 
+                id: 4, 
+                eq1: 'Rennes', 
+                eq2: 'Nantes', 
+                logoEq1: 'https://logos-world.net/wp-content/uploads/2020/07/PSG-Logo.png',
+                logoEq2: 'https://logos-world.net/wp-content/uploads/2020/06/Real-Madrid-Logo-700x394.png',
+                competition: 'Ligue 1',
+                prono: '2', 
+                cote: 2.45, 
+                date: '2025-06-12', 
+                statut: 'en_cours' 
+            },
+            { 
+                id: 5, 
+                eq1: 'Bordeaux', 
+                eq2: 'Strasbourg', 
+                logoEq1: 'https://logos-world.net/wp-content/uploads/2020/07/PSG-Logo.png',
+                logoEq2: 'https://logos-world.net/wp-content/uploads/2020/06/Real-Madrid-Logo-700x394.png',
+                competition: 'Ligue 1',
+                prono: 'Moins de 2.5 buts', 
+                cote: 1.75, 
+                date: '2025-06-06', 
+                statut: 'gagne' 
+            }
+        ];
+
+        let idCompteur = 6;
+
+        function getBadgeStatut(statut) {
+            switch(statut) {
+                case 'gagne': return 'bg-green-100 text-green-800';
+                case 'perdu': return 'bg-red-100 text-red-800';
+                default: return 'bg-yellow-100 text-yellow-800';
+            }
+        }
+
+        function getTexteStatut(statut) {
+            switch(statut) {
+                case 'gagne': return 'Gagné';
+                case 'perdu': return 'Perdu';
+                default: return 'En cours';
+            }
+        }
+
+        function filtrerPronostics() {
+            const filtre = document.getElementById('filtreStatut').value;
+            return filtre === 'tous' ? pronostics : pronostics.filter(p => p.statut === filtre);
+        }
+
+        function afficherPronostics() {
+            const pronosFiltres = filtrerPronostics();
+            const tab = document.getElementById('tabProno');
+            const mobile = document.getElementById('pronoMobile');
+            
+            tab.innerHTML = '';
+            mobile.innerHTML = '';
+
+            pronosFiltres.forEach(p => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-4 py-3 whitespace-nowrap">
+                        <div class="flex items-center space-x-2">
+                            <img src="${p.logoEq1}" alt="${p.eq1}" class="w-6 h-6 object-contain">
+                            <span class="text-sm text-gray-900">${p.eq1}</span>
+                            <span class="text-gray-500 text-xs">vs</span>
+                            <img src="${p.logoEq2}" alt="${p.eq2}" class="w-6 h-6 object-contain">
+                            <span class="text-sm text-gray-900">${p.eq2}</span>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-600">${p.competition}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">${p.prono}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900 font-semibold">${p.cote}</td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">${p.date}</td>
+                    <td class="px-4 py-3 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs rounded-full ${getBadgeStatut(p.statut)}">
+                            ${getTexteStatut(p.statut)}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-sm space-x-1">
+                        <button onclick="modifierProno(${p.id})" class="bg-bleu text-white px-2 py-1 rounded hover:bg-bleu-fonce transition-colors text-xs">
+                            <i class="fas fa-edit mr-1"></i>Modifier
+                        </button>
+                        <button onclick="supprimerProno(${p.id})" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition-colors text-xs">
+                            <i class="fas fa-trash mr-1"></i>Suppr
+                        </button>
+                    </td>
+                `;
+                tab.appendChild(row);
+
+                const card = document.createElement('div');
+                card.className = 'border-b border-gray-200 p-3';
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    <img src="${p.logoEq1}" alt="${p.eq1}" class="w-6 h-6 object-contain">
+                                    <span class="text-sm font-medium text-gray-900">${p.eq1}</span>
+                                    <span class="text-gray-500 text-xs">vs</span>
+                                    <img src="${p.logoEq2}" alt="${p.eq2}" class="w-6 h-6 object-contain">
+                                    <span class="text-sm font-medium text-gray-900">${p.eq2}</span>
+                                </div>
+                                <p class="text-xs text-gray-500">${p.competition} - ${p.date}</p>
+                            </div>
+                            <span class="px-2 py-1 text-xs rounded-full ${getBadgeStatut(p.statut)}">
+                                ${getTexteStatut(p.statut)}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-xs text-gray-600">Prono: <span class="font-medium">${p.prono}</span></p>
+                                <p class="text-xs text-gray-600">Cote: <span class="font-bold text-bleu">${p.cote}</span></p>
+                            </div>
+                            <div class="flex space-x-1">
+                                <button onclick="modifierProno(${p.id})" class="bg-bleu text-white px-2 py-1 rounded hover:bg-bleu-fonce transition-colors text-xs">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="supprimerProno(${p.id})" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition-colors text-xs">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                mobile.appendChild(card);
+            });
+        }
+
+        function majCompteurs() {
+            const total = pronostics.length;
+            const gagnes = pronostics.filter(p => p.statut === 'gagne').length;
+            const perdus = pronostics.filter(p => p.statut === 'perdu').length;
+
+            document.getElementById('totProno').textContent = total;
+            document.getElementById('pronoGagne').textContent = gagnes;
+            document.getElementById('pronoPerdu').textContent = perdus;
+        }
+
+        function modifierProno(id) {
+            const p = pronostics.find(prono => prono.id === id);
+            if (p) {
+                document.getElementById('titreModal').textContent = 'Modifier Pronostic';
+                document.getElementById('pronoId').value = p.id;
+                document.getElementById('eq1').value = p.eq1;
+                document.getElementById('eq2').value = p.eq2;
+                document.getElementById('competition').value = p.competition;
+                document.getElementById('prono').value = p.prono;
+                document.getElementById('cote').value = p.cote;
+                document.getElementById('dateMatch').value = p.date;
+                document.getElementById('statut').value = p.statut;
+                document.getElementById('modalEdit').classList.remove('hidden');
+            }
+        }
+
+        function supprimerProno(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce pronostic ?')) {
+                const index = pronostics.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    pronostics.splice(index, 1);
+                    afficherPronostics();
+                    majCompteurs();
+                    alert('Pronostic supprimé avec succès!');
+                }
+            }
+        }
+
+        function fermerModal() {
+            document.getElementById('modalEdit').classList.add('hidden');
+        }
+
+        function convertirFichierEnBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        document.getElementById('formProno').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('pronoId').value;
+            const eq1 = document.getElementById('eq1').value;
+            const eq2 = document.getElementById('eq2').value;
+            const competition = document.getElementById('competition').value;
+            const prono = document.getElementById('prono').value;
+            const cote = parseFloat(document.getElementById('cote').value);
+            const date = document.getElementById('dateMatch').value;
+            const statut = document.getElementById('statut').value;
+
+            let logoEq1 = 'https://logos-world.net/wp-content/uploads/2020/07/PSG-Logo.png';
+            let logoEq2 = 'https://logos-world.net/wp-content/uploads/2020/06/Real-Madrid-Logo-700x394.png';
+
+            const fichierLogoEq1 = document.getElementById('logoEq1').files[0];
+            const fichierLogoEq2 = document.getElementById('logoEq2').files[0];
+
+            if (fichierLogoEq1) {
+                logoEq1 = await convertirFichierEnBase64(fichierLogoEq1);
+            }
+            if (fichierLogoEq2) {
+                logoEq2 = await convertirFichierEnBase64(fichierLogoEq2);
+            }
+
+            if (id) {
+                const index = pronostics.findIndex(p => p.id == id);
+                if (index !== -1) {
+                    const pronoExistant = pronostics[index];
+                    pronostics[index] = { 
+                        id: parseInt(id), 
+                        eq1, 
+                        eq2, 
+                        logoEq1: fichierLogoEq1 ? logoEq1 : pronoExistant.logoEq1,
+                        logoEq2: fichierLogoEq2 ? logoEq2 : pronoExistant.logoEq2,
+                        competition,
+                        prono, 
+                        cote, 
+                        date, 
+                        statut 
+                    };
+                    alert('Pronostic modifié avec succès!');
+                }
+            } else {
+                const nouveauProno = { 
+                    id: idCompteur++, 
+                    eq1, 
+                    eq2, 
+                    logoEq1,
+                    logoEq2,
+                    competition,
+                    prono, 
+                    cote, 
+                    date, 
+                    statut 
+                };
+                pronostics.push(nouveauProno);
+                alert('Pronostic ajouté avec succès!');
+            }
+
+            fermerModal();
+            afficherPronostics();
+            majCompteurs();
+        });
+
+        document.getElementById('filtreStatut').addEventListener('change', afficherPronostics);
+
+        const btnDeco = document.getElementById('btnDeco');
+        btnDeco.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                window.location.href = '/auth/login.html';
+            }
+        });
+
+        afficherPronostics();
+        majCompteurs();
+    </script>
 </body>
 </html>
