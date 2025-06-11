@@ -2,236 +2,197 @@ tailwind.config = {
     theme: {
         extend: {
             colors: {
-                'bleu-principal': '#1e40af',
-                'bleu-fonce': '#1e3a8a',
-                'jaune-accent': '#fbbf24',
-                'jaune-clair': '#fef3c7'
+                'bleuPrinc': '#1e40af',
+                'bleuFonce': '#1e3a8a',
+                'bleuDash': '#3b82f6',
+                'bleuClair': '#dbeafe',
+                'jauneAcc': '#fbbf24',
+                'jauneClair': '#fef3c7',
+                'vertPar': '#16a34a'
             }
         }
     }
 }
+    let chronoInterval;
+    let tempsRestant = 20 * 60; 
+    let methodePaiementSelectionnee = '';
 
-let etapeCourante = 1;
-let montantDemande = 0;
-let plateformeDemande = '';
-let chronoInterval;
-let tempsRestant = 1200; 
+    const btnOuvrir = document.getElementById('btnOuvrir');
+    const btnFermer = document.getElementById('btnFermer');
+    const menu = document.getElementById('menu');
+    const fondMenu = document.getElementById('fondMenu');
 
-const etapes = {
-    1: document.getElementById('etap1'),
-    att: document.getElementById('etapAtt'),
-    coord: document.getElementById('etapCoord'),
-    retrait: document.getElementById('etapRetrait'),
-    exp: document.getElementById('etapExp')
-};
-
-const modal = document.getElementById('modal');
-const modalTitle = document.getElementById('modalTitle');
-const modalText = document.getElementById('modalText');
-const modalBtn = document.getElementById('modalBtn');
-
-const btnMenu = document.getElementById('btnMenu');
-const menu = document.getElementById('menu');
-const fondMenu = document.getElementById('fondMenu');
-const fermer = document.getElementById('fermer');
-
-btnMenu.addEventListener('click', () => {
-    menu.classList.remove('-translate-x-full');
-    fondMenu.classList.remove('hidden');
-});
-
-[fermer, fondMenu].forEach(el => {
-    el.addEventListener('click', () => {
-        menu.classList.add('-translate-x-full');
-        fondMenu.classList.add('hidden');
+    btnOuvrir.addEventListener('click', () => {
+        menu.classList.add('ouvert');
+        fondMenu.classList.add('actif');
     });
-});
 
-const liens = document.querySelectorAll('.lien-nav');
-liens.forEach(lien => {
-    lien.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (href && href !== '#') {
-            window.location.href = href;
-            return;
+    btnFermer.addEventListener('click', fermerMenu);
+    fondMenu.addEventListener('click', fermerMenu);
+
+    function fermerMenu() {
+        menu.classList.remove('ouvert');
+        fondMenu.classList.remove('actif');
+    }
+
+    const btnDrop = document.getElementById('btnDrop');
+    const listeDrop = document.getElementById('listeDrop');
+    const optSel = document.getElementById('optSel');
+    const imgSel = document.getElementById('imgSel');
+
+    btnDrop.addEventListener('click', () => {
+        listeDrop.classList.toggle('ouvert');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!btnDrop.contains(e.target) && !listeDrop.contains(e.target)) {
+            listeDrop.classList.remove('ouvert');
         }
-        
+    });
+
+    document.querySelectorAll('.itemDrop').forEach(item => {
+        item.addEventListener('click', () => {
+            const value = item.getAttribute('data-value');
+            const imgSrc = item.getAttribute('data-img');
+            const text = item.querySelector('span').textContent;
+            
+            methodePaiementSelectionnee = value;
+            optSel.textContent = text;
+            imgSel.src = imgSrc;
+            imgSel.classList.remove('hidden');
+            
+            listeDrop.classList.remove('ouvert');
+        });
+    });
+
+    document.getElementById('formDem').addEventListener('submit', (e) => {
         e.preventDefault();
         
-        liens.forEach(l => l.classList.remove('actif'));
-        liens.forEach(l => {
-            l.classList.remove('bg-gradient-to-r', 'from-bleu-principal', 'to-bleu-fonce', 'text-white');
-            l.classList.add('text-gray-300', 'hover:text-white');
-        });
+        const montant = document.getElementById('montant').value;
+        const plateforme = document.getElementById('plat').value;
         
-        this.classList.add('actif');
-        this.classList.remove('text-gray-300', 'hover:text-white');
-        this.classList.add('bg-gradient-to-r', 'from-bleu-principal', 'to-bleu-fonce', 'text-white');
-    });
-});
-
-const dropdown = document.getElementById('btn');
-const liste = document.getElementById('liste');
-const opt = document.getElementById('opt');
-
-dropdown.addEventListener('click', () => {
-    liste.classList.toggle('show');
-});
-
-document.querySelectorAll('.dropdown-item').forEach(item => {
-    item.addEventListener('click', () => {
-        const value = item.dataset.value;
-        const text = item.querySelector('span').textContent;
-        const img = item.querySelector('img').src;
-        
-        opt.innerHTML = `<img src="${img}" class="w-6 h-6 mr-2 rounded"> ${text}`;
-        liste.classList.remove('show');
-    });
-});
-
-document.addEventListener('click', (e) => {
-    if (!dropdown.contains(e.target)) {
-        liste.classList.remove('show');
-    }
-});
-
-function afficherEtape(etape) {
-    Object.values(etapes).forEach(el => el.classList.add('hidden'));
-    if (etapes[etape]) {
-        etapes[etape].classList.remove('hidden');
-    }
-}
-
-function afficherModal(titre, texte, callback = null) {
-    modalTitle.textContent = titre;
-    modalText.textContent = texte;
-    modal.classList.remove('hidden');
-    
-    modalBtn.onclick = () => {
-        modal.classList.add('hidden');
-        if (callback) callback();
-    };
-}
-
-function demarrerChrono() {
-    const chronoEl = document.getElementById('chrono');
-    
-    chronoInterval = setInterval(() => {
-        const minutes = Math.floor(tempsRestant / 60);
-        const secondes = tempsRestant % 60;
-        
-        chronoEl.textContent = `${minutes.toString().padStart(2, '0')}:${secondes.toString().padStart(2, '0')}`;
-        
-        if (tempsRestant <= 0) {
-            clearInterval(chronoInterval);
-            afficherEtape('exp');
+        if (!montant || !plateforme) {
+            alert('Veuillez remplir tous les champs obligatoires');
             return;
         }
         
-        tempsRestant--;
-    }, 1000);
-}
-
-function genererCoordonnees() {
-    const villes = ['Abidjan', 'Bouaké', 'Daloa', 'Yamoussoukro', 'San-Pédro', 'Korhogo', 'Man', 'Divo'];
-    const rues = ['Rue des Jardins', 'Avenue de la Paix', 'Boulevard du Commerce', 'Rue de la République', 'Avenue des Cocotiers', 'Rue du Marché', 'Boulevard de l\'Indépendance'];
-    
-    const villeAleatoire = villes[Math.floor(Math.random() * villes.length)];
-    const rueAleatoire = rues[Math.floor(Math.random() * rues.length)];
-    
-    return { ville: villeAleatoire, rue: rueAleatoire };
-}
-
-document.getElementById('formDemand').addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const montant = document.getElementById('montant').value;
-    const plat = document.getElementById('plat').value;
-    
-    if (!montant || montant < 1000) {
-        afficherModal('Erreur', 'Le montant minimum est de 1000 FCFA');
-        return;
-    }
-    
-    if (!plat) {
-        afficherModal('Erreur', 'Veuillez sélectionner une plateforme');
-        return;
-    }
-    
-    montantDemande = parseInt(montant);
-    plateformeDemande = plat;
-    
-    afficherEtape('att');
-    
-    setTimeout(() => {
-        const coords = genererCoordonnees();
+        if (montant < 1000) {
+            alert('Le montant minimum est de 1000 FCFA');
+            return;
+        }
         
-        document.getElementById('nomPlat').textContent = plat.toUpperCase();
-        document.getElementById('montantAff').value = montantDemande;
-        document.getElementById('villeAff').value = coords.ville;
-        document.getElementById('rueAff').value = coords.rue;
-        document.getElementById('montantFin').value = montantDemande;
+        changerEtape('etapAtt');
         
-        afficherEtape('coord');
-        demarrerChrono();
-    }, 3000);
-});
-
-document.getElementById('formCoord').addEventListener('submit', (e) => {
-    e.preventDefault();
-    afficherEtape('retrait');
-});
-
-document.getElementById('formRetrait').addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const code = document.getElementById('code').value;
-    const tel = document.getElementById('tel').value;
-    const platDest = document.querySelector('input[name="platDest"]:checked');
-    
-    if (!code) {
-        afficherModal('Erreur', 'Veuillez saisir le code de retrait');
-        return;
-    }
-    
-    if (!tel) {
-        afficherModal('Erreur', 'Veuillez saisir votre numéro de téléphone');
-        return;
-    }
-    
-    if (!platDest) {
-        afficherModal('Erreur', 'Veuillez sélectionner une plateforme de destination');
-        return;
-    }
-    
-    clearInterval(chronoInterval);
-    afficherModal('Succès!', `Votre retrait de ${montantDemande} FCFA a été effectué avec succès. Vous recevrez une confirmation par SMS.`, () => {
-        document.getElementById('formDemand').reset();
-        document.getElementById('formRetrait').reset();
-        tempsRestant = 1200;
-        afficherEtape(1);
+        setTimeout(() => {
+            afficherCoordonnees(montant, plateforme);
+        }, 3000); 
     });
-});
 
-document.getElementById('recom').addEventListener('click', () => {
-    tempsRestant = 1200;
-    clearInterval(chronoInterval);
-    afficherEtape(1);
-});
-
-document.getElementById('depot').addEventListener('click', () => {
-    window.location.href = 'dashboardDepot.html';
-});
-
-document.getElementById('retrait').addEventListener('click', () => {
-    window.location.href = 'dashboardRetrait.html';
-});
-
-document.getElementById('deco').addEventListener('click', (e) => {
-    e.preventDefault();
-    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-        window.location.href = '/auth/login.html';
+    function afficherCoordonnees(montant, plateforme) {
+        const villes = ['Abidjan', 'Bouaké', 'Daloa', 'Yamoussoukro', 'San-Pédro'];
+        const rues = ['Rue 12', 'Avenue 7', 'Boulevard 3', 'Rue du Commerce', 'Avenue de la Paix'];
+        
+        document.getElementById('montantAff').textContent = montant;
+        document.getElementById('nomPlat').textContent = plateforme.toUpperCase();
+        document.getElementById('villeAff').textContent = villes[Math.floor(Math.random() * villes.length)];
+        document.getElementById('rueAff').textContent = rues[Math.floor(Math.random() * rues.length)];
+        document.getElementById('montantFin').value = montant;
+        
+        changerEtape('etapCoord');
+        demarrerChrono();
     }
-});
 
-afficherEtape(1);
+    function demarrerChrono() {
+        const chronoElement = document.getElementById('chrono');
+        
+        chronoInterval = setInterval(() => {
+            const minutes = Math.floor(tempsRestant / 60);
+            const secondes = tempsRestant % 60;
+            
+            chronoElement.textContent = `${minutes.toString().padStart(2, '0')}:${secondes.toString().padStart(2, '0')}`;
+            
+            if (tempsRestant <= 0) {
+                clearInterval(chronoInterval);
+                alert('Temps écoulé! Veuillez recommencer la procédure.');
+                changerEtape('etap1');
+                tempsRestant = 20 * 60;
+            }
+            
+            tempsRestant--;
+        }, 1000);
+    }
+
+    document.getElementById('formRet').addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const identifiant = document.getElementById('id').value;
+        const code = document.getElementById('code').value;
+        const montant = document.getElementById('montantFin').value;
+        const telephone = document.getElementById('tel').value;
+        const plateformeDest = document.querySelector('input[name="platDest"]:checked');
+        
+        if (!identifiant || !code || !montant || !telephone || !plateformeDest || !methodePaiementSelectionnee) {
+            alert('Veuillez remplir tous les champs obligatoires');
+            return;
+        }
+        
+        setTimeout(() => {
+            clearInterval(chronoInterval);
+            afficherSucces(montant, plateformeDest.value, optSel.textContent);
+        }, 2000);
+    });
+
+    function afficherSucces(montant, plateforme, methode) {
+        
+        changerEtape('etapSucces');
+    }
+
+    function changerEtape(nouvelleEtape) {
+        document.querySelectorAll('.etap').forEach(etape => {
+            etape.classList.remove('actif');
+        });
+        document.getElementById(nouvelleEtape).classList.add('actif');
+    }
+
+    function retourAccueil() {
+        window.location.href = 'dashboardUser.html';
+    }
+
+    function aller(page) {
+        window.location.href = page;
+    }
+
+    const btnDeco = document.getElementById('btnDeco');
+    const modalConfirm = document.getElementById('modalConfirm');
+    const btnAnnuler = document.getElementById('btnAnnuler');
+    const btnConfirmer = document.getElementById('btnConfirmer');
+
+    btnDeco.addEventListener('click', (e) => {
+        e.preventDefault();
+        modalConfirm.style.display = 'flex';
+    });
+
+    btnAnnuler.addEventListener('click', () => {
+        modalConfirm.style.display = 'none';
+    });
+
+    btnConfirmer.addEventListener('click', () => {
+        e.preventDefault();
+        if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+            window.location.href = '/auth/login.html';
+        }
+    });
+
+    modalConfirm.addEventListener('click', (e) => {
+        if (e.target === modalConfirm) {
+            modalConfirm.style.display = 'none';
+        }
+    });
+
+    window.addEventListener('load', () => {
+        document.querySelector('.cardDepot').style.animationDelay = '0.2s';
+    });
+
+    document.querySelectorAll('.iconeFlottante').forEach(icone => {
+    icone.style.animation = 'flottement 3s ease-in-out infinite';
+});

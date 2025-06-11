@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Utilisateurs VIP - Dashboard Admin</title>
+    <title>Dashboard Admin</title>
     <link rel="shortcut icon" href="/assets/img/log.jpeg" type="image/jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -21,7 +21,6 @@
 </head>
 <body class="bg-gray-50 font-sans">
     <div class="flex h-screen overflow-hidden">
-        <!-- Menu latéral -->
         <aside id="menu" class="bg-white shadow-lg w-64 fixed h-full z-30 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
             <div class="p-4 lg:p-6 bg-blue-600 flex justify-between items-center">
                 <h2 class="text-white text-lg lg:text-xl font-bold">Admin Panel</h2>
@@ -79,7 +78,6 @@
         </aside>
 
         <div class="flex-1 lg:ml-64 flex flex-col h-screen">
-            <!-- En-tête -->
             <header class="bg-white shadow-sm border-b flex-shrink-0">
                 <div class="flex items-center justify-between px-3 lg:px-6 py-3 lg:py-4">
                     <div class="flex items-center min-w-0 flex-1">
@@ -97,11 +95,9 @@
                     </div>
                 </div>
             </header>
-
-            <!-- Contenu principal -->
+            
             <main class="flex-1 overflow-y-auto p-3 lg:p-6">
                 <div class="space-y-4 lg:space-y-6">
-                    <!-- Carte de statistiques -->
                     <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg lg:rounded-xl p-4 lg:p-6 text-white">
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                             <div class="mb-3 sm:mb-0">
@@ -120,7 +116,6 @@
                         </div>
                     </div>
 
-                    <!-- Tableau des utilisateurs -->
                     <div class="bg-white rounded-lg lg:rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                         <div class="p-3 lg:p-6 border-b border-gray-200">
                             <div class="flex flex-col space-y-3 lg:space-y-0 lg:flex-row lg:items-center lg:justify-between lg:gap-4">
@@ -140,7 +135,6 @@
                             </div>
                         </div>
 
-                        <!-- Version desktop du tableau -->
                         <div class="hidden lg:block overflow-x-auto">
                             <table class="w-full">
                                 <thead class="bg-gray-50">
@@ -157,11 +151,9 @@
                             </table>
                         </div>
 
-                        <!-- Version mobile (cartes) -->
                         <div id="cartesMobile" class="lg:hidden divide-y divide-gray-200">
                         </div>
 
-                        <!-- Pagination -->
                         <div class="px-3 lg:px-6 py-3 lg:py-4 bg-gray-50 border-t border-gray-200">
                             <div class="flex flex-col xs:flex-row xs:items-center xs:justify-between gap-3 lg:gap-4">
                                 <p class="text-xs lg:text-sm text-gray-700 text-center xs:text-left">
@@ -190,238 +182,6 @@
 
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden lg:hidden"></div>
 
-    <script>
-const btnOuvrir = document.getElementById('btnOuvrir');
-const btnFermer = document.getElementById('btnFermer');
-const menu = document.getElementById('menu');
-const overlay = document.getElementById('overlay');
-const tableauVip = document.getElementById('tableauVip');
-const cartesMobile = document.getElementById('cartesMobile');
-const recherche = document.getElementById('recherche');
-const filtre = document.getElementById('filtre');
-
-const usersVip = [
-    {
-        nom: 'Jean Dupont',
-        email: 'jean.dupont@email.com',
-        tel: '0123456789',
-        ville: 'Paris',
-        naissance: '15/03/1985',
-        inscription: '12/01/2024',
-        statut: 'actif'
-    },
-    {
-        nom: 'Thomas Moreau',
-        email: 'thomas.moreau@email.com',
-        tel: '0567890123',
-        ville: 'Nice',
-        naissance: '18/09/1987',
-        inscription: '22/01/2024',
-        statut: 'actif'
-    },
-    {
-        nom: 'Emma Petit',
-        email: 'emma.petit@email.com',
-        tel: '0678901234',
-        ville: 'Nantes',
-        naissance: '03/11/1991',
-        inscription: '08/04/2024',
-        statut: 'actif'
-    },
-    {
-        nom: 'Julien Roux',
-        email: 'julien.roux@email.com',
-        tel: '0789012345',
-        ville: 'Bordeaux',
-        naissance: '25/06/1989',
-        inscription: '17/02/2024',
-        statut: 'expire'
-    },
-    {
-        nom: 'Camille Blanc',
-        email: 'camille.blanc@email.com',
-        tel: '0890123456',
-        ville: 'Strasbourg',
-        naissance: '12/01/1993',
-        inscription: '30/03/2024',
-        statut: 'actif'
-    }
-];
-
-function afficherUsers(users = usersVip) {
-    // Version desktop
-    tableauVip.innerHTML = '';
-    
-    // Version mobile
-    cartesMobile.innerHTML = '';
-    
-    users.forEach((user, index) => {
-        const couleurStatut = user.statut === 'actif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-        const iconeStatut = user.statut === 'actif' ? 'fas fa-check-circle' : 'fas fa-times-circle';
-        const texteStatut = user.statut === 'actif' ? 'Actif' : 'Expiré';
-        
-        // Ligne pour desktop
-        const row = document.createElement('tr');
-        row.className = 'hover:bg-gray-50 transition-colors';
-        row.innerHTML = `
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mr-3 shadow-sm">
-                        <i class="fas fa-crown text-white text-sm"></i>
-                    </div>
-                    <div>
-                        <div class="text-sm font-semibold text-gray-900">${user.nom}</div>
-                        <div class="text-xs text-gray-500 uppercase tracking-wide">Premium</div>
-                    </div>
-                </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">${user.email}</div>
-                <div class="text-sm text-gray-500">${user.tel}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">${user.ville}</div>
-                <div class="text-sm text-gray-500">${user.naissance}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.inscription}</td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center gap-3">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${couleurStatut}">
-                        <i class="${iconeStatut} mr-1"></i>
-                        ${texteStatut}
-                    </span>
-                    <select onchange="changerStatut(${index}, this.value)" class="text-xs border border-gray-300 rounded px-2 py-1 focus:ring-1 focus:ring-blue-500">
-                        <option value="actif" ${user.statut === 'actif' ? 'selected' : ''}>Actif</option>
-                        <option value="expire" ${user.statut === 'expire' ? 'selected' : ''}>Expiré</option>
-                    </select>
-                </div>
-            </td>
-        `;
-        tableauVip.appendChild(row);
-
-        // Carte pour mobile
-        const carte = document.createElement('div');
-        carte.className = 'p-4 bg-white hover:bg-gray-50 transition-colors';
-        carte.innerHTML = `
-            <div class="flex items-start justify-between mb-3">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mr-3 shadow-sm">
-                        <i class="fas fa-crown text-white text-sm"></i>
-                    </div>
-                    <div>
-                        <div class="text-sm font-semibold text-gray-900">${user.nom}</div>
-                        <div class="text-xs text-gray-500 uppercase tracking-wide">Premium</div>
-                    </div>
-                </div>
-                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${couleurStatut}">
-                    <i class="${iconeStatut} mr-1"></i>
-                    ${texteStatut}
-                </span>
-            </div>
-            
-            <div class="grid grid-cols-2 gap-3 text-xs mb-3">
-                <div>
-                    <span class="text-gray-500">Email:</span>
-                    <div class="text-gray-900 truncate">${user.email}</div>
-                </div>
-                <div>
-                    <span class="text-gray-500">Téléphone:</span>
-                    <div class="text-gray-900">${user.tel}</div>
-                </div>
-                <div>
-                    <span class="text-gray-500">Ville:</span>
-                    <div class="text-gray-900">${user.ville}</div>
-                </div>
-                <div>
-                    <span class="text-gray-500">Naissance:</span>
-                    <div class="text-gray-900">${user.naissance}</div>
-                </div>
-            </div>
-            
-            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
-                <div class="text-xs">
-                    <span class="text-gray-500">Inscription:</span>
-                    <span class="text-gray-900">${user.inscription}</span>
-                </div>
-                <select onchange="changerStatut(${index}, this.value)" class="text-xs border border-gray-300 rounded px-2 py-1 focus:ring-1 focus:ring-blue-500">
-                    <option value="actif" ${user.statut === 'actif' ? 'selected' : ''}>Actif</option>
-                    <option value="expire" ${user.statut === 'expire' ? 'selected' : ''}>Expiré</option>
-                </select>
-            </div>
-        `;
-        cartesMobile.appendChild(carte);
-    });
-}
-
-function changerStatut(index, nouveauStatut) {
-    usersVip[index].statut = nouveauStatut;
-    afficherUsers(filtrer());
-}
-
-function filtrer() {
-    const rech = recherche.value.toLowerCase();
-    const stat = filtre.value;
-    
-    return usersVip.filter(user => {
-        const matchRech = user.nom.toLowerCase().includes(rech) || 
-                         user.email.toLowerCase().includes(rech) ||
-                         user.ville.toLowerCase().includes(rech);
-        const matchStat = !stat || user.statut === stat;
-        
-        return matchRech && matchStat;
-    });
-}
-
-// Gestion du menu mobile
-btnOuvrir.addEventListener('click', () => {
-    menu.classList.remove('-translate-x-full');
-    overlay.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-});
-
-btnFermer.addEventListener('click', () => {
-    menu.classList.add('-translate-x-full');
-    overlay.classList.add('hidden');
-    document.body.style.overflow = 'auto';
-});
-
-overlay.addEventListener('click', () => {
-    menu.classList.add('-translate-x-full');
-    overlay.classList.add('hidden');
-    document.body.style.overflow = 'auto';
-});
-
-// Gestion des filtres
-recherche.addEventListener('input', () => {
-    afficherUsers(filtrer());
-});
-
-filtre.addEventListener('change', () => {
-    afficherUsers(filtrer());
-});
-
-// Gestion de la déconnexion
-const btnDeco = document.getElementById('btnDeco');
-btnDeco.addEventListener('click', function(e) {
-    e.preventDefault();
-    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-        window.location.href = '/auth/login.html';
-    }
-});
-
-// Initialisation
-afficherUsers();
-
-// Gestion du redimensionnement
-window.addEventListener('resize', () => {
-    if (window.innerWidth >= 1024) {
-        menu.classList.remove('-translate-x-full');
-        overlay.classList.add('hidden');
-        document.body.style.overflow = 'auto';
-    } else {
-        menu.classList.add('-translate-x-full');
-    }
-});
-    </script>
+    <script src="/script/adminVip.js"></script>
 </body>
 </html>

@@ -2,174 +2,133 @@ tailwind.config = {
     theme: {
         extend: {
             colors: {
-                'bleu-principal': '#1e40af',
-                'bleu-fonce': '#1e3a8a',
-                'jaune-accent': '#fbbf24',
-                'jaune-clair': '#fef3c7'
+                'bleuPrinc': '#1e40af',
+                'bleuFc': '#1e3a8a',
+                'bleuDash': '#3b82f6',
+                'jauneAcc': '#fbbf24',
+                'vertPar': '#059669'
             }
         }
     }
 }
+    const btnOuvrMenu = document.getElementById('btnOuvrMenuMob');
+    const btnFermerMenu = document.getElementById('fermerMenu');
+    const menu = document.getElementById('menu');
+    const fondMenu = document.getElementById('fondMenu');
 
-const btnMenu = document.getElementById('btnMenu');
-const menu = document.getElementById('menu');
-const fondMenu = document.getElementById('fondMenu');
-const fermerMenu = document.getElementById('fermerMenu');
+    btnOuvrMenu.addEventListener('click', () => {
+        menu.classList.remove('-translate-x-full');
+        fondMenu.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    });
 
-function ouvrir() {
-    menu.classList.remove('-translate-x-full');
-    fondMenu.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-}
-
-function fermer() {
-    menu.classList.add('-translate-x-full');
-    fondMenu.classList.add('hidden');
-    document.body.style.overflow = 'auto';
-}
-
-btnMenu.addEventListener('click', function() {
-    if (menu.classList.contains('-translate-x-full')) {
-        ouvrir();
-    } else {
-        fermer();
+    function fermerMenu() {
+        menu.classList.add('-translate-x-full');
+        fondMenu.classList.add('hidden');
+        document.body.style.overflow = 'auto';
     }
-});
 
-fermerMenu.addEventListener('click', fermer);
-fondMenu.addEventListener('click', fermer);
+    btnFermerMenu.addEventListener('click', fermerMenu);
+    fondMenu.addEventListener('click', fermerMenu);
 
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        fermer();
+    function allerPage(page) {
+        window.location.href = page;
     }
-});
 
-const liens = document.querySelectorAll('.lien-nav');
-liens.forEach(lien => {
-    lien.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (href && href !== '#') {
-            window.location.href = href;
-            return;
-        }
-        
-        e.preventDefault();
-        
-        liens.forEach(l => l.classList.remove('actif'));
-        liens.forEach(l => {
-            l.classList.remove('bg-gradient-to-r', 'from-bleu-principal', 'to-bleu-fonce', 'text-white');
-            l.classList.add('text-gray-300', 'hover:text-white');
-        });
-        
-        this.classList.add('actif');
-        this.classList.remove('text-gray-300', 'hover:text-white');
-        this.classList.add('bg-gradient-to-r', 'from-bleu-principal', 'to-bleu-fonce', 'text-white');
+    document.getElementById('btnVoirPron').addEventListener('click', () => {
+        allerPage('dashboardPronostic.html');
     });
-});
 
-const btnsBonus = document.querySelectorAll('.btn-bonus');
-btnsBonus.forEach(btn => {
-    btn.addEventListener('click', function() {
-        this.textContent = 'Réclamé';
-        this.classList.remove('bg-red-400', 'bg-blue-400', 'bg-jaune-accent');
-        this.classList.add('bg-green-500');
-        this.disabled = true;
+    document.getElementById('btnVoirBon').addEventListener('click', () => {
+        allerPage('dashboardBonus.html');
     });
-});
 
-const btnDetails = document.querySelectorAll('.btn-detail');
-btnDetails.forEach(btn => {
-    btn.addEventListener('click', function() {
-        const transactionId = this.getAttribute('data-id');
-        const transactionCard = this.closest('.bg-gray-700');
-        const details = transactionCard.querySelectorAll('.bg-gray-800');
-        
-        transactionCard.classList.add('ring-2', 'ring-bleu-principal');
-        setTimeout(() => {
-            transactionCard.classList.remove('ring-2', 'ring-bleu-principal');
-        }, 2000);
-        
-        console.log(`Affichage des détails de la transaction #${transactionId}`);
+    document.getElementById('btnVoirActivites').addEventListener('click', () => {
+        allerPage('dashboardTransaction.html');
     });
-});
 
-const btnDepot = document.getElementById('depot');
-const btnRetrait = document.getElementById('retrait');
-
-btnDepot.addEventListener('click', function() {
-    window.location.href = 'dashboardDepot.html';
-});
-
-btnRetrait.addEventListener('click', function() {
-    window.location.href = 'dashboardRetrait.html';
-});
-
-const voirProno = document.getElementById('voirProno');
-voirProno.addEventListener('click', function() {
-    window.location.href = 'dashboardPronostic.html';
-});
-
-const voirBonus = document.getElementById('voirBonus');
-voirBonus.addEventListener('click', function() {
-    window.location.href = 'dashboardBonus.html';
-});
-
-const btnDeco = document.getElementById('btnDeco');
-btnDeco.addEventListener('click', function(e) {
-    e.preventDefault();
-    if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-        window.location.href = '/auth/login.html';
-    }
-});
-
-const cartesProno = document.querySelectorAll('.carte-prono');
-cartesProno.forEach(carte => {
-    carte.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-5px) scale(1.02)';
-    });
-    
-    carte.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
-    });
-});
-
-function updateTime() {
-    const now = new Date();
-    const timeString = now.toLocaleTimeString('fr-FR');
-    const timeElement = document.querySelector('.current-time');
-    if (timeElement) {
-        timeElement.textContent = timeString;
-    }
-}
-
-setInterval(updateTime, 1000);
-
-window.addEventListener('load', function() {
-    document.body.classList.add('loaded');
-    
-    const cartesStat = document.querySelectorAll('.carte-stat');
-    cartesStat.forEach((carte, index) => {
-        setTimeout(() => {
-            carte.style.opacity = '0';
-            carte.style.transform = 'translateY(20px)';
-            carte.style.transition = 'all 0.5s ease';
+    document.querySelectorAll('.btnBon').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            this.classList.add('btnBonusClick');
+            this.innerHTML = '<i class="fas fa-check mr-1"></i>Réclamé';
+            this.disabled = true;
             
             setTimeout(() => {
-                carte.style.opacity = '1';
-                carte.style.transform = 'translateY(0)';
-            }, 100);
-        }, index * 200);
+                showNotification('Bonus réclamé avec succès !', 'success');
+            }, 500);
+        });
     });
-});
 
-const notifications = document.querySelectorAll('.notification');
-notifications.forEach(notification => {
-    setTimeout(() => {
-        notification.style.opacity = '0';
-        notification.style.transform = 'translateX(100%)';
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg transition-all duration-300 transform translate-x-full ${
+            type === 'success' ? 'bg-green-600 text-white' : 
+            type === 'error' ? 'bg-red-600 text-white' : 
+            'bg-blue-600 text-white'
+        }`;
+        notification.innerHTML = `
+            <div class="flex items-center">
+                <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : 'info'} mr-2"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
         setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, 5000);
+            notification.classList.remove('translate-x-full');
+        }, 100);
+        
+        setTimeout(() => {
+            notification.classList.add('translate-x-full');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+
+    document.getElementById('btnDeconnexion').addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+            window.location.href = '/auth/login.html';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.cardStat');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.2}s`;
+        });
+    });
+
+    if (window.innerWidth > 768) {
+        document.querySelectorAll('.icAnim').forEach(icon => {
+            icon.addEventListener('mouseenter', () => {
+                icon.style.animation = 'flottement 1s ease-in-out infinite';
+            });
+            
+            icon.addEventListener('mouseleave', () => {
+                icon.style.animation = 'none';
+            });
+        });
+    }
+
+    setInterval(() => {
+        const soldeBonus = document.querySelector('.text-jauneAcc');
+        if (soldeBonus && Math.random() > 0.95) {
+            const currentAmount = parseFloat(soldeBonus.textContent.replace(/[^\d.]/g, ''));
+            const newAmount = currentAmount + Math.floor(Math.random() * 100);
+            soldeBonus.textContent = `${newAmount.toLocaleString('fr-FR', { minimumFractionDigits: 2 })} XOF`;
+            
+            soldeBonus.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                soldeBonus.style.transform = 'scale(1)';
+            }, 200);
+        }
+    }, 10000);
+
+    document.querySelectorAll('.iconeFlottante').forEach(icone => {
+    icone.style.animation = 'flottement 3s ease-in-out infinite';
 });

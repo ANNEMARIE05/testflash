@@ -11,23 +11,23 @@ tailwind.config = {
     }
 }
 
-const ouvrir = document.getElementById('ouvrir');
-const fermer = document.getElementById('fermer');
+const btnOuvrir = document.getElementById('btnOuvrir');
+const btnFermer = document.getElementById('btnFermer');
 const menu = document.getElementById('menu');
 const overlay = document.getElementById('overlay');
-const modalReponse = document.getElementById('modalReponse');
-const fermerModal = document.getElementById('fermerModal');
-const annuler = document.getElementById('annuler');
-const soumettre = document.getElementById('soumettre');
+const modalRep = document.getElementById('modalRep');
+const btnFermerModal = document.getElementById('btnFermerModal');
+const btnAnn = document.getElementById('btnAnn');
+const btnSoum = document.getElementById('btnSoum');
 
-let demandeSelectionnee = null;
+let demSel = null;
 
-ouvrir.addEventListener('click', () => {
+btnOuvrir.addEventListener('click', () => {
     menu.classList.remove('-translate-x-full');
     overlay.classList.remove('hidden');
 });
 
-fermer.addEventListener('click', () => {
+btnFermer.addEventListener('click', () => {
     menu.classList.add('-translate-x-full');
     overlay.classList.add('hidden');
 });
@@ -37,43 +37,44 @@ overlay.addEventListener('click', () => {
     overlay.classList.add('hidden');
 });
 
-fermerModal.addEventListener('click', () => {
-    modalReponse.classList.add('hidden');
+btnFermerModal.addEventListener('click', () => {
+    modalRep.classList.add('hidden');
 });
 
-annuler.addEventListener('click', () => {
-    modalReponse.classList.add('hidden');
+btnAnn.addEventListener('click', () => {
+    modalRep.classList.add('hidden');
 });
 
-const demandes = [
-    { id: 1, nom: 'Koffi Yao', montant: '1000', plateforme: '1xbet', date: '2025-06-06' },
-    { id: 2, nom: 'Akissi Marie', montant: '2500', plateforme: 'melbet', date: '2025-06-06' },
-    { id: 3, nom: 'Kouame Jean', montant: '5000', plateforme: '1xbet', date: '2025-06-05' },
-    { id: 4, nom: 'Adjoua Sandra', montant: '1500', plateforme: 'melbet', date: '2025-06-05' },
-    { id: 5, nom: 'Yao Kouassi', montant: '3000', plateforme: '1xbet', date: '2025-06-04' }
+const dem = [
+    { id: 1, nom: 'Koffi Yao', mt: '1000', num: '0708123456', pf: '1xbet', dt: '2025-06-06' },
+    { id: 2, nom: 'Akissi Marie', mt: '2500', num: '0759876543', pf: 'melbet', dt: '2025-06-06' },
+    { id: 3, nom: 'Kouame Jean', mt: '5000', num: '0702345678', pf: '1xbet', dt: '2025-06-05' },
+    { id: 4, nom: 'Adjoua Sandra', mt: '1500', num: '0748765432', pf: 'melbet', dt: '2025-06-05' },
+    { id: 5, nom: 'Yao Kouassi', mt: '3000', num: '0756789012', pf: '1xbet', dt: '2025-06-04' }
 ];
 
-function afficherDemandes() {
-    const tab = document.getElementById('tabDemandes');
-    const mobile = document.getElementById('demandesMobile');
+function affDem() {
+    const tab = document.getElementById('tabDem');
+    const mob = document.getElementById('demMob');
     
     tab.innerHTML = '';
-    mobile.innerHTML = '';
+    mob.innerHTML = '';
 
-    demandes.forEach(d => {
+    dem.forEach(d => {
         const row = document.createElement('tr');
         row.className = 'hover:bg-gray-50';
         row.innerHTML = `
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${d.nom}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${parseInt(d.montant).toLocaleString()} FCFA</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${parseInt(d.mt).toLocaleString()} FCFA</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${d.num}</td>
             <td class="px-6 py-4 whitespace-nowrap">
                 <span class="px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
-                    ${d.plateforme}
+                    ${d.pf}
                 </span>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${d.date}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${d.dt}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm">
-                <button onclick="repondre(${d.id})" class="bg-bleu text-white px-3 py-1 rounded hover:bg-bleu-fonce transition-colors text-xs">
+                <button onclick="rep(${d.id})" class="bg-bleu text-white px-3 py-1 rounded hover:bg-bleu-fonce transition-colors text-xs">
                     <i class="fas fa-reply mr-1"></i>Répondre
                 </button>
             </td>
@@ -87,60 +88,61 @@ function afficherDemandes() {
                 <div class="flex justify-between items-start">
                     <div>
                         <p class="font-medium text-gray-900">${d.nom}</p>
-                        <p class="text-sm text-gray-500">${d.date}</p>
+                        <p class="text-sm text-gray-500">${d.dt}</p>
+                        <p class="text-sm text-gray-600">${d.num}</p>
                     </div>
                     <span class="px-2 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
-                        ${d.plateforme}
+                        ${d.pf}
                     </span>
                 </div>
                 <div class="flex justify-between items-center">
-                    <p class="text-lg font-bold text-gray-900">${parseInt(d.montant).toLocaleString()} FCFA</p>
-                    <button onclick="repondre(${d.id})" class="bg-bleu text-white px-3 py-1 rounded hover:bg-bleu-fonce transition-colors text-xs">
+                    <p class="text-lg font-bold text-gray-900">${parseInt(d.mt).toLocaleString()} FCFA</p>
+                    <button onclick="rep(${d.id})" class="bg-bleu text-white px-3 py-1 rounded hover:bg-bleu-fonce transition-colors text-xs">
                         <i class="fas fa-reply mr-1"></i>Répondre
                     </button>
                 </div>
             </div>
         `;
-        mobile.appendChild(card);
+        mob.appendChild(card);
     });
 }
 
-function repondre(id) {
-    demandeSelectionnee = demandes.find(d => d.id === id);
-    modalReponse.classList.remove('hidden');
+function rep(id) {
+    demSel = dem.find(d => d.id === id);
+    modalRep.classList.remove('hidden');
     
-    document.getElementById('montant').value = '';
-    document.getElementById('ville').value = '';
-    document.getElementById('rue').value = '';
+    document.getElementById('mt').value = '';
+    document.getElementById('vil').value = '';
+    document.getElementById('ru').value = '';
 }
 
-soumettre.addEventListener('click', () => {
-    const montant = document.getElementById('montant').value;
-    const ville = document.getElementById('ville').value;
-    const rue = document.getElementById('rue').value;
+btnSoum.addEventListener('click', () => {
+    const mt = document.getElementById('mt').value;
+    const vil = document.getElementById('vil').value;
+    const ru = document.getElementById('ru').value;
 
-    if (!montant || !ville || !rue) {
+    if (!mt || !vil || !ru) {
         alert('Veuillez remplir tous les champs');
         return;
     }
 
-    if (demandeSelectionnee) {
-        const index = demandes.findIndex(d => d.id === demandeSelectionnee.id);
-        if (index !== -1) {
-            demandes.splice(index, 1);
+    if (demSel) {
+        const idx = dem.findIndex(d => d.id === demSel.id);
+        if (idx !== -1) {
+            dem.splice(idx, 1);
         }
         
-        afficherDemandes();
-        modalReponse.classList.add('hidden');
+        affDem();
+        modalRep.classList.add('hidden');
         alert('Réponse envoyée avec succès!');
     }
 });
 
-const deco = document.getElementById('deco');
-deco.addEventListener('click', function(e) {
+const btnDeco = document.getElementById('btnDeco');
+btnDeco.addEventListener('click', function(e) {
     e.preventDefault();
     if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
         window.location.href = '/auth/login.html';
     }
 });
-afficherDemandes();
+affDem();

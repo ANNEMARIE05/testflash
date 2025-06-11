@@ -1,12 +1,52 @@
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        * { font-family: 'Inter', sans-serif; }
+        
+        @keyframes glissHaut {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
 
-.hover\:from-bleu-fonce:hover { background: linear-gradient(to right, #1e40af, #3b82f6); }
-.card-hover:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
-}
-.box {
-    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
-    padding: 12px;
-    margin-bottom: 12px;
-    border-bottom: 2px solid white;
-}
+        @keyframes flottement {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .cardVid {
+            animation: glissHaut 0.6s ease-out forwards;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .cardVid:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+        }
+        
+        .barreNav {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .barreNav.ouvert {
+            transform: translateX(0);
+        }
+        
+        @media (min-width: 1024px) {
+            .barreNav { transform: translateX(0); }
+        }
+
+        .modalVid {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+
+        .modalVid.actif {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
